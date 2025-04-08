@@ -1,0 +1,45 @@
+{
+   "ActiveEmotionalView":"No Loops",
+   "Default View_ScaleFactor":"1.0",
+   "Default View_TopLeft":"-597,-312",
+   "DisplayTieOff":"1",
+   "ExpandedHierarchyInLayout":"",
+   "No Loops_ExpandedHierarchyInLayout":"",
+   "No Loops_Layout":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace port S00_AXI -pg 1 -lvl 0 -x 0 -y 60 -defaultsOSRD
+preplace port M01_AXI -pg 1 -lvl 3 -x 620 -y 80 -defaultsOSRD
+preplace port M00_AXI -pg 1 -lvl 3 -x 620 -y 60 -defaultsOSRD
+preplace port port-id_aclk -pg 1 -lvl 0 -x 0 -y 80 -defaultsOSRD
+preplace port port-id_aresetn -pg 1 -lvl 0 -x 0 -y 100 -defaultsOSRD
+preplace inst axi_revision -pg 1 -lvl 1 -x 170 -y 160 -defaultsOSRD -pinDir S_AXI right -pinY S_AXI 0R -pinDir AXI_ACLK left -pinY AXI_ACLK 0L -pinDir AXI_ARESETN left -pinY AXI_ARESETN 20L
+preplace inst system_interconnect -pg 1 -lvl 2 -x 460 -y 60 -defaultsOSRD -pinDir S00_AXI left -pinY S00_AXI 0L -pinDir M00_AXI right -pinY M00_AXI 0R -pinDir M01_AXI right -pinY M01_AXI 20R -pinDir M02_AXI left -pinY M02_AXI 100L -pinDir aclk left -pinY aclk 120L -pinDir aresetn left -pinY aresetn 140L
+preplace netloc pcie_bridge_axi_aclk 1 0 2 40 80 320
+preplace netloc pcie_bridge_axi_aresetn 1 0 2 20 100 300
+preplace netloc pcie_bridge_M_AXI_B 1 0 2 NJ 60 N
+preplace netloc system_interconnect_M01_AXI 1 2 1 NJ 80
+preplace netloc system_interconnect_M02_AXI 1 1 1 N 160
+preplace netloc system_interconnect_M00_AXI 1 2 1 NJ 60
+levelinfo -pg 1 0 170 460 620
+pagesize -pg 1 -db -bbox -sgen -110 0 730 260
+",
+   "No Loops_ScaleFactor":"1.0",
+   "No Loops_TopLeft":"-366,-154",
+   "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace port S00_AXI -pg 1 -lvl 0 -x 0 -y 120 -defaultsOSRD
+preplace port M01_AXI -pg 1 -lvl 3 -x 530 -y 150 -defaultsOSRD
+preplace port port-id_aclk -pg 1 -lvl 0 -x 0 -y 140 -defaultsOSRD
+preplace port port-id_aresetn -pg 1 -lvl 0 -x 0 -y 160 -defaultsOSRD
+preplace inst axi_revision -pg 1 -lvl 2 -x 410 -y 70 -defaultsOSRD
+preplace inst system_interconnect -pg 1 -lvl 1 -x 160 -y 140 -defaultsOSRD
+preplace netloc pcie_bridge_axi_aclk 1 0 2 30 220 300J
+preplace netloc pcie_bridge_axi_aresetn 1 0 2 20 230 310J
+preplace netloc pcie_bridge_M_AXI_B 1 0 1 NJ 120
+preplace netloc system_interconnect_M00_AXI 1 1 1 290 50n
+preplace netloc system_interconnect_M01_AXI 1 1 2 NJ 150 NJ
+levelinfo -pg 1 0 160 410 530
+pagesize -pg 1 -db -bbox -sgen -100 0 630 240
+"
+}
+0

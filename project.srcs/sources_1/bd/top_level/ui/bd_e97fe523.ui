@@ -1,0 +1,117 @@
+{
+   "ActiveEmotionalView":"No Loops",
+   "Default View_ScaleFactor":"0.661628",
+   "Default View_TopLeft":"-271,-11",
+   "DisplayTieOff":"1",
+   "ExpandedHierarchyInLayout":"",
+   "No Loops_ExpandedHierarchyInLayout":"",
+   "No Loops_Layout":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace port axis_in -pg 1 -lvl 0 -x 0 -y 100 -defaultsOSRD
+preplace port axis_pcie_out -pg 1 -lvl 5 -x 1300 -y 140 -defaultsOSRD
+preplace port axis_qsfp_out -pg 1 -lvl 5 -x 1300 -y 160 -defaultsOSRD
+preplace port hbm_refclk -pg 1 -lvl 5 -x 1300 -y 240 -defaultsOSRD -right
+preplace port port-id_clk -pg 1 -lvl 0 -x 0 -y 240 -defaultsOSRD
+preplace port port-id_resetn -pg 1 -lvl 0 -x 0 -y 80 -defaultsOSRD
+preplace port port-id_loopback_mode -pg 1 -lvl 0 -x 0 -y 220 -defaultsOSRD
+preplace port port-id_overflow_0 -pg 1 -lvl 5 -x 1300 -y 280 -defaultsOSRD
+preplace port port-id_overflow_1 -pg 1 -lvl 5 -x 1300 -y 320 -defaultsOSRD
+preplace port port-id_bad_packet_strb -pg 1 -lvl 0 -x 0 -y 160 -defaultsOSRD -left
+preplace port port-id_good_packet_strb -pg 1 -lvl 0 -x 0 -y 40 -defaultsOSRD -left
+preplace port port-id_hbm_cattrip -pg 1 -lvl 5 -x 1300 -y 300 -defaultsOSRD
+preplace portBus hwm_0 -pg 1 -lvl 5 -x 1300 -y 340 -defaultsOSRD
+preplace portBus hwm_1 -pg 1 -lvl 5 -x 1300 -y 360 -defaultsOSRD
+preplace portBus hbm_temp -pg 1 -lvl 5 -x 1300 -y 260 -defaultsOSRD
+preplace inst input_axis_switch -pg 1 -lvl 2 -x 520 -y 100 -swap {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 17 16} -defaultsOSRD -pinDir axis_in left -pinY axis_in 0L -pinDir axis_out0 right -pinY axis_out0 40R -pinDir axis_out1 right -pinY axis_out1 60R -pinDir clk left -pinY clk 20L -pinDir port_select left -pinY port_select 60L -pinDir packet_strb left -pinY packet_strb 40L
+preplace inst output_axis_switch -pg 1 -lvl 4 -x 1140 -y 140 -swap {0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 16 15 17} -defaultsOSRD -pinDir axis_in left -pinY axis_in 0L -pinDir axis_out0 right -pinY axis_out0 0R -pinDir axis_out1 right -pinY axis_out1 20R -pinDir clk left -pinY clk 40L -pinDir port_select left -pinY port_select 20L -pinDir packet_strb right -pinY packet_strb 40R
+preplace inst switch_ctrl -pg 1 -lvl 1 -x 190 -y 300 -swap {1 0 2 6 10 5 8 3 9 4 7} -defaultsOSRD -pinDir clk left -pinY clk 20L -pinDir resetn left -pinY resetn 0L -pinDir inflow_q right -pinY inflow_q 0R -pinDir has_data0 right -pinY has_data0 100R -pinDir has_data1 right -pinY has_data1 180R -pinDir inflow_done0 right -pinY inflow_done0 80R -pinDir inflow_done1 right -pinY inflow_done1 140R -pinDir ram_reader_idle0 right -pinY ram_reader_idle0 20R -pinDir ram_reader_idle1 right -pinY ram_reader_idle1 160R -pinDir ram_reader_start0 right -pinY ram_reader_start0 40R -pinDir ram_reader_start1 right -pinY ram_reader_start1 120R
+preplace inst data_buffer -pg 1 -lvl 3 -x 830 -y 140 -swap {11 1 2 3 4 5 6 7 8 9 10 0 12 13 14 15 16 22 18 25 17 20 21 24 23 29 19 32 28 30 26 31 27} -defaultsOSRD -pinDir hbm_refclk right -pinY hbm_refclk 100R -pinDir AXIS_IN0 left -pinY AXIS_IN0 0L -pinDir AXIS_IN1 left -pinY AXIS_IN1 20L -pinDir axis_out right -pinY axis_out 0R -pinDir clk left -pinY clk 40L -pinDir resetn left -pinY resetn 220L -pinBusDir hbm_temp right -pinBusY hbm_temp 120R -pinDir hbm_cattrip right -pinY hbm_cattrip 160R -pinBusDir inflow_q left -pinBusY inflow_q 120L -pinDir ram_reader_idle0 left -pinY ram_reader_idle0 180L -pinDir start_ram_reader0 left -pinY start_ram_reader0 200L -pinDir has_data0 left -pinY has_data0 260L -pinDir inflow_done0 left -pinY inflow_done0 240L -pinBusDir hwm_0 right -pinBusY hwm_0 200R -pinDir overflow_0 right -pinY overflow_0 140R -pinDir has_data1 left -pinY has_data1 340L -pinDir inflow_done1 left -pinY inflow_done1 300L -pinBusDir hwm_1 right -pinBusY hwm_1 220R -pinDir overflow_1 right -pinY overflow_1 180R -pinDir ram_reader_idle1 left -pinY ram_reader_idle1 320L -pinDir start_ram_reader1 left -pinY start_ram_reader1 280L
+preplace inst bad_packet_filter -pg 1 -lvl 1 -x 190 -y 100 -swap {0 1 2 3 4 5 6 7 8 9 10 11 12 13 15 14 16} -defaultsOSRD -pinDir AXIS_IN left -pinY AXIS_IN 0L -pinDir AXIS_OUT right -pinY AXIS_OUT 0R -pinDir clk left -pinY clk 40L -pinDir resetn left -pinY resetn 20L -pinDir bad_packet_strb left -pinY bad_packet_strb 60L
+preplace netloc bad_packet_filter_bad_packet_strb 1 0 1 N 160
+preplace netloc channel_0_high_water_mark 1 3 2 NJ 340 NJ
+preplace netloc channel_0_overflow 1 3 2 NJ 280 NJ
+preplace netloc channel_0_ram_reader_idle 1 1 2 NJ 320 NJ
+preplace netloc channel_1_high_water_mark 1 3 2 NJ 360 NJ
+preplace netloc channel_1_idle 1 1 2 NJ 460 NJ
+preplace netloc channel_1_overflow 1 3 2 NJ 320 NJ
+preplace netloc input_axis_switch_packet_strb 1 0 2 NJ 40 340
+preplace netloc pcie_bridge_axi_aclk 1 0 4 20 20 380 240 680 80 980
+preplace netloc port_select_1 1 0 4 NJ 220 NJ 220 660J 60 1000J
+preplace netloc ram_hbm_cattrip 1 3 2 NJ 300 NJ
+preplace netloc ram_hbm_temp 1 3 2 NJ 260 NJ
+preplace netloc resetn_1 1 0 3 40 240 340J 360 N
+preplace netloc start_ram_reader_0 1 1 2 NJ 340 NJ
+preplace netloc stream_to_ram_0_done 1 1 2 NJ 380 NJ
+preplace netloc stream_to_ram_0_has_data 1 1 2 NJ 400 NJ
+preplace netloc stream_to_ram_1_done 1 1 2 NJ 440 NJ
+preplace netloc stream_to_ram_1_has_data 1 1 2 NJ 480 NJ
+preplace netloc switch_ctrl_0_inflow_q 1 1 2 360 260 NJ
+preplace netloc switch_ctrl_ram_reader_start1 1 1 2 NJ 420 NJ
+preplace netloc Conn1 1 4 1 NJ 140
+preplace netloc axis_in_1 1 0 1 NJ 100
+preplace netloc axis_switch_axis_out0 1 2 1 N 140
+preplace netloc axis_switch_axis_out1 1 2 1 N 160
+preplace netloc bad_packet_filter_AXIS_OUT 1 1 1 N 100
+preplace netloc data_buffer_axis_out 1 3 1 N 140
+preplace netloc hbm_refclk_1 1 3 2 NJ 240 N
+preplace netloc output_axis_switch_axis_out1 1 4 1 NJ 160
+levelinfo -pg 1 0 190 520 830 1140 1300
+pagesize -pg 1 -db -bbox -sgen -180 0 1460 540
+",
+   "No Loops_ScaleFactor":"0.827628",
+   "No Loops_TopLeft":"-176,-68",
+   "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
+#  -string -flagsOSRD
+preplace port axis_in -pg 1 -lvl 0 -x 0 -y 730 -defaultsOSRD
+preplace port axis_pcie_out -pg 1 -lvl 5 -x 1430 -y 570 -defaultsOSRD
+preplace port axis_qsfp_out -pg 1 -lvl 5 -x 1430 -y 590 -defaultsOSRD
+preplace port hbm_refclk -pg 1 -lvl 0 -x 0 -y 430 -defaultsOSRD
+preplace port port-id_clk -pg 1 -lvl 0 -x 0 -y 50 -defaultsOSRD
+preplace port port-id_resetn -pg 1 -lvl 0 -x 0 -y 70 -defaultsOSRD
+preplace port port-id_loopback_mode -pg 1 -lvl 0 -x 0 -y 660 -defaultsOSRD
+preplace port port-id_overflow_0 -pg 1 -lvl 5 -x 1430 -y 450 -defaultsOSRD
+preplace port port-id_overflow_1 -pg 1 -lvl 5 -x 1430 -y 510 -defaultsOSRD
+preplace port port-id_bad_packet_strb -pg 1 -lvl 5 -x 1430 -y 760 -defaultsOSRD
+preplace port port-id_good_packet_strb -pg 1 -lvl 5 -x 1430 -y 830 -defaultsOSRD
+preplace port port-id_hbm_cattrip -pg 1 -lvl 5 -x 1430 -y 350 -defaultsOSRD
+preplace portBus hwm_0 -pg 1 -lvl 5 -x 1430 -y 430 -defaultsOSRD
+preplace portBus hwm_1 -pg 1 -lvl 5 -x 1430 -y 490 -defaultsOSRD
+preplace portBus hbm_temp -pg 1 -lvl 5 -x 1430 -y 330 -defaultsOSRD
+preplace inst input_axis_switch -pg 1 -lvl 2 -x 600 -y 350 -defaultsOSRD
+preplace inst output_axis_switch -pg 1 -lvl 4 -x 1270 -y 590 -defaultsOSRD
+preplace inst switch_ctrl -pg 1 -lvl 1 -x 260 -y 120 -defaultsOSRD
+preplace inst data_buffer -pg 1 -lvl 3 -x 910 -y 430 -defaultsOSRD
+preplace inst bad_packet_filter -pg 1 -lvl 4 -x 1270 -y 750 -defaultsOSRD
+preplace netloc bad_packet_filter_bad_packet_strb 1 4 1 NJ 760
+preplace netloc channel_0_high_water_mark 1 3 2 NJ 430 NJ
+preplace netloc channel_0_overflow 1 3 2 NJ 450 NJ
+preplace netloc channel_0_ram_reader_idle 1 0 4 90 250 NJ 250 NJ 250 1060
+preplace netloc channel_1_high_water_mark 1 3 2 1110J 490 NJ
+preplace netloc channel_1_idle 1 0 4 70 640 NJ 640 NJ 640 1070
+preplace netloc channel_1_overflow 1 3 2 1120J 510 NJ
+preplace netloc input_axis_switch_packet_strb 1 2 3 730J 830 NJ 830 NJ
+preplace netloc pcie_bridge_axi_aclk 1 0 4 30 260 440 440 750 650 1110
+preplace netloc port_select_1 1 0 4 NJ 660 NJ 660 NJ 660 1130J
+preplace netloc ram_hbm_cattrip 1 3 2 NJ 350 NJ
+preplace netloc ram_hbm_temp 1 3 2 NJ 330 NJ
+preplace netloc resetn_1 1 0 4 20 450 NJ 450 760 770 NJ
+preplace netloc start_ram_reader_0 1 1 2 450 480 NJ
+preplace netloc stream_to_ram_0_done 1 0 4 80 600 NJ 600 NJ 600 1060
+preplace netloc stream_to_ram_0_has_data 1 0 4 40 610 NJ 610 NJ 610 1100
+preplace netloc stream_to_ram_1_done 1 0 4 60 630 NJ 630 NJ 630 1080
+preplace netloc stream_to_ram_1_has_data 1 0 4 50 620 NJ 620 NJ 620 1090
+preplace netloc switch_ctrl_0_inflow_q 1 1 2 460 460 NJ
+preplace netloc switch_ctrl_ram_reader_start1 1 1 2 430 500 NJ
+preplace netloc Conn1 1 4 1 NJ 570
+preplace netloc axis_in_1 1 0 4 NJ 730 NJ 730 NJ 730 NJ
+preplace netloc axis_switch_axis_out0 1 2 1 760 330n
+preplace netloc axis_switch_axis_out1 1 2 1 750 350n
+preplace netloc bad_packet_filter_AXIS_OUT 1 1 4 470 670 NJ 670 NJ 670 1410
+preplace netloc data_buffer_axis_out 1 3 1 1130 310n
+preplace netloc hbm_refclk_1 1 0 3 NJ 430 NJ 430 740J
+preplace netloc output_axis_switch_axis_out1 1 4 1 NJ 590
+levelinfo -pg 1 0 260 600 910 1270 1430
+pagesize -pg 1 -db -bbox -sgen -150 0 1600 850
+"
+}
+
