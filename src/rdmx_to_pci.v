@@ -17,7 +17,7 @@
 */
 
 
-module rdmx_to_pci # (parameter DW=512)
+module rdmx_to_pci # (parameter DW=512, FREQ_HZ = 250000000)
 (
     input           clk, resetn,
 
@@ -26,6 +26,9 @@ module rdmx_to_pci # (parameter DW=512)
 
     // Strobes high for one cycle when we see an invalid RDMX offset
     output          pci_range_err_strb,
+
+    // The number of data-cycles per second written to PCI
+    output reg [31:0] pci_throughput,
 
     // The input stream
     input[DW-1:0]   AXIS_IN_TDATA,
@@ -161,6 +164,36 @@ end
 //=============================================================================
 
 
+//=============================================================================
+// This block measures the write-throughput of the M_AXI interface
+//=============================================================================
+reg[31:0] write_cycle_counter;
+reg[31:0] tpm_timer;
+//-----------------------------------------------------------------------------
+always @(posedge clk) begin
+    
+    if (tpm_timer) tpm_timer <= tpm_timer - 1;
+
+    if (resetn == 0) begin
+        write_cycle_counter <= 0;
+        pci_throughput      <= 0;
+        tpm_timer           <= FREQ_HZ;
+    end
+
+    else if (tpm_timer == 0) begin
+        pci_throughput      <= write_cycle_counter;
+        write_cycle_counter <= (M_AXI_WVALID & M_AXI_WREADY);
+        tpm_timer           <= FREQ_HZ;
+    end
+
+    else if (M_AXI_WVALID & M_AXI_WREADY)
+        write_cycle_counter <= write_cycle_counter + 1;
+
+end
+//=============================================================================
+
+
+
 
 //=============================================================================
 // Constant values for M_AXI ports associated with AXI write operations
@@ -192,6 +225,9 @@ assign M_AXI_ARCACHE = 0;
 assign M_AXI_ARQOS   = 0;
 assign M_AXI_RREADY  = 0; 
 //=============================================================================
+
+
+
 
 
 

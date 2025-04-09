@@ -55,6 +55,9 @@ module control # (parameter AW=8, HBM_TEMPW=7, DEFAULT_PCI_BASE = 64'h1_0000_000
     // These are the high-water mark of RAM usage for each RAM bank
     input[63:0] hwm_0, hwm_1,
 
+    // The write-throughput of the PCI bus (in cycles per second)sx
+    input[31:0] pci_throughput,
+
     // The base address and size of the contiguous buffer in host RAM
     output reg[63:0] pci_base, pci_size,
 
@@ -137,6 +140,7 @@ localparam REG_HWMARK_0H      = 36;
 localparam REG_HWMARK_0L      = 37;
 localparam REG_HWMARK_1H      = 38;
 localparam REG_HWMARK_1L      = 39;
+localparam REG_PCI_THROUGHPUT = 40;
 //==========================================================================
 
 
@@ -418,6 +422,7 @@ always @(posedge clk) begin
             REG_XMIT_SIZE_H:    ashi_rdata <= xmit_byte_count[63:32];
             REG_XMIT_SIZE_L:    ashi_rdata <= xmit_byte_count[31:00];
             REG_XMIT_START:     ashi_rdata <= (xmit_idle == 0);
+            REG_PCI_THROUGHPUT: ashi_rdata <= pci_throughput;
 
             // Reads of any other register are a decode-error
             default: ashi_rresp <= DECERR;
