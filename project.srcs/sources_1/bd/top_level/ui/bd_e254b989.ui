@@ -63,8 +63,8 @@ preplace netloc hbm_refclk_1 1 2 1 N 220
 levelinfo -pg 1 0 220 580 740
 pagesize -pg 1 -db -bbox -sgen -190 0 900 600
 ",
-   "No Loops_ScaleFactor":"0.948333",
-   "No Loops_TopLeft":"-348,1",
+   "No Loops_ScaleFactor":"1.0",
+   "No Loops_TopLeft":"-390,-58",
    "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
 #  -string -flagsOSRD
 preplace port hbm0_refclk -pg 1 -lvl 0 -x 0 -y 310 -defaultsOSRD
@@ -124,4 +124,4 @@ levelinfo -pg 1 0 200 600 760
 pagesize -pg 1 -db -bbox -sgen -180 0 930 600
 "
 }
-
+0

@@ -3148,7 +3148,7 @@
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>NUM_WRITE_OUTSTANDING</spirit:name>
-          <spirit:value spirit:format="long" spirit:id="BUSIFPARAM_VALUE.M_AXI_B.NUM_WRITE_OUTSTANDING">32</spirit:value>
+          <spirit:value spirit:format="long" spirit:id="BUSIFPARAM_VALUE.M_AXI_B.NUM_WRITE_OUTSTANDING">8</spirit:value>
         </spirit:parameter>
         <spirit:parameter>
           <spirit:name>HAS_BURST</spirit:name>
@@ -19984,7 +19984,7 @@
   <spirit:addressSpaces>
     <spirit:addressSpace>
       <spirit:name>M_AXI</spirit:name>
-      <spirit:range spirit:format="long" spirit:resolve="dependent" spirit:dependency="spirit:pow(2,id(&apos;MODELPARAM_VALUE.AXI_ADDR_WIDTH&apos;))">16777216T</spirit:range>
+      <spirit:range spirit:resolve="dependent" spirit:dependency="spirit:pow(2,id(&apos;MODELPARAM_VALUE.AXI_ADDR_WIDTH&apos;))">16777216T</spirit:range>
       <spirit:width spirit:format="long" spirit:resolve="dependent" spirit:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.AXI_ADDR_WIDTH&apos;))">64</spirit:width>
     </spirit:addressSpace>
     <spirit:addressSpace>
@@ -19994,12 +19994,12 @@
     </spirit:addressSpace>
     <spirit:addressSpace>
       <spirit:name>M_AXI_BYPASS</spirit:name>
-      <spirit:range spirit:format="long" spirit:resolve="dependent" spirit:dependency="spirit:pow(2,id(&apos;MODELPARAM_VALUE.AXI_ADDR_WIDTH&apos;))">16777216T</spirit:range>
+      <spirit:range spirit:resolve="dependent" spirit:dependency="spirit:pow(2,id(&apos;MODELPARAM_VALUE.AXI_ADDR_WIDTH&apos;))">16777216T</spirit:range>
       <spirit:width spirit:format="long" spirit:resolve="dependent" spirit:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.AXI_ADDR_WIDTH&apos;))">64</spirit:width>
     </spirit:addressSpace>
     <spirit:addressSpace>
       <spirit:name>M_AXI_B</spirit:name>
-      <spirit:range spirit:format="long" spirit:resolve="dependent" spirit:dependency="spirit:pow(2,id(&apos;MODELPARAM_VALUE.AXI_ADDR_WIDTH&apos;))">16777216T</spirit:range>
+      <spirit:range spirit:resolve="dependent" spirit:dependency="spirit:pow(2,id(&apos;MODELPARAM_VALUE.AXI_ADDR_WIDTH&apos;))">16777216T</spirit:range>
       <spirit:width spirit:format="long" spirit:resolve="dependent" spirit:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.AXI_ADDR_WIDTH&apos;))">64</spirit:width>
     </spirit:addressSpace>
   </spirit:addressSpaces>
@@ -20188,7 +20188,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:814e492f</spirit:value>
+            <spirit:value>9:f0f65952</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -20202,7 +20202,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:66c127d1</spirit:value>
+            <spirit:value>9:486a3001</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -20541,7 +20541,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.PF0_DEVICE_ID&apos;))" spirit:bitStringLength="16">0x9048</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.PF0_DEVICE_ID&apos;))" spirit:bitStringLength="16">0x9040</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -50254,7 +50254,7 @@
       <spirit:modelParameter spirit:dataType="std_logic_vector">
         <spirit:name>PF0_DEVICE_ID</spirit:name>
         <spirit:displayName>Pf0 Device Id</spirit:displayName>
-        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PF0_DEVICE_ID" spirit:bitStringLength="16">0x9048</spirit:value>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PF0_DEVICE_ID" spirit:bitStringLength="16">0x9040</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="std_logic_vector">
         <spirit:name>PF0_REVISION_ID</spirit:name>
@@ -52441,7 +52441,7 @@
     <spirit:parameter>
       <spirit:name>pf0_device_id</spirit:name>
       <spirit:displayName>PF0 Device Id</spirit:displayName>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.pf0_device_id" spirit:order="21">9048</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.pf0_device_id" spirit:order="21">9040</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -60305,26 +60305,22 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK.ASSOCIATED_BUSIF" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK.ASSOCIATED_RESET" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK.FREQ_HZ" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK.FREQ_HZ" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK.FREQ_TOLERANCE_HZ" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK.PHASE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK_GT.ASSOCIATED_BUSIF" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK_GT.ASSOCIATED_RESET" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK_GT.CLK_DOMAIN" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK_GT.CLK_DOMAIN" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK_GT.FREQ_HZ" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK_GT.FREQ_TOLERANCE_HZ" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.CLK.SYS_CLK_GT.PHASE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.INTERRUPT.INTERRUPT_OUT.PortWidth" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.INTERRUPT.INTERRUPT_OUT.SENSITIVITY" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_B.NUM_READ_OUTSTANDING" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_B.NUM_READ_THREADS" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_B.NUM_WRITE_OUTSTANDING" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.M_AXI_B.NUM_WRITE_THREADS" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.PCIE_MGT.BOARD.ASSOCIATED_PARAM" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RST.AXI_ARESETN.POLARITY" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RST.AXI_CTL_ARESETN.POLARITY" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RST.SYS_RST_N.BOARD.ASSOCIATED_PARAM" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RST.SYS_RST_N.POLARITY" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RST.SYS_RST_N.POLARITY" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.RST.SYS_RST_N.TYPE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.ADDR_WIDTH" xilinx:valueSource="auto" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.ARUSER_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
@@ -60342,7 +60338,7 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.HAS_REGION" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.HAS_RRESP" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.HAS_WSTRB" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.ID_WIDTH" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.ID_WIDTH" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.MAX_BURST_LENGTH" xilinx:valueSource="ip_propagated" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.NUM_READ_OUTSTANDING" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S_AXI_B.NUM_READ_THREADS" xilinx:valuePermission="bd"/>

@@ -8684,7 +8684,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:84c594b8</spirit:value>
+            <spirit:value>9:99bbc8eb</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -13929,7 +13929,7 @@
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
           <spirit:driver>
-            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.PF0_DEVICE_ID&apos;))" spirit:bitStringLength="16">0x9048</spirit:defaultValue>
+            <spirit:defaultValue spirit:format="bitString" spirit:resolve="dependent" spirit:dependency="spirit:decode(id(&apos;MODELPARAM_VALUE.PF0_DEVICE_ID&apos;))" spirit:bitStringLength="16">0x9040</spirit:defaultValue>
           </spirit:driver>
         </spirit:wire>
         <spirit:vendorExtensions>
@@ -23458,7 +23458,7 @@
       <spirit:modelParameter spirit:dataType="std_logic_vector">
         <spirit:name>PF0_DEVICE_ID</spirit:name>
         <spirit:displayName>Pf0 Device Id</spirit:displayName>
-        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PF0_DEVICE_ID" spirit:bitStringLength="16">0x9048</spirit:value>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PF0_DEVICE_ID" spirit:bitStringLength="16">0x9040</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="string">
         <spirit:name>PF0_DEV_CAP2_128B_CAS_ATOMIC_COMPLETER_SUPPORT</spirit:name>
@@ -26501,7 +26501,7 @@
     <spirit:parameter>
       <spirit:name>PF0_DEVICE_ID</spirit:name>
       <spirit:displayName>Pf0 Device Id</spirit:displayName>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.PF0_DEVICE_ID" spirit:order="25">9048</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.PF0_DEVICE_ID" spirit:order="25">9040</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>PF0_DEV_CAP2_128B_CAS_ATOMIC_COMPLETER_SUPPORT</spirit:name>

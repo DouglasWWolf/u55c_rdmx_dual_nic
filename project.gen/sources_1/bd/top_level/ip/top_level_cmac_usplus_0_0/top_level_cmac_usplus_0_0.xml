@@ -30584,25 +30584,6 @@
       <spirit:enumeration>Asynchronous</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
-      <spirit:name>choice_list_5a3035da</spirit:name>
-      <spirit:enumeration>Custom</spirit:enumeration>
-      <spirit:enumeration>pcie_refclk</spirit:enumeration>
-      <spirit:enumeration>qsfp0_refclk0</spirit:enumeration>
-      <spirit:enumeration>qsfp1_refclk0</spirit:enumeration>
-      <spirit:enumeration>slr0_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>slr1_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>pcie_refclk</spirit:enumeration>
-      <spirit:enumeration>qsfp0_refclk0</spirit:enumeration>
-      <spirit:enumeration>qsfp1_refclk0</spirit:enumeration>
-      <spirit:enumeration>slr0_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>slr1_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>pcie_refclk</spirit:enumeration>
-      <spirit:enumeration>qsfp0_refclk0</spirit:enumeration>
-      <spirit:enumeration>qsfp1_refclk0</spirit:enumeration>
-      <spirit:enumeration>slr0_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>slr1_freerun_clk</spirit:enumeration>
-    </spirit:choice>
-    <spirit:choice>
       <spirit:name>choice_list_67e898b2</spirit:name>
       <spirit:enumeration>Custom</spirit:enumeration>
       <spirit:enumeration>qsfp0_4x</spirit:enumeration>
@@ -30631,6 +30612,12 @@
       <spirit:name>choice_list_bd2b5ad6</spirit:name>
       <spirit:enumeration>Enable FCS Insertion</spirit:enumeration>
       <spirit:enumeration>Disable FCS Insertion</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_list_f6168831</spirit:name>
+      <spirit:enumeration>Custom</spirit:enumeration>
+      <spirit:enumeration>qsfp0_refclk0</spirit:enumeration>
+      <spirit:enumeration>qsfp1_refclk0</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
       <spirit:name>choice_list_f784087d</spirit:name>
@@ -31690,7 +31677,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>DIFFCLK_BOARD_INTERFACE</spirit:name>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.DIFFCLK_BOARD_INTERFACE" spirit:choiceRef="choice_list_5a3035da" spirit:order="710">Custom</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.DIFFCLK_BOARD_INTERFACE" spirit:choiceRef="choice_list_f6168831" spirit:order="710">Custom</spirit:value>
       <spirit:vendorExtensions>
         <xilinx:parameterInfo>
           <xilinx:enablement>
@@ -31745,12 +31732,12 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.CLK_DOMAIN" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.FREQ_HZ" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.HAS_TKEEP" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.HAS_TLAST" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.HAS_TLAST" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.HAS_TREADY" xilinx:valueSource="constant_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.HAS_TSTRB" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.LAYERED_METADATA" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.PHASE" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.TDATA_NUM_BYTES" xilinx:valueSource="default_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.TDATA_NUM_BYTES" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.TDEST_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.TID_WIDTH" xilinx:valueSource="constant" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.AXIS_TX.TUSER_WIDTH" xilinx:valueSource="propagated" xilinx:valuePermission="bd"/>
@@ -31773,7 +31760,7 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.GT_DRPCLK_PORT.PHASE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.GT_REF_CLK.BOARD.ASSOCIATED_PARAM" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.GT_REF_CLK.CAN_DEBUG" xilinx:valuePermission="bd"/>
-        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.GT_REF_CLK.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.GT_REF_CLK.FREQ_HZ" xilinx:valueSource="user" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.GT_REF_CLK_OUT_PORT.ASSOCIATED_BUSIF" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.GT_REF_CLK_OUT_PORT.ASSOCIATED_RESET" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.GT_REF_CLK_OUT_PORT.CLK_DOMAIN" xilinx:valuePermission="bd"/>

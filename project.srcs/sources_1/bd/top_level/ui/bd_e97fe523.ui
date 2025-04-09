@@ -58,8 +58,8 @@ preplace netloc output_axis_switch_axis_out1 1 4 1 NJ 160
 levelinfo -pg 1 0 190 520 830 1140 1300
 pagesize -pg 1 -db -bbox -sgen -180 0 1460 540
 ",
-   "No Loops_ScaleFactor":"0.827628",
-   "No Loops_TopLeft":"-176,-68",
+   "No Loops_ScaleFactor":"0.916259",
+   "No Loops_TopLeft":"-176,-116",
    "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
 #  -string -flagsOSRD
 preplace port axis_in -pg 1 -lvl 0 -x 0 -y 730 -defaultsOSRD
@@ -114,4 +114,4 @@ levelinfo -pg 1 0 260 600 910 1270 1430
 pagesize -pg 1 -db -bbox -sgen -150 0 1600 850
 "
 }
-
+0

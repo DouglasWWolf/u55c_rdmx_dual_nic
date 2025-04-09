@@ -6636,25 +6636,6 @@
   </spirit:model>
   <spirit:choices>
     <spirit:choice>
-      <spirit:name>choice_list_5a3035da</spirit:name>
-      <spirit:enumeration>Custom</spirit:enumeration>
-      <spirit:enumeration>pcie_refclk</spirit:enumeration>
-      <spirit:enumeration>qsfp0_refclk0</spirit:enumeration>
-      <spirit:enumeration>qsfp1_refclk0</spirit:enumeration>
-      <spirit:enumeration>slr0_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>slr1_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>pcie_refclk</spirit:enumeration>
-      <spirit:enumeration>qsfp0_refclk0</spirit:enumeration>
-      <spirit:enumeration>qsfp1_refclk0</spirit:enumeration>
-      <spirit:enumeration>slr0_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>slr1_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>pcie_refclk</spirit:enumeration>
-      <spirit:enumeration>qsfp0_refclk0</spirit:enumeration>
-      <spirit:enumeration>qsfp1_refclk0</spirit:enumeration>
-      <spirit:enumeration>slr0_freerun_clk</spirit:enumeration>
-      <spirit:enumeration>slr1_freerun_clk</spirit:enumeration>
-    </spirit:choice>
-    <spirit:choice>
       <spirit:name>choice_list_7f3a042b</spirit:name>
       <spirit:enumeration>IBUFDS</spirit:enumeration>
       <spirit:enumeration>OBUFDS</spirit:enumeration>
@@ -6668,6 +6649,11 @@
       <spirit:enumeration>OBUFDS_GTE</spirit:enumeration>
       <spirit:enumeration>OBUFDS_GTE_ADV</spirit:enumeration>
       <spirit:enumeration>BUFG_PS</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
+      <spirit:name>choice_list_e48d1c6c</spirit:name>
+      <spirit:enumeration>Custom</spirit:enumeration>
+      <spirit:enumeration>pcie_refclk</spirit:enumeration>
     </spirit:choice>
   </spirit:choices>
   <spirit:description>Utility ip for instantiating various Buffers, such as BUFG, differential IO Buffers etc.</spirit:description>
@@ -6697,7 +6683,7 @@
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>DIFF_CLK_IN_BOARD_INTERFACE</spirit:name>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.DIFF_CLK_IN_BOARD_INTERFACE" spirit:choiceRef="choice_list_5a3035da" spirit:order="1.2">Custom</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.DIFF_CLK_IN_BOARD_INTERFACE" spirit:choiceRef="choice_list_e48d1c6c" spirit:order="1.2">Custom</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>C_BUFGCE_DIV</spirit:name>

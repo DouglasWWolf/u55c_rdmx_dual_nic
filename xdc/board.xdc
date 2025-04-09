@@ -42,7 +42,7 @@ set_clock_groups -group [get_clocks pcie1_sys_clk -include_generated_clocks] -as
 #
 # pcie reset signal from the host PC 
 #
-#set_property -dict {PACKAGE_PIN BF41  IOSTANDARD LVCMOS18} [get_ports pcie_perst_l]
+set_property -dict {PACKAGE_PIN BF41  IOSTANDARD LVCMOS18} [get_ports pcie_perst_l]
 
 
 #
