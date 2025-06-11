@@ -1,0 +1,670 @@
+//====================================================================================
+//                        ------->  Revision History  <------
+//====================================================================================
+//
+//   Date     Who   Ver  Changes
+//====================================================================================
+// 17-Mar-25  DWW     1  Initial creation
+//
+// 24-Apr-25  DWW     2  Added register comments
+//
+// 28-Apr-25  DWW     3  Changed PCI_PAUSE units from clock-cycles to microseconds
+//====================================================================================
+
+/*
+    This provides status and control registers for the rdmx_nic design
+*/
+
+
+module control # (parameter AW=8, HBM_TEMPW=7, DEFAULT_PCI_BASE = 64'h1_0000_0000, FREQ_HZ = 250000000)
+(
+
+    (* X_INTERFACE_PARAMETER = "ASSOCIATED_RESET resetn:resetn_out" *)
+    input clk,
+    
+    input resetn,
+
+    output reg[63:0] packet_count,
+    output reg       gen_packets,
+    input            generator_idle,
+
+    // While this is 1, the data-flow to the PCI bridge will be suspended
+    output pause_pci,
+
+    // These strobe high for one cycle upon the receipt of a good or bad packet
+    input bad_packet_strb, good_packet_strb,
+
+    // These indicates that "stream_to_ram" overflowed the available RAM
+    input overflow_0, overflow_1,
+
+    // If this is asserted, a catastrophic temperature failure has occured
+    input async_hbm_cattrip,
+
+    // This is the temperature of the HBM RAM, in Celsius
+    input[HBM_TEMPW-1:0] async_hbm_temp,
+
+    // This is a '1' if the QSFP port has acheived PCS alignment with the peer
+    input async_pcs_aligned,
+
+    // Strobes high if we receive a packet with an invalid RDMX target address
+    input pci_range_err_strb,
+
+    // We use this to reset the rest of the system
+    (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 resetn_out RST" *)
+    output reg resetn_out,
+
+    // When this is a '1', input packets are routed back out the QSFP port
+    output reg loopback,
+
+    // These are the high-water mark of RAM usage for each RAM bank
+    input[63:0] hwm_0, hwm_1,
+
+    // The write-throughput of the PCI bus (in cycles per second)sx
+    input[31:0] pci_throughput,
+
+    // The base address and size of the contiguous buffer in host RAM
+    output reg[63:0] pci_base, pci_size,
+
+    // Control and status for transmitting data out the QSFP
+    output reg[63:0] xmit_src_addr,
+    output reg[63:0] xmit_dst_addr,
+    output reg[63:0] xmit_byte_count,
+    output reg       xmit_start,
+    input            xmit_idle,
+
+    // We use this to monitor the output of the buffer for sequence errors
+    (* X_INTERFACE_MODE = "monitor" *)
+    input[511:0] seq_axis_tdata,
+    input        seq_axis_tvalid,
+    input        seq_axis_tlast,
+    input        seq_axis_tready,
+
+    //================== This is an AXI4-Lite slave interface ==================
+        
+    // "Specify write address"              -- Master --    -- Slave --
+    input[AW-1:0]                           S_AXI_AWADDR,   
+    input                                   S_AXI_AWVALID,  
+    output                                                  S_AXI_AWREADY,
+    input[2:0]                              S_AXI_AWPROT,
+
+    // "Write Data"                         -- Master --    -- Slave --
+    input[31:0]                             S_AXI_WDATA,      
+    input                                   S_AXI_WVALID,
+    input[3:0]                              S_AXI_WSTRB,
+    output                                                  S_AXI_WREADY,
+
+    // "Send Write Response"                -- Master --    -- Slave --
+    output[1:0]                                             S_AXI_BRESP,
+    output                                                  S_AXI_BVALID,
+    input                                   S_AXI_BREADY,
+
+    // "Specify read address"               -- Master --    -- Slave --
+    input[AW-1:0]                           S_AXI_ARADDR,     
+    input                                   S_AXI_ARVALID,
+    input[2:0]                              S_AXI_ARPROT,     
+    output                                                  S_AXI_ARREADY,
+
+    // "Read data back to master"           -- Master --    -- Slave --
+    output[31:0]                                            S_AXI_RDATA,
+    output                                                  S_AXI_RVALID,
+    output[1:0]                                             S_AXI_RRESP,
+    input                                   S_AXI_RREADY
+    //==========================================================================
+);  
+
+// This is the number of clock cycles in one microsecond
+localparam ONE_USEC = FREQ_HZ / 1000000;
+
+
+//=========================  AXI Register Map  =============================
+
+/*
+    @register Hardware related status bits
+
+    @field link_stat 1 0 RO n/a Ethernet link status
+    @field temp_ok   1 1 RO n/a HBM RAM temperature OK
+*/
+localparam REG_STATUS         =  0;
+
+
+/*
+    @register Error conditions
+
+    @field pci_range_err 1 0 RO 0 RDMX packet received with invalid target addr
+    @field overflow_0    1 1 RO 0 Internal RAM buffer 0 overflow detected
+    @field overflow_1    1 2 RO 0 Internal RAM buffer 1 overflow detected
+    @field seq_err       1 3 RO 0 Sequence error.  Not normally used.
+    @fdesc                        In normal usage, this bit is often set and is not
+    @fdesc                        an error.
+*/
+localparam REG_ERRORS         =  1;
+
+/*
+    @register Count of non-corrupt RDMX packets received 
+    @rdesc    Will be cleared by writing a 1 to either NICx_RESET or NICx_CLEAR_COUNTERS
+    @rsize    64
+    @rname    REG_GOOD_PACKETS
+*/
+localparam REG_GOOD_PACKETS_H =  2;
+localparam REG_GOOD_PACKETS_L =  3;
+
+/*
+    @register Count of corrupt RDMX packets received 
+    @rdesc    Will be cleared by writing a 1 to either NICx_RESET or NICx_CLEAR_COUNTERS    
+    @rsize    64
+    @rname    REG_BAD_PACKETS
+*/
+localparam REG_BAD_PACKETS_H  =  4;
+localparam REG_BAD_PACKETS_L  =  5;
+
+/*
+    @register  Base address in host RAM where received packets are stored
+    @rsize     64
+    @rname     REG_PCI_BASE
+*/
+localparam REG_PCI_BASE_H     =  6;
+localparam REG_PCI_BASE_L     =  7;
+
+/*
+    @register Size of the contiguous buffer in host RAM where received
+    @rdesc    packets are stored
+    @rsize    64
+    @rname    REG_PCI_SIZE
+*/
+localparam REG_PCI_SIZE_H     =  8;
+localparam REG_PCI_SIZE_L     =  9;
+
+/*
+    @register System reset.  Writing a 1 will cause a system reset.  After writing
+    @rdesc    a 1, read this register until it auto-clears to 0.  Don't write a 1 
+    @rdesc    to this register while packets are still being received
+*/
+localparam REG_RESET          = 10;
+
+/*
+    @register Writing a 1 clears the NICx_GOOD_PACKETS and NICx_BAD_PACKETS
+    @rdesc    counter.  It is safe to clear the counters at any time.
+*/
+localparam REG_CLEAR_COUNTERS = 11;
+
+/*
+    @register HBM RAM temperature in whole degress Celsius
+*/
+localparam REG_HBM_TEMP       = 12;
+
+/*
+    @register When transmitting a block of data, this is the source address in host-RAM
+    @rsize    64
+    @rname    REG_XMIT_SRCADDR
+*/
+localparam REG_XMIT_SRCADDR_H = 20;
+localparam REG_XMIT_SRCADDR_L = 21;
+
+/*
+    @register When transmitting a block of data, this is the 64-bit RDMX target address
+    @rsize    64
+    @rname    REG_XMIT_DSTADDR
+*/
+localparam REG_XMIT_DSTADDR_H = 22;
+localparam REG_XMIT_DSTADDR_L = 23;
+
+/*
+    @register When transmitting a block of data, this is the size of the data (in bytes)
+    @rsize    64
+    @rname    REG_XMIT_SIZE
+*/
+localparam REG_XMIT_SIZE_H    = 24;
+localparam REG_XMIT_SIZE_L    = 25;
+
+/*
+    @register Writing a 1 to this register begins transmission of a block of data.
+    @rdesc    This register will remain a '1' until the transmission is complete, 
+    @rdesc    at which point it will auto-clear to 0.
+*/
+localparam REG_XMIT_START     = 26;    
+
+/*
+    @register Count of packets to generate. 
+    @rdesc    ** For use by RTL engineers only **
+    @rsize    64
+    @rname    REG_PACKET_COUNT
+*/
+localparam REG_PACKET_COUNT_H = 32;
+localparam REG_PACKET_COUNT_L = 33;
+
+/*
+    @register Set this to 1 to loop all incoming packets back to the source QSFP
+    @rdesc    ** For use by RTL engineers only **
+*/
+localparam REG_LOOPBACK       = 34;
+
+
+/*
+    @register Write an integer to this register to "pause" PCI output for the
+    @rdesc    specified number of microseconds.
+    @rdesc    ** For use by RTL engineers only **
+*/
+localparam REG_PAUSE_PCI      = 35;
+
+/*
+    @register High-water mark for internal RAM bank 0
+    @rdesc    ** For use by RTL engineers only **    
+    @rsize    64
+    @rname    REG_HWMARK_0
+*/
+localparam REG_HWMARK_0H      = 36;
+localparam REG_HWMARK_0L      = 37;
+
+/*
+    @register High-water mark for internal RAM bank 1
+    @rdesc    ** For use by RTL engineers only **    
+    @rsize    64
+    @rname    REG_HWMARK_1
+
+*/
+localparam REG_HWMARK_1H      = 38;
+localparam REG_HWMARK_1L      = 39;
+
+
+/*
+    @register The current write-throughput of the PCIe interface.
+    @rdesc    The units are data-cycles/second.  A data-cycle is 64 bytes.
+    @rdesc    ** For use by RTL engineers only **        
+*/
+localparam REG_PCI_THROUGHPUT = 40;
+//==========================================================================
+
+
+//==========================================================================
+// We'll communicate with the AXI4-Lite Slave core with these signals.
+//==========================================================================
+// AXI Slave Handler Interface for write requests
+wire[31:0]  ashi_windx;     // Input   Write register-index
+wire[31:0]  ashi_waddr;     // Input:  Write-address
+wire[31:0]  ashi_wdata;     // Input:  Write-data
+wire        ashi_write;     // Input:  1 = Handle a write request
+reg[1:0]    ashi_wresp;     // Output: Write-response (OKAY, DECERR, SLVERR)
+wire        ashi_widle;     // Output: 1 = Write state machine is idle
+
+// AXI Slave Handler Interface for read requests
+wire[31:0]  ashi_rindx;     // Input   Read register-index
+wire[31:0]  ashi_raddr;     // Input:  Read-address
+wire        ashi_read;      // Input:  1 = Handle a read request
+reg[31:0]   ashi_rdata;     // Output: Read data
+reg[1:0]    ashi_rresp;     // Output: Read-response (OKAY, DECERR, SLVERR);
+wire        ashi_ridle;     // Output: 1 = Read state machine is idle
+//==========================================================================
+
+// The state of the state-machines that handle AXI4-Lite read and AXI4-Lite write
+reg ashi_write_state, ashi_read_state;
+
+// The AXI4 slave state machines are idle when in state 0 and their "start" signals are low
+assign ashi_widle = (ashi_write == 0) && (ashi_write_state == 0);
+assign ashi_ridle = (ashi_read  == 0) && (ashi_read_state  == 0);
+   
+// These are the valid values for ashi_rresp and ashi_wresp
+localparam OKAY   = 0;
+localparam SLVERR = 2;
+localparam DECERR = 3;
+
+// The address mask is 'AW' 1-bits in a row
+localparam ADDR_MASK = (1 << AW) - 1;
+
+// This will be a 1 when a sequence error of detected
+reg seq_error;
+
+// This strobes high for a cycle to clear various counters
+reg clear_counters;
+
+// Used to count-down the reset time
+reg[15:0] reset_countdown;
+
+// This is active high
+wire reset_out = (resetn == 0) | (reset_countdown != 0);
+ 
+// resetn_out is the active-low version of reset_out
+always @(posedge clk) resetn_out <= ~reset_out;
+
+// This is a '1' if the QSFP port has achieved PCS alignment with the peer
+wire pcs_aligned;
+
+// If this is non-zero, a pause of the PCI bus begins for the specified number of usecs
+reg[31:0] begin_pause_pci;
+
+// This is the temperature of the HBM RAM, in Celsius
+wire[HBM_TEMPW-1:0] hbm_temp;
+
+// If this is asserted, a catastrophic temperature failure has occured
+wire hbm_cattrip;
+
+// Is the HBM temperature within the normal operating range?
+wire temp_ok = ~hbm_cattrip;
+
+//=============================================================================
+// This block records a pci_range_error when we see the strobe
+//=============================================================================
+reg pci_range_err;
+//-----------------------------------------------------------------------------
+always @(posedge clk) begin
+    if (resetn_out == 0 || clear_counters)
+        pci_range_err <= 0;
+    else if (pci_range_err_strb)
+        pci_range_err <= 1;
+end
+//=============================================================================
+
+
+//=============================================================================
+// Count the number of good packets
+//=============================================================================
+reg[63:0] good_packets;
+//-----------------------------------------------------------------------------
+always @(posedge clk) begin
+    if (resetn_out == 0 || clear_counters)
+        good_packets <= 0;
+    else if (good_packet_strb)
+        good_packets <= good_packets + 1;
+end
+//=============================================================================
+
+
+//=============================================================================
+// Count the number of bad packets
+//=============================================================================
+reg[63:0] bad_packets;
+//-----------------------------------------------------------------------------
+always @(posedge clk) begin
+    if (resetn_out == 0 || clear_counters)
+        bad_packets <= 0;
+    else if (bad_packet_strb)
+        bad_packets <= bad_packets + 1;
+end
+//=============================================================================
+
+
+//=============================================================================
+// This block monitors for sequence errors
+//
+// When packets are generated with the built-in packet generator, the high
+// 32 bits of TDATA always contain a counter.  If any data cycle occurs where
+// that counter is wrong, it indicates that something went awry in the buffer.
+//=============================================================================
+wire[31:0] seq_data = seq_axis_tdata[64*8-1 -: 32];
+reg [31:0] seq_prior;
+//-----------------------------------------------------------------------------
+always @(posedge clk) begin
+    if (resetn_out == 0 || clear_counters)
+        seq_error <= 0;
+
+    else if (seq_axis_tvalid & seq_axis_tready) begin
+
+        if (seq_data != 0 && seq_data != (seq_prior+1))
+            seq_error <= 1;
+
+        seq_prior <= seq_data;
+
+    end
+end
+//=============================================================================
+
+
+
+//=============================================================================
+// This block counts down the number of microseconds that controls "pci_pause"
+//=============================================================================
+reg[31:0] pause_pci_usecs, pause_pci_clocks;
+//-----------------------------------------------------------------------------
+always @(posedge clk) begin
+
+    if (resetn == 0) begin
+        pause_pci_clocks <= 0;
+        pause_pci_usecs  <= 0;
+    end
+
+    else if (pause_pci_clocks)
+        pause_pci_clocks <= pause_pci_clocks - 1;
+
+    else if (pause_pci_usecs) begin        
+        pause_pci_usecs  <= pause_pci_usecs - 1;
+        pause_pci_clocks <= ONE_USEC;
+    end
+
+    if (begin_pause_pci) begin
+        pause_pci_usecs  <= begin_pause_pci - 1;
+        pause_pci_clocks <= ONE_USEC;
+    end   
+
+end
+
+// PCI output is paused while these counters are non-zero
+assign pause_pci = (pause_pci_usecs || pause_pci_clocks);
+//=============================================================================
+
+
+//==========================================================================
+// This state machine handles AXI4-Lite write requests
+//==========================================================================
+always @(posedge clk) begin
+
+    gen_packets     <= 0;
+    clear_counters  <= 0;
+    xmit_start      <= 0;
+    begin_pause_pci <= 0;
+
+    // This counts down to zero and control the duration of resetn_out
+    if (reset_countdown) reset_countdown <= reset_countdown - 1;
+
+    // If we're in reset, initialize important registers
+    if (resetn == 0) begin
+        ashi_write_state <= 0;
+        pci_base         <= DEFAULT_PCI_BASE;
+        pci_size         <= 64'h1_0000_0000;
+        xmit_src_addr    <= 64'h1_0000_0000;
+        xmit_dst_addr    <= 0;
+        xmit_byte_count  <= 64'h10_0000;
+        loopback         <= 0;
+    end
+    
+    // Otherwise, we're not in reset...
+    else case (ashi_write_state)
+        
+        // If an AXI write-request has occured...
+        0:  if (ashi_write) begin
+       
+                // Assume for the moment that the result will be OKAY
+                ashi_wresp <= OKAY;              
+            
+                // ashi_windex = index of register to be written
+                case (ashi_windx)
+               
+                    REG_PACKET_COUNT_H:
+                        begin
+                            packet_count[63:32] <= ashi_wdata;
+                        end
+
+                    REG_PACKET_COUNT_L:
+                        begin
+                            packet_count[31:00] <= ashi_wdata;
+                            gen_packets         <= 1;
+                        end
+
+                    REG_PCI_BASE_H:     pci_base[63:32] <= ashi_wdata;
+                    REG_PCI_BASE_L:     pci_base[31:00] <= ashi_wdata;                    
+                    REG_PCI_SIZE_H:     pci_size[63:32] <= ashi_wdata;
+                    REG_PCI_SIZE_L:     pci_size[31:00] <= ashi_wdata; 
+                    REG_LOOPBACK:       loopback        <= ashi_wdata;
+                    REG_RESET:          reset_countdown <= 1000;                  
+                    REG_PAUSE_PCI:      begin_pause_pci <= ashi_wdata;
+                    REG_CLEAR_COUNTERS: clear_counters  <= 1;
+
+                    REG_XMIT_SRCADDR_H: xmit_src_addr  [63:32] <= ashi_wdata;
+                    REG_XMIT_SRCADDR_L: xmit_src_addr  [31:00] <= ashi_wdata;
+                    REG_XMIT_DSTADDR_H: xmit_dst_addr  [63:32] <= ashi_wdata;
+                    REG_XMIT_DSTADDR_L: xmit_dst_addr  [31:00] <= ashi_wdata;
+                    REG_XMIT_SIZE_H:    xmit_byte_count[63:32] <= ashi_wdata;
+                    REG_XMIT_SIZE_L:    xmit_byte_count[31:00] <= ashi_wdata;
+                    REG_XMIT_START:     xmit_start             <= ashi_wdata[0];
+
+                    // Writes to any other register are a decode-error
+                    default: ashi_wresp <= DECERR;
+                endcase
+            end
+
+        // Dummy state, doesn't do anything
+        1: ashi_write_state <= 0;
+
+    endcase
+end
+//==========================================================================
+
+
+
+//==========================================================================
+// World's simplest state machine for handling AXI4-Lite read requests
+//==========================================================================
+always @(posedge clk) begin
+
+    // If we're in reset, initialize important registers
+    if (resetn == 0) begin
+        ashi_read_state <= 0;
+    
+    // If we're not in reset, and a read-request has occured...        
+    end else if (ashi_read) begin
+   
+        // Assume for the moment that the result will be OKAY
+        ashi_rresp <= OKAY;              
+        
+        // ashi_rindex = index of register to be read
+        case (ashi_rindx)
+            
+            // Allow a read from any valid register                
+            REG_PACKET_COUNT_H: ashi_rdata <= 0;
+            REG_PACKET_COUNT_L: ashi_rdata <= (generator_idle == 0);
+            REG_HWMARK_0H:      ashi_rdata <= hwm_0[63:32];
+            REG_HWMARK_0L:      ashi_rdata <= hwm_0[31:00];
+            REG_HWMARK_1H:      ashi_rdata <= hwm_1[63:32];
+            REG_HWMARK_1L:      ashi_rdata <= hwm_1[31:00];
+            REG_PCI_BASE_H:     ashi_rdata <= pci_base[63:32];
+            REG_PCI_BASE_L:     ashi_rdata <= pci_base[31:00];
+            REG_PCI_SIZE_H:     ashi_rdata <= pci_size[63:32];
+            REG_PCI_SIZE_L:     ashi_rdata <= pci_size[31:00];
+            REG_LOOPBACK:       ashi_rdata <= loopback;
+            REG_HBM_TEMP:       ashi_rdata <= hbm_temp;
+
+            REG_ERRORS:         ashi_rdata <= 
+                                {
+                                    seq_error,
+                                    overflow_1,
+                                    overflow_0,
+                                    pci_range_err                                   
+                                };
+
+            REG_RESET:          ashi_rdata <= reset_out;
+            REG_GOOD_PACKETS_H: ashi_rdata <= good_packets[63:32];
+            REG_GOOD_PACKETS_L: ashi_rdata <= good_packets[31:00];
+            REG_BAD_PACKETS_H:  ashi_rdata <= bad_packets[63:32];
+            REG_BAD_PACKETS_L:  ashi_rdata <= bad_packets[31:00];
+
+            REG_STATUS:         ashi_rdata <=
+                                {
+                                    temp_ok,
+                                    pcs_aligned
+                                };
+
+            REG_PAUSE_PCI:      ashi_rdata <= pause_pci;
+
+            REG_XMIT_SRCADDR_H: ashi_rdata <= xmit_src_addr  [63:32];
+            REG_XMIT_SRCADDR_L: ashi_rdata <= xmit_src_addr  [31:00];
+            REG_XMIT_DSTADDR_H: ashi_rdata <= xmit_dst_addr  [63:32];
+            REG_XMIT_DSTADDR_L: ashi_rdata <= xmit_dst_addr  [31:00];
+            REG_XMIT_SIZE_H:    ashi_rdata <= xmit_byte_count[63:32];
+            REG_XMIT_SIZE_L:    ashi_rdata <= xmit_byte_count[31:00];
+            REG_XMIT_START:     ashi_rdata <= (xmit_idle == 0);
+            REG_PCI_THROUGHPUT: ashi_rdata <= pci_throughput;
+
+            // Reads of any other register are a decode-error
+            default: ashi_rresp <= DECERR;
+
+        endcase
+    end
+end
+//==========================================================================
+
+
+//==========================================================================
+// These synchronize various signals into our clock domain
+//==========================================================================
+cdc_single i_sync_hbm_cattrip  (async_hbm_cattrip, clk, hbm_cattrip);
+cdc_single i_sync_pcs_alignment(async_pcs_aligned, clk, pcs_aligned);
+
+xpm_cdc_array_single #
+(
+      .DEST_SYNC_FF(4),  
+      .SRC_INPUT_REG(0), 
+      .WIDTH(HBM_TEMPW)          
+)
+i_sync_hbm_temp
+(
+    .src_in(async_hbm_temp),
+    .dest_clk(clk),
+    .dest_out(hbm_temp)    
+);
+//==========================================================================
+
+
+//==========================================================================
+// This connects us to an AXI4-Lite slave core
+//==========================================================================
+axi4_lite_slave#(ADDR_MASK) i_axi4lite_slave
+(
+    .clk            (clk),
+    .resetn         (resetn),
+    
+    // AXI AW channel
+    .AXI_AWADDR     (S_AXI_AWADDR),
+    .AXI_AWVALID    (S_AXI_AWVALID),   
+    .AXI_AWREADY    (S_AXI_AWREADY),
+    
+    // AXI W channel
+    .AXI_WDATA      (S_AXI_WDATA),
+    .AXI_WVALID     (S_AXI_WVALID),
+    .AXI_WSTRB      (S_AXI_WSTRB),
+    .AXI_WREADY     (S_AXI_WREADY),
+
+    // AXI B channel
+    .AXI_BRESP      (S_AXI_BRESP),
+    .AXI_BVALID     (S_AXI_BVALID),
+    .AXI_BREADY     (S_AXI_BREADY),
+
+    // AXI AR channel
+    .AXI_ARADDR     (S_AXI_ARADDR), 
+    .AXI_ARVALID    (S_AXI_ARVALID),
+    .AXI_ARREADY    (S_AXI_ARREADY),
+
+    // AXI R channel
+    .AXI_RDATA      (S_AXI_RDATA),
+    .AXI_RVALID     (S_AXI_RVALID),
+    .AXI_RRESP      (S_AXI_RRESP),
+    .AXI_RREADY     (S_AXI_RREADY),
+
+    // ASHI write-request registers
+    .ASHI_WADDR     (ashi_waddr),
+    .ASHI_WINDX     (ashi_windx),
+    .ASHI_WDATA     (ashi_wdata),
+    .ASHI_WRITE     (ashi_write),
+    .ASHI_WRESP     (ashi_wresp),
+    .ASHI_WIDLE     (ashi_widle),
+
+    // ASHI read registers
+    .ASHI_RADDR     (ashi_raddr),
+    .ASHI_RINDX     (ashi_rindx),
+    .ASHI_RDATA     (ashi_rdata),
+    .ASHI_READ      (ashi_read ),
+    .ASHI_RRESP     (ashi_rresp),
+    .ASHI_RIDLE     (ashi_ridle)
+);
+//==========================================================================
+
+
+
+endmodule
