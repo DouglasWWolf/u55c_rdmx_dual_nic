@@ -7,7 +7,6 @@
 //                            conversion from 2021.1 to 2024.2
 //
 //   1.2.0  08-Jun-2025  DWW  Integrated with the build system
-//                            Changed PCIe bridge access from crossbars to breakouts
 //================================================================================================
 localparam VERSION_MAJOR = 1;
 localparam VERSION_MINOR = 2;

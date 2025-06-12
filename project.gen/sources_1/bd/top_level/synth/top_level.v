@@ -2,7 +2,7 @@
 //Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2024.2 (lin64) Build 5239630 Fri Nov 08 22:34:34 MST 2024
-//Date        : Tue Jun 10 23:45:29 2025
+//Date        : Wed Jun 11 22:46:50 2025
 //Host        : wolf-super-server running 64-bit Ubuntu 20.04.6 LTS
 //Command     : generate_target top_level.bd
 //Design      : top_level
@@ -20,6 +20,7 @@ module bridge_imp_1G1UR6S
     S_AXI_arprot,
     S_AXI_arqos,
     S_AXI_arready,
+    S_AXI_arregion,
     S_AXI_arsize,
     S_AXI_arvalid,
     S_AXI_awaddr,
@@ -31,6 +32,7 @@ module bridge_imp_1G1UR6S
     S_AXI_awprot,
     S_AXI_awqos,
     S_AXI_awready,
+    S_AXI_awregion,
     S_AXI_awsize,
     S_AXI_awvalid,
     S_AXI_bid,
@@ -60,40 +62,42 @@ module bridge_imp_1G1UR6S
   input [63:0]S_AXI_araddr;
   input [1:0]S_AXI_arburst;
   input [3:0]S_AXI_arcache;
-  input [4:0]S_AXI_arid;
+  input [5:0]S_AXI_arid;
   input [7:0]S_AXI_arlen;
-  input S_AXI_arlock;
+  input [0:0]S_AXI_arlock;
   input [2:0]S_AXI_arprot;
   input [3:0]S_AXI_arqos;
-  output S_AXI_arready;
+  output [0:0]S_AXI_arready;
+  input [3:0]S_AXI_arregion;
   input [2:0]S_AXI_arsize;
-  input S_AXI_arvalid;
+  input [0:0]S_AXI_arvalid;
   input [63:0]S_AXI_awaddr;
   input [1:0]S_AXI_awburst;
   input [3:0]S_AXI_awcache;
-  input [4:0]S_AXI_awid;
+  input [5:0]S_AXI_awid;
   input [7:0]S_AXI_awlen;
-  input S_AXI_awlock;
+  input [0:0]S_AXI_awlock;
   input [2:0]S_AXI_awprot;
   input [3:0]S_AXI_awqos;
-  output S_AXI_awready;
+  output [0:0]S_AXI_awready;
+  input [3:0]S_AXI_awregion;
   input [2:0]S_AXI_awsize;
-  input S_AXI_awvalid;
-  output [4:0]S_AXI_bid;
-  input S_AXI_bready;
+  input [0:0]S_AXI_awvalid;
+  output [5:0]S_AXI_bid;
+  input [0:0]S_AXI_bready;
   output [1:0]S_AXI_bresp;
-  output S_AXI_bvalid;
+  output [0:0]S_AXI_bvalid;
   output [511:0]S_AXI_rdata;
-  output [4:0]S_AXI_rid;
-  output S_AXI_rlast;
-  input S_AXI_rready;
+  output [5:0]S_AXI_rid;
+  output [0:0]S_AXI_rlast;
+  input [0:0]S_AXI_rready;
   output [1:0]S_AXI_rresp;
-  output S_AXI_rvalid;
+  output [0:0]S_AXI_rvalid;
   input [511:0]S_AXI_wdata;
-  input S_AXI_wlast;
-  output S_AXI_wready;
+  input [0:0]S_AXI_wlast;
+  output [0:0]S_AXI_wready;
   input [63:0]S_AXI_wstrb;
-  input S_AXI_wvalid;
+  input [0:0]S_AXI_wvalid;
   input [7:0]pcie_mgt_rxn;
   input [7:0]pcie_mgt_rxp;
   output [7:0]pcie_mgt_txn;
@@ -107,40 +111,42 @@ module bridge_imp_1G1UR6S
   wire [63:0]S_AXI_araddr;
   wire [1:0]S_AXI_arburst;
   wire [3:0]S_AXI_arcache;
-  wire [4:0]S_AXI_arid;
+  wire [5:0]S_AXI_arid;
   wire [7:0]S_AXI_arlen;
-  wire S_AXI_arlock;
+  wire [0:0]S_AXI_arlock;
   wire [2:0]S_AXI_arprot;
   wire [3:0]S_AXI_arqos;
-  wire S_AXI_arready;
+  wire \^S_AXI_arready ;
+  wire [3:0]S_AXI_arregion;
   wire [2:0]S_AXI_arsize;
-  wire S_AXI_arvalid;
+  wire [0:0]S_AXI_arvalid;
   wire [63:0]S_AXI_awaddr;
   wire [1:0]S_AXI_awburst;
   wire [3:0]S_AXI_awcache;
-  wire [4:0]S_AXI_awid;
+  wire [5:0]S_AXI_awid;
   wire [7:0]S_AXI_awlen;
-  wire S_AXI_awlock;
+  wire [0:0]S_AXI_awlock;
   wire [2:0]S_AXI_awprot;
   wire [3:0]S_AXI_awqos;
-  wire S_AXI_awready;
+  wire \^S_AXI_awready ;
+  wire [3:0]S_AXI_awregion;
   wire [2:0]S_AXI_awsize;
-  wire S_AXI_awvalid;
-  wire [4:0]S_AXI_bid;
-  wire S_AXI_bready;
+  wire [0:0]S_AXI_awvalid;
+  wire [5:0]S_AXI_bid;
+  wire [0:0]S_AXI_bready;
   wire [1:0]S_AXI_bresp;
-  wire S_AXI_bvalid;
+  wire \^S_AXI_bvalid ;
   wire [511:0]S_AXI_rdata;
-  wire [4:0]S_AXI_rid;
-  wire S_AXI_rlast;
-  wire S_AXI_rready;
+  wire [5:0]S_AXI_rid;
+  wire \^S_AXI_rlast ;
+  wire [0:0]S_AXI_rready;
   wire [1:0]S_AXI_rresp;
-  wire S_AXI_rvalid;
+  wire \^S_AXI_rvalid ;
   wire [511:0]S_AXI_wdata;
-  wire S_AXI_wlast;
-  wire S_AXI_wready;
+  wire [0:0]S_AXI_wlast;
+  wire \^S_AXI_wready ;
   wire [63:0]S_AXI_wstrb;
-  wire S_AXI_wvalid;
+  wire [0:0]S_AXI_wvalid;
   wire [31:0]axi4_lite_plug_M_AXI_ARADDR;
   wire axi4_lite_plug_M_AXI_ARREADY;
   wire axi4_lite_plug_M_AXI_ARVALID;
@@ -160,7 +166,7 @@ module bridge_imp_1G1UR6S
   wire axi4_lite_plug_M_AXI_WVALID;
   wire [63:0]axi_clock_converter_M_AXI1_ARADDR;
   wire [1:0]axi_clock_converter_M_AXI1_ARBURST;
-  wire [4:0]axi_clock_converter_M_AXI1_ARID;
+  wire [5:0]axi_clock_converter_M_AXI1_ARID;
   wire [7:0]axi_clock_converter_M_AXI1_ARLEN;
   wire axi_clock_converter_M_AXI1_ARREADY;
   wire [3:0]axi_clock_converter_M_AXI1_ARREGION;
@@ -168,18 +174,18 @@ module bridge_imp_1G1UR6S
   wire axi_clock_converter_M_AXI1_ARVALID;
   wire [63:0]axi_clock_converter_M_AXI1_AWADDR;
   wire [1:0]axi_clock_converter_M_AXI1_AWBURST;
-  wire [4:0]axi_clock_converter_M_AXI1_AWID;
+  wire [5:0]axi_clock_converter_M_AXI1_AWID;
   wire [7:0]axi_clock_converter_M_AXI1_AWLEN;
   wire axi_clock_converter_M_AXI1_AWREADY;
   wire [3:0]axi_clock_converter_M_AXI1_AWREGION;
   wire [2:0]axi_clock_converter_M_AXI1_AWSIZE;
   wire axi_clock_converter_M_AXI1_AWVALID;
-  wire [4:0]axi_clock_converter_M_AXI1_BID;
+  wire [5:0]axi_clock_converter_M_AXI1_BID;
   wire axi_clock_converter_M_AXI1_BREADY;
   wire [1:0]axi_clock_converter_M_AXI1_BRESP;
   wire axi_clock_converter_M_AXI1_BVALID;
   wire [511:0]axi_clock_converter_M_AXI1_RDATA;
-  wire [4:0]axi_clock_converter_M_AXI1_RID;
+  wire [5:0]axi_clock_converter_M_AXI1_RID;
   wire axi_clock_converter_M_AXI1_RLAST;
   wire axi_clock_converter_M_AXI1_RREADY;
   wire [1:0]axi_clock_converter_M_AXI1_RRESP;
@@ -203,6 +209,12 @@ module bridge_imp_1G1UR6S
   wire [0:0]util_ds_buf_IBUF_DS_ODIV2;
   wire [0:0]util_ds_buf_IBUF_OUT;
 
+  assign S_AXI_arready[0] = \^S_AXI_arready ;
+  assign S_AXI_awready[0] = \^S_AXI_awready ;
+  assign S_AXI_bvalid[0] = \^S_AXI_bvalid ;
+  assign S_AXI_rlast[0] = \^S_AXI_rlast ;
+  assign S_AXI_rvalid[0] = \^S_AXI_rvalid ;
+  assign S_AXI_wready[0] = \^S_AXI_wready ;
   top_level_axi4_lite_plug_1 axi4_lite_plug
        (.M_AXI_ARADDR(axi4_lite_plug_M_AXI_ARADDR),
         .M_AXI_ARREADY(axi4_lite_plug_M_AXI_ARREADY),
@@ -266,8 +278,8 @@ module bridge_imp_1G1UR6S
         .s_axi_arlock(S_AXI_arlock),
         .s_axi_arprot(S_AXI_arprot),
         .s_axi_arqos(S_AXI_arqos),
-        .s_axi_arready(S_AXI_arready),
-        .s_axi_arregion({1'b0,1'b0,1'b0,1'b0}),
+        .s_axi_arready(\^S_AXI_arready ),
+        .s_axi_arregion(S_AXI_arregion),
         .s_axi_arsize(S_AXI_arsize),
         .s_axi_arvalid(S_AXI_arvalid),
         .s_axi_awaddr(S_AXI_awaddr),
@@ -278,23 +290,23 @@ module bridge_imp_1G1UR6S
         .s_axi_awlock(S_AXI_awlock),
         .s_axi_awprot(S_AXI_awprot),
         .s_axi_awqos(S_AXI_awqos),
-        .s_axi_awready(S_AXI_awready),
-        .s_axi_awregion({1'b0,1'b0,1'b0,1'b0}),
+        .s_axi_awready(\^S_AXI_awready ),
+        .s_axi_awregion(S_AXI_awregion),
         .s_axi_awsize(S_AXI_awsize),
         .s_axi_awvalid(S_AXI_awvalid),
         .s_axi_bid(S_AXI_bid),
         .s_axi_bready(S_AXI_bready),
         .s_axi_bresp(S_AXI_bresp),
-        .s_axi_bvalid(S_AXI_bvalid),
+        .s_axi_bvalid(\^S_AXI_bvalid ),
         .s_axi_rdata(S_AXI_rdata),
         .s_axi_rid(S_AXI_rid),
-        .s_axi_rlast(S_AXI_rlast),
+        .s_axi_rlast(\^S_AXI_rlast ),
         .s_axi_rready(S_AXI_rready),
         .s_axi_rresp(S_AXI_rresp),
-        .s_axi_rvalid(S_AXI_rvalid),
+        .s_axi_rvalid(\^S_AXI_rvalid ),
         .s_axi_wdata(S_AXI_wdata),
         .s_axi_wlast(S_AXI_wlast),
-        .s_axi_wready(S_AXI_wready),
+        .s_axi_wready(\^S_AXI_wready ),
         .s_axi_wstrb(S_AXI_wstrb),
         .s_axi_wvalid(S_AXI_wvalid));
   top_level_pcie_bridge_1 pcie_bridge
@@ -406,6 +418,7 @@ module bridge_imp_GAQWW3
     S_AXI_B_arid,
     S_AXI_B_arlen,
     S_AXI_B_arready,
+    S_AXI_B_arregion,
     S_AXI_B_arsize,
     S_AXI_B_arvalid,
     S_AXI_B_awaddr,
@@ -413,6 +426,7 @@ module bridge_imp_GAQWW3
     S_AXI_B_awid,
     S_AXI_B_awlen,
     S_AXI_B_awready,
+    S_AXI_B_awregion,
     S_AXI_B_awsize,
     S_AXI_B_awvalid,
     S_AXI_B_bid,
@@ -476,33 +490,35 @@ module bridge_imp_GAQWW3
   output [0:0]M_AXI_B_wvalid;
   input [63:0]S_AXI_B_araddr;
   input [1:0]S_AXI_B_arburst;
-  input [4:0]S_AXI_B_arid;
+  input [5:0]S_AXI_B_arid;
   input [7:0]S_AXI_B_arlen;
-  output S_AXI_B_arready;
+  output [0:0]S_AXI_B_arready;
+  input [3:0]S_AXI_B_arregion;
   input [2:0]S_AXI_B_arsize;
-  input S_AXI_B_arvalid;
+  input [0:0]S_AXI_B_arvalid;
   input [63:0]S_AXI_B_awaddr;
   input [1:0]S_AXI_B_awburst;
-  input [4:0]S_AXI_B_awid;
+  input [5:0]S_AXI_B_awid;
   input [7:0]S_AXI_B_awlen;
-  output S_AXI_B_awready;
+  output [0:0]S_AXI_B_awready;
+  input [3:0]S_AXI_B_awregion;
   input [2:0]S_AXI_B_awsize;
-  input S_AXI_B_awvalid;
-  output [4:0]S_AXI_B_bid;
-  input S_AXI_B_bready;
+  input [0:0]S_AXI_B_awvalid;
+  output [5:0]S_AXI_B_bid;
+  input [0:0]S_AXI_B_bready;
   output [1:0]S_AXI_B_bresp;
-  output S_AXI_B_bvalid;
+  output [0:0]S_AXI_B_bvalid;
   output [511:0]S_AXI_B_rdata;
-  output [4:0]S_AXI_B_rid;
-  output S_AXI_B_rlast;
-  input S_AXI_B_rready;
+  output [5:0]S_AXI_B_rid;
+  output [0:0]S_AXI_B_rlast;
+  input [0:0]S_AXI_B_rready;
   output [1:0]S_AXI_B_rresp;
-  output S_AXI_B_rvalid;
+  output [0:0]S_AXI_B_rvalid;
   input [511:0]S_AXI_B_wdata;
-  input S_AXI_B_wlast;
-  output S_AXI_B_wready;
+  input [0:0]S_AXI_B_wlast;
+  output [0:0]S_AXI_B_wready;
   input [63:0]S_AXI_B_wstrb;
-  input S_AXI_B_wvalid;
+  input [0:0]S_AXI_B_wvalid;
   output axi_aclk;
   output axi_aresetn;
   input [7:0]pcie0_mgt_rxn;
@@ -550,33 +566,35 @@ module bridge_imp_GAQWW3
   wire \^M_AXI_B_wvalid ;
   wire [63:0]S_AXI_B_araddr;
   wire [1:0]S_AXI_B_arburst;
-  wire [4:0]S_AXI_B_arid;
+  wire [5:0]S_AXI_B_arid;
   wire [7:0]S_AXI_B_arlen;
-  wire S_AXI_B_arready;
+  wire \^S_AXI_B_arready ;
+  wire [3:0]S_AXI_B_arregion;
   wire [2:0]S_AXI_B_arsize;
-  wire S_AXI_B_arvalid;
+  wire [0:0]S_AXI_B_arvalid;
   wire [63:0]S_AXI_B_awaddr;
   wire [1:0]S_AXI_B_awburst;
-  wire [4:0]S_AXI_B_awid;
+  wire [5:0]S_AXI_B_awid;
   wire [7:0]S_AXI_B_awlen;
-  wire S_AXI_B_awready;
+  wire \^S_AXI_B_awready ;
+  wire [3:0]S_AXI_B_awregion;
   wire [2:0]S_AXI_B_awsize;
-  wire S_AXI_B_awvalid;
-  wire [4:0]S_AXI_B_bid;
-  wire S_AXI_B_bready;
+  wire [0:0]S_AXI_B_awvalid;
+  wire [5:0]S_AXI_B_bid;
+  wire [0:0]S_AXI_B_bready;
   wire [1:0]S_AXI_B_bresp;
-  wire S_AXI_B_bvalid;
+  wire \^S_AXI_B_bvalid ;
   wire [511:0]S_AXI_B_rdata;
-  wire [4:0]S_AXI_B_rid;
-  wire S_AXI_B_rlast;
-  wire S_AXI_B_rready;
+  wire [5:0]S_AXI_B_rid;
+  wire \^S_AXI_B_rlast ;
+  wire [0:0]S_AXI_B_rready;
   wire [1:0]S_AXI_B_rresp;
-  wire S_AXI_B_rvalid;
+  wire \^S_AXI_B_rvalid ;
   wire [511:0]S_AXI_B_wdata;
-  wire S_AXI_B_wlast;
-  wire S_AXI_B_wready;
+  wire [0:0]S_AXI_B_wlast;
+  wire \^S_AXI_B_wready ;
   wire [63:0]S_AXI_B_wstrb;
-  wire S_AXI_B_wvalid;
+  wire [0:0]S_AXI_B_wvalid;
   wire [31:0]axi4_lite_plug_M_AXI_ARADDR;
   wire axi4_lite_plug_M_AXI_ARREADY;
   wire axi4_lite_plug_M_AXI_ARVALID;
@@ -620,6 +638,12 @@ module bridge_imp_GAQWW3
   assign M_AXI_B_wlast[0] = \^M_AXI_B_wlast ;
   assign M_AXI_B_wstrb = \^M_AXI_B_wstrb [0];
   assign M_AXI_B_wvalid[0] = \^M_AXI_B_wvalid ;
+  assign S_AXI_B_arready[0] = \^S_AXI_B_arready ;
+  assign S_AXI_B_awready[0] = \^S_AXI_B_awready ;
+  assign S_AXI_B_bvalid[0] = \^S_AXI_B_bvalid ;
+  assign S_AXI_B_rlast[0] = \^S_AXI_B_rlast ;
+  assign S_AXI_B_rvalid[0] = \^S_AXI_B_rvalid ;
+  assign S_AXI_B_wready[0] = \^S_AXI_B_wready ;
   top_level_axi4_lite_plug_0_0 axi4_lite_plug
        (.M_AXI_ARADDR(axi4_lite_plug_M_AXI_ARADDR),
         .M_AXI_ARREADY(axi4_lite_plug_M_AXI_ARREADY),
@@ -685,31 +709,31 @@ module bridge_imp_GAQWW3
         .s_axib_arburst(S_AXI_B_arburst),
         .s_axib_arid(S_AXI_B_arid),
         .s_axib_arlen(S_AXI_B_arlen),
-        .s_axib_arready(S_AXI_B_arready),
-        .s_axib_arregion({1'b0,1'b0,1'b0,1'b0}),
+        .s_axib_arready(\^S_AXI_B_arready ),
+        .s_axib_arregion(S_AXI_B_arregion),
         .s_axib_arsize(S_AXI_B_arsize),
         .s_axib_arvalid(S_AXI_B_arvalid),
         .s_axib_awaddr(S_AXI_B_awaddr),
         .s_axib_awburst(S_AXI_B_awburst),
         .s_axib_awid(S_AXI_B_awid),
         .s_axib_awlen(S_AXI_B_awlen),
-        .s_axib_awready(S_AXI_B_awready),
-        .s_axib_awregion({1'b0,1'b0,1'b0,1'b0}),
+        .s_axib_awready(\^S_AXI_B_awready ),
+        .s_axib_awregion(S_AXI_B_awregion),
         .s_axib_awsize(S_AXI_B_awsize),
         .s_axib_awvalid(S_AXI_B_awvalid),
         .s_axib_bid(S_AXI_B_bid),
         .s_axib_bready(S_AXI_B_bready),
         .s_axib_bresp(S_AXI_B_bresp),
-        .s_axib_bvalid(S_AXI_B_bvalid),
+        .s_axib_bvalid(\^S_AXI_B_bvalid ),
         .s_axib_rdata(S_AXI_B_rdata),
         .s_axib_rid(S_AXI_B_rid),
-        .s_axib_rlast(S_AXI_B_rlast),
+        .s_axib_rlast(\^S_AXI_B_rlast ),
         .s_axib_rready(S_AXI_B_rready),
         .s_axib_rresp(S_AXI_B_rresp),
-        .s_axib_rvalid(S_AXI_B_rvalid),
+        .s_axib_rvalid(\^S_AXI_B_rvalid ),
         .s_axib_wdata(S_AXI_B_wdata),
         .s_axib_wlast(S_AXI_B_wlast),
-        .s_axib_wready(S_AXI_B_wready),
+        .s_axib_wready(\^S_AXI_B_wready ),
         .s_axib_wstrb(S_AXI_B_wstrb),
         .s_axib_wvalid(S_AXI_B_wvalid),
         .s_axil_araddr(axi4_lite_plug_M_AXI_ARADDR),
@@ -5979,7 +6003,7 @@ module pcie0_bridge_imp_XR3943
   wire S_AXI_ABM_arlock;
   wire [2:0]S_AXI_ABM_arprot;
   wire [3:0]S_AXI_ABM_arqos;
-  wire S_AXI_ABM_arready;
+  wire [1:1]\^S_AXI_ABM_arready ;
   wire [2:0]S_AXI_ABM_arsize;
   wire S_AXI_ABM_arvalid;
   wire [63:0]S_AXI_ABM_awaddr;
@@ -5990,60 +6014,62 @@ module pcie0_bridge_imp_XR3943
   wire S_AXI_ABM_awlock;
   wire [2:0]S_AXI_ABM_awprot;
   wire [3:0]S_AXI_ABM_awqos;
-  wire S_AXI_ABM_awready;
+  wire [1:1]\^S_AXI_ABM_awready ;
   wire [2:0]S_AXI_ABM_awsize;
   wire S_AXI_ABM_awvalid;
   wire S_AXI_ABM_bready;
-  wire [1:0]S_AXI_ABM_bresp;
-  wire S_AXI_ABM_bvalid;
-  wire [511:0]S_AXI_ABM_rdata;
-  wire S_AXI_ABM_rlast;
+  wire [3:2]\^S_AXI_ABM_bresp ;
+  wire [1:1]\^S_AXI_ABM_bvalid ;
+  wire [1023:512]\^S_AXI_ABM_rdata ;
+  wire [1:1]\^S_AXI_ABM_rlast ;
   wire S_AXI_ABM_rready;
-  wire [1:0]S_AXI_ABM_rresp;
-  wire S_AXI_ABM_rvalid;
+  wire [3:2]\^S_AXI_ABM_rresp ;
+  wire [1:1]\^S_AXI_ABM_rvalid ;
   wire [511:0]S_AXI_ABM_wdata;
   wire S_AXI_ABM_wlast;
-  wire S_AXI_ABM_wready;
+  wire [1:1]\^S_AXI_ABM_wready ;
   wire [63:0]S_AXI_ABM_wstrb;
   wire S_AXI_ABM_wvalid;
   wire axi_aresetn;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARADDR" *) (* DONT_TOUCH *) wire [63:0]axi_crossbar_0_M00_AXI_ARADDR;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARBURST" *) (* DONT_TOUCH *) wire [1:0]axi_crossbar_0_M00_AXI_ARBURST;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARCACHE" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_ARCACHE;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARID" *) (* DONT_TOUCH *) wire [4:0]axi_crossbar_0_M00_AXI_ARID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARID" *) (* DONT_TOUCH *) wire [5:0]axi_crossbar_0_M00_AXI_ARID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARLEN" *) (* DONT_TOUCH *) wire [7:0]axi_crossbar_0_M00_AXI_ARLEN;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARLOCK" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_ARLOCK;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARLOCK" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_ARLOCK;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARPROT" *) (* DONT_TOUCH *) wire [2:0]axi_crossbar_0_M00_AXI_ARPROT;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARQOS" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_ARQOS;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_ARREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_ARREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARREGION" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_ARREGION;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARSIZE" *) (* DONT_TOUCH *) wire [2:0]axi_crossbar_0_M00_AXI_ARSIZE;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_ARVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_ARVALID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWADDR" *) (* DONT_TOUCH *) wire [63:0]axi_crossbar_0_M00_AXI_AWADDR;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWBURST" *) (* DONT_TOUCH *) wire [1:0]axi_crossbar_0_M00_AXI_AWBURST;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWCACHE" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_AWCACHE;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWID" *) (* DONT_TOUCH *) wire [4:0]axi_crossbar_0_M00_AXI_AWID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWID" *) (* DONT_TOUCH *) wire [5:0]axi_crossbar_0_M00_AXI_AWID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWLEN" *) (* DONT_TOUCH *) wire [7:0]axi_crossbar_0_M00_AXI_AWLEN;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWLOCK" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_AWLOCK;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWLOCK" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_AWLOCK;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWPROT" *) (* DONT_TOUCH *) wire [2:0]axi_crossbar_0_M00_AXI_AWPROT;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWQOS" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_AWQOS;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_AWREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_AWREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWREGION" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_AWREGION;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWSIZE" *) (* DONT_TOUCH *) wire [2:0]axi_crossbar_0_M00_AXI_AWSIZE;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_AWVALID;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BID" *) (* DONT_TOUCH *) wire [4:0]axi_crossbar_0_M00_AXI_BID;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_BREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_AWVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BID" *) (* DONT_TOUCH *) wire [5:0]axi_crossbar_0_M00_AXI_BID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_BREADY;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BRESP" *) (* DONT_TOUCH *) wire [1:0]axi_crossbar_0_M00_AXI_BRESP;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_BVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_BVALID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RDATA" *) (* DONT_TOUCH *) wire [511:0]axi_crossbar_0_M00_AXI_RDATA;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RID" *) (* DONT_TOUCH *) wire [4:0]axi_crossbar_0_M00_AXI_RID;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RLAST" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_RLAST;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_RREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RID" *) (* DONT_TOUCH *) wire [5:0]axi_crossbar_0_M00_AXI_RID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RLAST" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_RLAST;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_RREADY;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RRESP" *) (* DONT_TOUCH *) wire [1:0]axi_crossbar_0_M00_AXI_RRESP;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_RVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_RVALID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WDATA" *) (* DONT_TOUCH *) wire [511:0]axi_crossbar_0_M00_AXI_WDATA;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WLAST" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_WLAST;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_WREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WLAST" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_WLAST;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_WREADY;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WSTRB" *) (* DONT_TOUCH *) wire [63:0]axi_crossbar_0_M00_AXI_WSTRB;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_WVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_WVALID;
   wire [511:0]axis_register_slice_M_AXIS_TDATA;
   wire axis_register_slice_M_AXIS_TLAST;
   wire axis_register_slice_M_AXIS_TREADY;
@@ -6073,7 +6099,7 @@ module pcie0_bridge_imp_XR3943
   wire rdmx_to_pci_M_AXI_ARLOCK;
   wire [2:0]rdmx_to_pci_M_AXI_ARPROT;
   wire [3:0]rdmx_to_pci_M_AXI_ARQOS;
-  wire rdmx_to_pci_M_AXI_ARREADY;
+  wire [0:0]rdmx_to_pci_M_AXI_ARREADY;
   wire [2:0]rdmx_to_pci_M_AXI_ARSIZE;
   wire rdmx_to_pci_M_AXI_ARVALID;
   wire [63:0]rdmx_to_pci_M_AXI_AWADDR;
@@ -6084,132 +6110,111 @@ module pcie0_bridge_imp_XR3943
   wire rdmx_to_pci_M_AXI_AWLOCK;
   wire [2:0]rdmx_to_pci_M_AXI_AWPROT;
   wire [3:0]rdmx_to_pci_M_AXI_AWQOS;
-  wire rdmx_to_pci_M_AXI_AWREADY;
+  wire [0:0]rdmx_to_pci_M_AXI_AWREADY;
   wire [2:0]rdmx_to_pci_M_AXI_AWSIZE;
   wire rdmx_to_pci_M_AXI_AWVALID;
   wire rdmx_to_pci_M_AXI_BREADY;
   wire [1:0]rdmx_to_pci_M_AXI_BRESP;
-  wire rdmx_to_pci_M_AXI_BVALID;
+  wire [0:0]rdmx_to_pci_M_AXI_BVALID;
   wire [511:0]rdmx_to_pci_M_AXI_RDATA;
-  wire rdmx_to_pci_M_AXI_RLAST;
+  wire [0:0]rdmx_to_pci_M_AXI_RLAST;
   wire rdmx_to_pci_M_AXI_RREADY;
   wire [1:0]rdmx_to_pci_M_AXI_RRESP;
-  wire rdmx_to_pci_M_AXI_RVALID;
+  wire [0:0]rdmx_to_pci_M_AXI_RVALID;
   wire [511:0]rdmx_to_pci_M_AXI_WDATA;
   wire rdmx_to_pci_M_AXI_WLAST;
-  wire rdmx_to_pci_M_AXI_WREADY;
+  wire [0:0]rdmx_to_pci_M_AXI_WREADY;
   wire [63:0]rdmx_to_pci_M_AXI_WSTRB;
   wire rdmx_to_pci_M_AXI_WVALID;
   wire resetn_in;
 
+  assign S_AXI_ABM_arready = \^S_AXI_ABM_arready [1];
+  assign S_AXI_ABM_awready = \^S_AXI_ABM_awready [1];
+  assign S_AXI_ABM_bresp[1:0] = \^S_AXI_ABM_bresp [3:2];
+  assign S_AXI_ABM_bvalid = \^S_AXI_ABM_bvalid [1];
+  assign S_AXI_ABM_rdata[511:0] = \^S_AXI_ABM_rdata [1023:512];
+  assign S_AXI_ABM_rlast = \^S_AXI_ABM_rlast [1];
+  assign S_AXI_ABM_rresp[1:0] = \^S_AXI_ABM_rresp [3:2];
+  assign S_AXI_ABM_rvalid = \^S_AXI_ABM_rvalid [1];
+  assign S_AXI_ABM_wready = \^S_AXI_ABM_wready [1];
   assign axi_aclk = pcie_bridge_axi_aclk;
-  top_level_axi4_breakout_0_3 axi4_breakout
-       (.M_AXI_ARADDR(axi_crossbar_0_M00_AXI_ARADDR),
-        .M_AXI_ARBURST(axi_crossbar_0_M00_AXI_ARBURST),
-        .M_AXI_ARCACHE(axi_crossbar_0_M00_AXI_ARCACHE),
-        .M_AXI_ARID(axi_crossbar_0_M00_AXI_ARID),
-        .M_AXI_ARLEN(axi_crossbar_0_M00_AXI_ARLEN),
-        .M_AXI_ARLOCK(axi_crossbar_0_M00_AXI_ARLOCK),
-        .M_AXI_ARPROT(axi_crossbar_0_M00_AXI_ARPROT),
-        .M_AXI_ARQOS(axi_crossbar_0_M00_AXI_ARQOS),
-        .M_AXI_ARREADY(axi_crossbar_0_M00_AXI_ARREADY),
-        .M_AXI_ARSIZE(axi_crossbar_0_M00_AXI_ARSIZE),
-        .M_AXI_ARVALID(axi_crossbar_0_M00_AXI_ARVALID),
-        .M_AXI_AWADDR(axi_crossbar_0_M00_AXI_AWADDR),
-        .M_AXI_AWBURST(axi_crossbar_0_M00_AXI_AWBURST),
-        .M_AXI_AWCACHE(axi_crossbar_0_M00_AXI_AWCACHE),
-        .M_AXI_AWID(axi_crossbar_0_M00_AXI_AWID),
-        .M_AXI_AWLEN(axi_crossbar_0_M00_AXI_AWLEN),
-        .M_AXI_AWLOCK(axi_crossbar_0_M00_AXI_AWLOCK),
-        .M_AXI_AWPROT(axi_crossbar_0_M00_AXI_AWPROT),
-        .M_AXI_AWQOS(axi_crossbar_0_M00_AXI_AWQOS),
-        .M_AXI_AWREADY(axi_crossbar_0_M00_AXI_AWREADY),
-        .M_AXI_AWSIZE(axi_crossbar_0_M00_AXI_AWSIZE),
-        .M_AXI_AWVALID(axi_crossbar_0_M00_AXI_AWVALID),
-        .M_AXI_BREADY(axi_crossbar_0_M00_AXI_BREADY),
-        .M_AXI_BRESP(axi_crossbar_0_M00_AXI_BRESP),
-        .M_AXI_BVALID(axi_crossbar_0_M00_AXI_BVALID),
-        .M_AXI_RDATA(axi_crossbar_0_M00_AXI_RDATA),
-        .M_AXI_RLAST(axi_crossbar_0_M00_AXI_RLAST),
-        .M_AXI_RREADY(axi_crossbar_0_M00_AXI_RREADY),
-        .M_AXI_RRESP(axi_crossbar_0_M00_AXI_RRESP),
-        .M_AXI_RVALID(axi_crossbar_0_M00_AXI_RVALID),
-        .M_AXI_WDATA(axi_crossbar_0_M00_AXI_WDATA),
-        .M_AXI_WLAST(axi_crossbar_0_M00_AXI_WLAST),
-        .M_AXI_WREADY(axi_crossbar_0_M00_AXI_WREADY),
-        .M_AXI_WSTRB(axi_crossbar_0_M00_AXI_WSTRB),
-        .M_AXI_WVALID(axi_crossbar_0_M00_AXI_WVALID),
-        .S_RD_ARADDR(S_AXI_ABM_araddr),
-        .S_RD_ARBURST(S_AXI_ABM_arburst),
-        .S_RD_ARCACHE(S_AXI_ABM_arcache),
-        .S_RD_ARID(S_AXI_ABM_arid),
-        .S_RD_ARLEN(S_AXI_ABM_arlen),
-        .S_RD_ARLOCK(S_AXI_ABM_arlock),
-        .S_RD_ARPROT(S_AXI_ABM_arprot),
-        .S_RD_ARQOS(S_AXI_ABM_arqos),
-        .S_RD_ARREADY(S_AXI_ABM_arready),
-        .S_RD_ARSIZE(S_AXI_ABM_arsize),
-        .S_RD_ARVALID(S_AXI_ABM_arvalid),
-        .S_RD_AWADDR(S_AXI_ABM_awaddr),
-        .S_RD_AWBURST(S_AXI_ABM_awburst),
-        .S_RD_AWCACHE(S_AXI_ABM_awcache),
-        .S_RD_AWID(S_AXI_ABM_awid),
-        .S_RD_AWLEN(S_AXI_ABM_awlen),
-        .S_RD_AWLOCK(S_AXI_ABM_awlock),
-        .S_RD_AWPROT(S_AXI_ABM_awprot),
-        .S_RD_AWQOS(S_AXI_ABM_awqos),
-        .S_RD_AWREADY(S_AXI_ABM_awready),
-        .S_RD_AWSIZE(S_AXI_ABM_awsize),
-        .S_RD_AWVALID(S_AXI_ABM_awvalid),
-        .S_RD_BREADY(S_AXI_ABM_bready),
-        .S_RD_BRESP(S_AXI_ABM_bresp),
-        .S_RD_BVALID(S_AXI_ABM_bvalid),
-        .S_RD_RDATA(S_AXI_ABM_rdata),
-        .S_RD_RLAST(S_AXI_ABM_rlast),
-        .S_RD_RREADY(S_AXI_ABM_rready),
-        .S_RD_RRESP(S_AXI_ABM_rresp),
-        .S_RD_RVALID(S_AXI_ABM_rvalid),
-        .S_RD_WDATA(S_AXI_ABM_wdata),
-        .S_RD_WLAST(S_AXI_ABM_wlast),
-        .S_RD_WREADY(S_AXI_ABM_wready),
-        .S_RD_WSTRB(S_AXI_ABM_wstrb),
-        .S_RD_WVALID(S_AXI_ABM_wvalid),
-        .S_WR_ARADDR(rdmx_to_pci_M_AXI_ARADDR),
-        .S_WR_ARBURST(rdmx_to_pci_M_AXI_ARBURST),
-        .S_WR_ARCACHE(rdmx_to_pci_M_AXI_ARCACHE),
-        .S_WR_ARID({1'b0,rdmx_to_pci_M_AXI_ARID}),
-        .S_WR_ARLEN(rdmx_to_pci_M_AXI_ARLEN),
-        .S_WR_ARLOCK(rdmx_to_pci_M_AXI_ARLOCK),
-        .S_WR_ARPROT(rdmx_to_pci_M_AXI_ARPROT),
-        .S_WR_ARQOS(rdmx_to_pci_M_AXI_ARQOS),
-        .S_WR_ARREADY(rdmx_to_pci_M_AXI_ARREADY),
-        .S_WR_ARSIZE(rdmx_to_pci_M_AXI_ARSIZE),
-        .S_WR_ARVALID(rdmx_to_pci_M_AXI_ARVALID),
-        .S_WR_AWADDR(rdmx_to_pci_M_AXI_AWADDR),
-        .S_WR_AWBURST(rdmx_to_pci_M_AXI_AWBURST),
-        .S_WR_AWCACHE(rdmx_to_pci_M_AXI_AWCACHE),
-        .S_WR_AWID({1'b0,rdmx_to_pci_M_AXI_AWID}),
-        .S_WR_AWLEN(rdmx_to_pci_M_AXI_AWLEN),
-        .S_WR_AWLOCK(rdmx_to_pci_M_AXI_AWLOCK),
-        .S_WR_AWPROT(rdmx_to_pci_M_AXI_AWPROT),
-        .S_WR_AWQOS(rdmx_to_pci_M_AXI_AWQOS),
-        .S_WR_AWREADY(rdmx_to_pci_M_AXI_AWREADY),
-        .S_WR_AWSIZE(rdmx_to_pci_M_AXI_AWSIZE),
-        .S_WR_AWVALID(rdmx_to_pci_M_AXI_AWVALID),
-        .S_WR_BREADY(rdmx_to_pci_M_AXI_BREADY),
-        .S_WR_BRESP(rdmx_to_pci_M_AXI_BRESP),
-        .S_WR_BVALID(rdmx_to_pci_M_AXI_BVALID),
-        .S_WR_RDATA(rdmx_to_pci_M_AXI_RDATA),
-        .S_WR_RLAST(rdmx_to_pci_M_AXI_RLAST),
-        .S_WR_RREADY(rdmx_to_pci_M_AXI_RREADY),
-        .S_WR_RRESP(rdmx_to_pci_M_AXI_RRESP),
-        .S_WR_RVALID(rdmx_to_pci_M_AXI_RVALID),
-        .S_WR_WDATA(rdmx_to_pci_M_AXI_WDATA),
-        .S_WR_WLAST(rdmx_to_pci_M_AXI_WLAST),
-        .S_WR_WREADY(rdmx_to_pci_M_AXI_WREADY),
-        .S_WR_WSTRB(rdmx_to_pci_M_AXI_WSTRB),
-        .S_WR_WVALID(rdmx_to_pci_M_AXI_WVALID),
-        .clk(pcie_bridge_axi_aclk));
+  top_level_axi_crossbar_0_0 axi_crossbar
+       (.aclk(pcie_bridge_axi_aclk),
+        .aresetn(resetn_in),
+        .m_axi_araddr(axi_crossbar_0_M00_AXI_ARADDR),
+        .m_axi_arburst(axi_crossbar_0_M00_AXI_ARBURST),
+        .m_axi_arcache(axi_crossbar_0_M00_AXI_ARCACHE),
+        .m_axi_arid(axi_crossbar_0_M00_AXI_ARID),
+        .m_axi_arlen(axi_crossbar_0_M00_AXI_ARLEN),
+        .m_axi_arlock(axi_crossbar_0_M00_AXI_ARLOCK),
+        .m_axi_arprot(axi_crossbar_0_M00_AXI_ARPROT),
+        .m_axi_arqos(axi_crossbar_0_M00_AXI_ARQOS),
+        .m_axi_arready(axi_crossbar_0_M00_AXI_ARREADY),
+        .m_axi_arregion(axi_crossbar_0_M00_AXI_ARREGION),
+        .m_axi_arsize(axi_crossbar_0_M00_AXI_ARSIZE),
+        .m_axi_arvalid(axi_crossbar_0_M00_AXI_ARVALID),
+        .m_axi_awaddr(axi_crossbar_0_M00_AXI_AWADDR),
+        .m_axi_awburst(axi_crossbar_0_M00_AXI_AWBURST),
+        .m_axi_awcache(axi_crossbar_0_M00_AXI_AWCACHE),
+        .m_axi_awid(axi_crossbar_0_M00_AXI_AWID),
+        .m_axi_awlen(axi_crossbar_0_M00_AXI_AWLEN),
+        .m_axi_awlock(axi_crossbar_0_M00_AXI_AWLOCK),
+        .m_axi_awprot(axi_crossbar_0_M00_AXI_AWPROT),
+        .m_axi_awqos(axi_crossbar_0_M00_AXI_AWQOS),
+        .m_axi_awready(axi_crossbar_0_M00_AXI_AWREADY),
+        .m_axi_awregion(axi_crossbar_0_M00_AXI_AWREGION),
+        .m_axi_awsize(axi_crossbar_0_M00_AXI_AWSIZE),
+        .m_axi_awvalid(axi_crossbar_0_M00_AXI_AWVALID),
+        .m_axi_bid(axi_crossbar_0_M00_AXI_BID),
+        .m_axi_bready(axi_crossbar_0_M00_AXI_BREADY),
+        .m_axi_bresp(axi_crossbar_0_M00_AXI_BRESP),
+        .m_axi_bvalid(axi_crossbar_0_M00_AXI_BVALID),
+        .m_axi_rdata(axi_crossbar_0_M00_AXI_RDATA),
+        .m_axi_rid(axi_crossbar_0_M00_AXI_RID),
+        .m_axi_rlast(axi_crossbar_0_M00_AXI_RLAST),
+        .m_axi_rready(axi_crossbar_0_M00_AXI_RREADY),
+        .m_axi_rresp(axi_crossbar_0_M00_AXI_RRESP),
+        .m_axi_rvalid(axi_crossbar_0_M00_AXI_RVALID),
+        .m_axi_wdata(axi_crossbar_0_M00_AXI_WDATA),
+        .m_axi_wlast(axi_crossbar_0_M00_AXI_WLAST),
+        .m_axi_wready(axi_crossbar_0_M00_AXI_WREADY),
+        .m_axi_wstrb(axi_crossbar_0_M00_AXI_WSTRB),
+        .m_axi_wvalid(axi_crossbar_0_M00_AXI_WVALID),
+        .s_axi_araddr({S_AXI_ABM_araddr,rdmx_to_pci_M_AXI_ARADDR}),
+        .s_axi_arburst({S_AXI_ABM_arburst,rdmx_to_pci_M_AXI_ARBURST}),
+        .s_axi_arcache({S_AXI_ABM_arcache,rdmx_to_pci_M_AXI_ARCACHE}),
+        .s_axi_arid({1'b0,S_AXI_ABM_arid,1'b0,1'b0,rdmx_to_pci_M_AXI_ARID}),
+        .s_axi_arlen({S_AXI_ABM_arlen,rdmx_to_pci_M_AXI_ARLEN}),
+        .s_axi_arlock({S_AXI_ABM_arlock,rdmx_to_pci_M_AXI_ARLOCK}),
+        .s_axi_arprot({S_AXI_ABM_arprot,rdmx_to_pci_M_AXI_ARPROT}),
+        .s_axi_arqos({S_AXI_ABM_arqos,rdmx_to_pci_M_AXI_ARQOS}),
+        .s_axi_arready({\^S_AXI_ABM_arready ,rdmx_to_pci_M_AXI_ARREADY}),
+        .s_axi_arsize({S_AXI_ABM_arsize,rdmx_to_pci_M_AXI_ARSIZE}),
+        .s_axi_arvalid({S_AXI_ABM_arvalid,rdmx_to_pci_M_AXI_ARVALID}),
+        .s_axi_awaddr({S_AXI_ABM_awaddr,rdmx_to_pci_M_AXI_AWADDR}),
+        .s_axi_awburst({S_AXI_ABM_awburst,rdmx_to_pci_M_AXI_AWBURST}),
+        .s_axi_awcache({S_AXI_ABM_awcache,rdmx_to_pci_M_AXI_AWCACHE}),
+        .s_axi_awid({1'b0,S_AXI_ABM_awid,1'b0,1'b0,rdmx_to_pci_M_AXI_AWID}),
+        .s_axi_awlen({S_AXI_ABM_awlen,rdmx_to_pci_M_AXI_AWLEN}),
+        .s_axi_awlock({S_AXI_ABM_awlock,rdmx_to_pci_M_AXI_AWLOCK}),
+        .s_axi_awprot({S_AXI_ABM_awprot,rdmx_to_pci_M_AXI_AWPROT}),
+        .s_axi_awqos({S_AXI_ABM_awqos,rdmx_to_pci_M_AXI_AWQOS}),
+        .s_axi_awready({\^S_AXI_ABM_awready ,rdmx_to_pci_M_AXI_AWREADY}),
+        .s_axi_awsize({S_AXI_ABM_awsize,rdmx_to_pci_M_AXI_AWSIZE}),
+        .s_axi_awvalid({S_AXI_ABM_awvalid,rdmx_to_pci_M_AXI_AWVALID}),
+        .s_axi_bready({S_AXI_ABM_bready,rdmx_to_pci_M_AXI_BREADY}),
+        .s_axi_bresp({\^S_AXI_ABM_bresp ,rdmx_to_pci_M_AXI_BRESP}),
+        .s_axi_bvalid({\^S_AXI_ABM_bvalid ,rdmx_to_pci_M_AXI_BVALID}),
+        .s_axi_rdata({\^S_AXI_ABM_rdata ,rdmx_to_pci_M_AXI_RDATA}),
+        .s_axi_rlast({\^S_AXI_ABM_rlast ,rdmx_to_pci_M_AXI_RLAST}),
+        .s_axi_rready({S_AXI_ABM_rready,rdmx_to_pci_M_AXI_RREADY}),
+        .s_axi_rresp({\^S_AXI_ABM_rresp ,rdmx_to_pci_M_AXI_RRESP}),
+        .s_axi_rvalid({\^S_AXI_ABM_rvalid ,rdmx_to_pci_M_AXI_RVALID}),
+        .s_axi_wdata({S_AXI_ABM_wdata,rdmx_to_pci_M_AXI_WDATA}),
+        .s_axi_wlast({S_AXI_ABM_wlast,rdmx_to_pci_M_AXI_WLAST}),
+        .s_axi_wready({\^S_AXI_ABM_wready ,rdmx_to_pci_M_AXI_WREADY}),
+        .s_axi_wstrb({S_AXI_ABM_wstrb,rdmx_to_pci_M_AXI_WSTRB}),
+        .s_axi_wvalid({S_AXI_ABM_wvalid,rdmx_to_pci_M_AXI_WVALID}));
   top_level_axis_register_slice_0_0 axis_register_slice
        (.aclk(pcie_bridge_axi_aclk),
         .aresetn(resetn_in),
@@ -6273,6 +6278,7 @@ module pcie0_bridge_imp_XR3943
         .S_AXI_B_arid(axi_crossbar_0_M00_AXI_ARID),
         .S_AXI_B_arlen(axi_crossbar_0_M00_AXI_ARLEN),
         .S_AXI_B_arready(axi_crossbar_0_M00_AXI_ARREADY),
+        .S_AXI_B_arregion(axi_crossbar_0_M00_AXI_ARREGION),
         .S_AXI_B_arsize(axi_crossbar_0_M00_AXI_ARSIZE),
         .S_AXI_B_arvalid(axi_crossbar_0_M00_AXI_ARVALID),
         .S_AXI_B_awaddr(axi_crossbar_0_M00_AXI_AWADDR),
@@ -6280,6 +6286,7 @@ module pcie0_bridge_imp_XR3943
         .S_AXI_B_awid(axi_crossbar_0_M00_AXI_AWID),
         .S_AXI_B_awlen(axi_crossbar_0_M00_AXI_AWLEN),
         .S_AXI_B_awready(axi_crossbar_0_M00_AXI_AWREADY),
+        .S_AXI_B_awregion(axi_crossbar_0_M00_AXI_AWREGION),
         .S_AXI_B_awsize(axi_crossbar_0_M00_AXI_AWSIZE),
         .S_AXI_B_awvalid(axi_crossbar_0_M00_AXI_AWVALID),
         .S_AXI_B_bid(axi_crossbar_0_M00_AXI_BID),
@@ -6370,7 +6377,7 @@ module pcie0_bridge_imp_XR3943
         .SLOT_1_AXI_arprot(axi_crossbar_0_M00_AXI_ARPROT),
         .SLOT_1_AXI_arqos(axi_crossbar_0_M00_AXI_ARQOS),
         .SLOT_1_AXI_arready(axi_crossbar_0_M00_AXI_ARREADY),
-        .SLOT_1_AXI_arregion({1'b0,1'b0,1'b0,1'b0}),
+        .SLOT_1_AXI_arregion(axi_crossbar_0_M00_AXI_ARREGION),
         .SLOT_1_AXI_arsize(axi_crossbar_0_M00_AXI_ARSIZE),
         .SLOT_1_AXI_aruser(1'b0),
         .SLOT_1_AXI_arvalid(axi_crossbar_0_M00_AXI_ARVALID),
@@ -6383,7 +6390,7 @@ module pcie0_bridge_imp_XR3943
         .SLOT_1_AXI_awprot(axi_crossbar_0_M00_AXI_AWPROT),
         .SLOT_1_AXI_awqos(axi_crossbar_0_M00_AXI_AWQOS),
         .SLOT_1_AXI_awready(axi_crossbar_0_M00_AXI_AWREADY),
-        .SLOT_1_AXI_awregion({1'b0,1'b0,1'b0,1'b0}),
+        .SLOT_1_AXI_awregion(axi_crossbar_0_M00_AXI_AWREGION),
         .SLOT_1_AXI_awsize(axi_crossbar_0_M00_AXI_AWSIZE),
         .SLOT_1_AXI_awuser(1'b0),
         .SLOT_1_AXI_awvalid(axi_crossbar_0_M00_AXI_AWVALID),
@@ -6530,7 +6537,7 @@ module pcie1_bridge_imp_1YH9ZFK
   wire S_AXI_ABM_arlock;
   wire [2:0]S_AXI_ABM_arprot;
   wire [3:0]S_AXI_ABM_arqos;
-  wire S_AXI_ABM_arready;
+  wire [1:1]\^S_AXI_ABM_arready ;
   wire [2:0]S_AXI_ABM_arsize;
   wire S_AXI_ABM_arvalid;
   wire [63:0]S_AXI_ABM_awaddr;
@@ -6541,59 +6548,61 @@ module pcie1_bridge_imp_1YH9ZFK
   wire S_AXI_ABM_awlock;
   wire [2:0]S_AXI_ABM_awprot;
   wire [3:0]S_AXI_ABM_awqos;
-  wire S_AXI_ABM_awready;
+  wire [1:1]\^S_AXI_ABM_awready ;
   wire [2:0]S_AXI_ABM_awsize;
   wire S_AXI_ABM_awvalid;
   wire S_AXI_ABM_bready;
-  wire [1:0]S_AXI_ABM_bresp;
-  wire S_AXI_ABM_bvalid;
-  wire [511:0]S_AXI_ABM_rdata;
-  wire S_AXI_ABM_rlast;
+  wire [3:2]\^S_AXI_ABM_bresp ;
+  wire [1:1]\^S_AXI_ABM_bvalid ;
+  wire [1023:512]\^S_AXI_ABM_rdata ;
+  wire [1:1]\^S_AXI_ABM_rlast ;
   wire S_AXI_ABM_rready;
-  wire [1:0]S_AXI_ABM_rresp;
-  wire S_AXI_ABM_rvalid;
+  wire [3:2]\^S_AXI_ABM_rresp ;
+  wire [1:1]\^S_AXI_ABM_rvalid ;
   wire [511:0]S_AXI_ABM_wdata;
   wire S_AXI_ABM_wlast;
-  wire S_AXI_ABM_wready;
+  wire [1:1]\^S_AXI_ABM_wready ;
   wire [63:0]S_AXI_ABM_wstrb;
   wire S_AXI_ABM_wvalid;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARADDR" *) (* DONT_TOUCH *) wire [63:0]axi_crossbar_0_M00_AXI_ARADDR;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARBURST" *) (* DONT_TOUCH *) wire [1:0]axi_crossbar_0_M00_AXI_ARBURST;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARCACHE" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_ARCACHE;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARID" *) (* DONT_TOUCH *) wire [4:0]axi_crossbar_0_M00_AXI_ARID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARID" *) (* DONT_TOUCH *) wire [5:0]axi_crossbar_0_M00_AXI_ARID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARLEN" *) (* DONT_TOUCH *) wire [7:0]axi_crossbar_0_M00_AXI_ARLEN;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARLOCK" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_ARLOCK;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARLOCK" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_ARLOCK;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARPROT" *) (* DONT_TOUCH *) wire [2:0]axi_crossbar_0_M00_AXI_ARPROT;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARQOS" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_ARQOS;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_ARREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_ARREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARREGION" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_ARREGION;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARSIZE" *) (* DONT_TOUCH *) wire [2:0]axi_crossbar_0_M00_AXI_ARSIZE;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_ARVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 ARVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_ARVALID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWADDR" *) (* DONT_TOUCH *) wire [63:0]axi_crossbar_0_M00_AXI_AWADDR;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWBURST" *) (* DONT_TOUCH *) wire [1:0]axi_crossbar_0_M00_AXI_AWBURST;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWCACHE" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_AWCACHE;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWID" *) (* DONT_TOUCH *) wire [4:0]axi_crossbar_0_M00_AXI_AWID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWID" *) (* DONT_TOUCH *) wire [5:0]axi_crossbar_0_M00_AXI_AWID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWLEN" *) (* DONT_TOUCH *) wire [7:0]axi_crossbar_0_M00_AXI_AWLEN;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWLOCK" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_AWLOCK;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWLOCK" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_AWLOCK;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWPROT" *) (* DONT_TOUCH *) wire [2:0]axi_crossbar_0_M00_AXI_AWPROT;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWQOS" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_AWQOS;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_AWREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_AWREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWREGION" *) (* DONT_TOUCH *) wire [3:0]axi_crossbar_0_M00_AXI_AWREGION;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWSIZE" *) (* DONT_TOUCH *) wire [2:0]axi_crossbar_0_M00_AXI_AWSIZE;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_AWVALID;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BID" *) (* DONT_TOUCH *) wire [4:0]axi_crossbar_0_M00_AXI_BID;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_BREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 AWVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_AWVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BID" *) (* DONT_TOUCH *) wire [5:0]axi_crossbar_0_M00_AXI_BID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_BREADY;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BRESP" *) (* DONT_TOUCH *) wire [1:0]axi_crossbar_0_M00_AXI_BRESP;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_BVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 BVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_BVALID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RDATA" *) (* DONT_TOUCH *) wire [511:0]axi_crossbar_0_M00_AXI_RDATA;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RID" *) (* DONT_TOUCH *) wire [4:0]axi_crossbar_0_M00_AXI_RID;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RLAST" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_RLAST;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_RREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RID" *) (* DONT_TOUCH *) wire [5:0]axi_crossbar_0_M00_AXI_RID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RLAST" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_RLAST;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_RREADY;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RRESP" *) (* DONT_TOUCH *) wire [1:0]axi_crossbar_0_M00_AXI_RRESP;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_RVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 RVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_RVALID;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WDATA" *) (* DONT_TOUCH *) wire [511:0]axi_crossbar_0_M00_AXI_WDATA;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WLAST" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_WLAST;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WREADY" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_WREADY;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WLAST" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_WLAST;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WREADY" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_WREADY;
   (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WSTRB" *) (* DONT_TOUCH *) wire [63:0]axi_crossbar_0_M00_AXI_WSTRB;
-  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WVALID" *) (* DONT_TOUCH *) wire axi_crossbar_0_M00_AXI_WVALID;
+  (* CONN_BUS_INFO = "axi_crossbar_0_M00_AXI xilinx.com:interface:aximm:1.0 AXI4 WVALID" *) (* DONT_TOUCH *) wire [0:0]axi_crossbar_0_M00_AXI_WVALID;
   wire [511:0]axis_register_slice_M_AXIS_TDATA;
   wire axis_register_slice_M_AXIS_TLAST;
   wire axis_register_slice_M_AXIS_TREADY;
@@ -6623,7 +6632,7 @@ module pcie1_bridge_imp_1YH9ZFK
   wire rdmx_to_pci_M_AXI_ARLOCK;
   wire [2:0]rdmx_to_pci_M_AXI_ARPROT;
   wire [3:0]rdmx_to_pci_M_AXI_ARQOS;
-  wire rdmx_to_pci_M_AXI_ARREADY;
+  wire [0:0]rdmx_to_pci_M_AXI_ARREADY;
   wire [2:0]rdmx_to_pci_M_AXI_ARSIZE;
   wire rdmx_to_pci_M_AXI_ARVALID;
   wire [63:0]rdmx_to_pci_M_AXI_AWADDR;
@@ -6634,132 +6643,111 @@ module pcie1_bridge_imp_1YH9ZFK
   wire rdmx_to_pci_M_AXI_AWLOCK;
   wire [2:0]rdmx_to_pci_M_AXI_AWPROT;
   wire [3:0]rdmx_to_pci_M_AXI_AWQOS;
-  wire rdmx_to_pci_M_AXI_AWREADY;
+  wire [0:0]rdmx_to_pci_M_AXI_AWREADY;
   wire [2:0]rdmx_to_pci_M_AXI_AWSIZE;
   wire rdmx_to_pci_M_AXI_AWVALID;
   wire rdmx_to_pci_M_AXI_BREADY;
   wire [1:0]rdmx_to_pci_M_AXI_BRESP;
-  wire rdmx_to_pci_M_AXI_BVALID;
+  wire [0:0]rdmx_to_pci_M_AXI_BVALID;
   wire [511:0]rdmx_to_pci_M_AXI_RDATA;
-  wire rdmx_to_pci_M_AXI_RLAST;
+  wire [0:0]rdmx_to_pci_M_AXI_RLAST;
   wire rdmx_to_pci_M_AXI_RREADY;
   wire [1:0]rdmx_to_pci_M_AXI_RRESP;
-  wire rdmx_to_pci_M_AXI_RVALID;
+  wire [0:0]rdmx_to_pci_M_AXI_RVALID;
   wire [511:0]rdmx_to_pci_M_AXI_WDATA;
   wire rdmx_to_pci_M_AXI_WLAST;
-  wire rdmx_to_pci_M_AXI_WREADY;
+  wire [0:0]rdmx_to_pci_M_AXI_WREADY;
   wire [63:0]rdmx_to_pci_M_AXI_WSTRB;
   wire rdmx_to_pci_M_AXI_WVALID;
   wire resetn_in;
 
+  assign S_AXI_ABM_arready = \^S_AXI_ABM_arready [1];
+  assign S_AXI_ABM_awready = \^S_AXI_ABM_awready [1];
+  assign S_AXI_ABM_bresp[1:0] = \^S_AXI_ABM_bresp [3:2];
+  assign S_AXI_ABM_bvalid = \^S_AXI_ABM_bvalid [1];
+  assign S_AXI_ABM_rdata[511:0] = \^S_AXI_ABM_rdata [1023:512];
+  assign S_AXI_ABM_rlast = \^S_AXI_ABM_rlast [1];
+  assign S_AXI_ABM_rresp[1:0] = \^S_AXI_ABM_rresp [3:2];
+  assign S_AXI_ABM_rvalid = \^S_AXI_ABM_rvalid [1];
+  assign S_AXI_ABM_wready = \^S_AXI_ABM_wready [1];
   assign pcie_bridge_axi_aclk = sys_clk;
-  top_level_axi4_breakout_2 axi4_breakout
-       (.M_AXI_ARADDR(axi_crossbar_0_M00_AXI_ARADDR),
-        .M_AXI_ARBURST(axi_crossbar_0_M00_AXI_ARBURST),
-        .M_AXI_ARCACHE(axi_crossbar_0_M00_AXI_ARCACHE),
-        .M_AXI_ARID(axi_crossbar_0_M00_AXI_ARID),
-        .M_AXI_ARLEN(axi_crossbar_0_M00_AXI_ARLEN),
-        .M_AXI_ARLOCK(axi_crossbar_0_M00_AXI_ARLOCK),
-        .M_AXI_ARPROT(axi_crossbar_0_M00_AXI_ARPROT),
-        .M_AXI_ARQOS(axi_crossbar_0_M00_AXI_ARQOS),
-        .M_AXI_ARREADY(axi_crossbar_0_M00_AXI_ARREADY),
-        .M_AXI_ARSIZE(axi_crossbar_0_M00_AXI_ARSIZE),
-        .M_AXI_ARVALID(axi_crossbar_0_M00_AXI_ARVALID),
-        .M_AXI_AWADDR(axi_crossbar_0_M00_AXI_AWADDR),
-        .M_AXI_AWBURST(axi_crossbar_0_M00_AXI_AWBURST),
-        .M_AXI_AWCACHE(axi_crossbar_0_M00_AXI_AWCACHE),
-        .M_AXI_AWID(axi_crossbar_0_M00_AXI_AWID),
-        .M_AXI_AWLEN(axi_crossbar_0_M00_AXI_AWLEN),
-        .M_AXI_AWLOCK(axi_crossbar_0_M00_AXI_AWLOCK),
-        .M_AXI_AWPROT(axi_crossbar_0_M00_AXI_AWPROT),
-        .M_AXI_AWQOS(axi_crossbar_0_M00_AXI_AWQOS),
-        .M_AXI_AWREADY(axi_crossbar_0_M00_AXI_AWREADY),
-        .M_AXI_AWSIZE(axi_crossbar_0_M00_AXI_AWSIZE),
-        .M_AXI_AWVALID(axi_crossbar_0_M00_AXI_AWVALID),
-        .M_AXI_BREADY(axi_crossbar_0_M00_AXI_BREADY),
-        .M_AXI_BRESP(axi_crossbar_0_M00_AXI_BRESP),
-        .M_AXI_BVALID(axi_crossbar_0_M00_AXI_BVALID),
-        .M_AXI_RDATA(axi_crossbar_0_M00_AXI_RDATA),
-        .M_AXI_RLAST(axi_crossbar_0_M00_AXI_RLAST),
-        .M_AXI_RREADY(axi_crossbar_0_M00_AXI_RREADY),
-        .M_AXI_RRESP(axi_crossbar_0_M00_AXI_RRESP),
-        .M_AXI_RVALID(axi_crossbar_0_M00_AXI_RVALID),
-        .M_AXI_WDATA(axi_crossbar_0_M00_AXI_WDATA),
-        .M_AXI_WLAST(axi_crossbar_0_M00_AXI_WLAST),
-        .M_AXI_WREADY(axi_crossbar_0_M00_AXI_WREADY),
-        .M_AXI_WSTRB(axi_crossbar_0_M00_AXI_WSTRB),
-        .M_AXI_WVALID(axi_crossbar_0_M00_AXI_WVALID),
-        .S_RD_ARADDR(S_AXI_ABM_araddr),
-        .S_RD_ARBURST(S_AXI_ABM_arburst),
-        .S_RD_ARCACHE(S_AXI_ABM_arcache),
-        .S_RD_ARID(S_AXI_ABM_arid),
-        .S_RD_ARLEN(S_AXI_ABM_arlen),
-        .S_RD_ARLOCK(S_AXI_ABM_arlock),
-        .S_RD_ARPROT(S_AXI_ABM_arprot),
-        .S_RD_ARQOS(S_AXI_ABM_arqos),
-        .S_RD_ARREADY(S_AXI_ABM_arready),
-        .S_RD_ARSIZE(S_AXI_ABM_arsize),
-        .S_RD_ARVALID(S_AXI_ABM_arvalid),
-        .S_RD_AWADDR(S_AXI_ABM_awaddr),
-        .S_RD_AWBURST(S_AXI_ABM_awburst),
-        .S_RD_AWCACHE(S_AXI_ABM_awcache),
-        .S_RD_AWID(S_AXI_ABM_awid),
-        .S_RD_AWLEN(S_AXI_ABM_awlen),
-        .S_RD_AWLOCK(S_AXI_ABM_awlock),
-        .S_RD_AWPROT(S_AXI_ABM_awprot),
-        .S_RD_AWQOS(S_AXI_ABM_awqos),
-        .S_RD_AWREADY(S_AXI_ABM_awready),
-        .S_RD_AWSIZE(S_AXI_ABM_awsize),
-        .S_RD_AWVALID(S_AXI_ABM_awvalid),
-        .S_RD_BREADY(S_AXI_ABM_bready),
-        .S_RD_BRESP(S_AXI_ABM_bresp),
-        .S_RD_BVALID(S_AXI_ABM_bvalid),
-        .S_RD_RDATA(S_AXI_ABM_rdata),
-        .S_RD_RLAST(S_AXI_ABM_rlast),
-        .S_RD_RREADY(S_AXI_ABM_rready),
-        .S_RD_RRESP(S_AXI_ABM_rresp),
-        .S_RD_RVALID(S_AXI_ABM_rvalid),
-        .S_RD_WDATA(S_AXI_ABM_wdata),
-        .S_RD_WLAST(S_AXI_ABM_wlast),
-        .S_RD_WREADY(S_AXI_ABM_wready),
-        .S_RD_WSTRB(S_AXI_ABM_wstrb),
-        .S_RD_WVALID(S_AXI_ABM_wvalid),
-        .S_WR_ARADDR(rdmx_to_pci_M_AXI_ARADDR),
-        .S_WR_ARBURST(rdmx_to_pci_M_AXI_ARBURST),
-        .S_WR_ARCACHE(rdmx_to_pci_M_AXI_ARCACHE),
-        .S_WR_ARID({1'b0,rdmx_to_pci_M_AXI_ARID}),
-        .S_WR_ARLEN(rdmx_to_pci_M_AXI_ARLEN),
-        .S_WR_ARLOCK(rdmx_to_pci_M_AXI_ARLOCK),
-        .S_WR_ARPROT(rdmx_to_pci_M_AXI_ARPROT),
-        .S_WR_ARQOS(rdmx_to_pci_M_AXI_ARQOS),
-        .S_WR_ARREADY(rdmx_to_pci_M_AXI_ARREADY),
-        .S_WR_ARSIZE(rdmx_to_pci_M_AXI_ARSIZE),
-        .S_WR_ARVALID(rdmx_to_pci_M_AXI_ARVALID),
-        .S_WR_AWADDR(rdmx_to_pci_M_AXI_AWADDR),
-        .S_WR_AWBURST(rdmx_to_pci_M_AXI_AWBURST),
-        .S_WR_AWCACHE(rdmx_to_pci_M_AXI_AWCACHE),
-        .S_WR_AWID({1'b0,rdmx_to_pci_M_AXI_AWID}),
-        .S_WR_AWLEN(rdmx_to_pci_M_AXI_AWLEN),
-        .S_WR_AWLOCK(rdmx_to_pci_M_AXI_AWLOCK),
-        .S_WR_AWPROT(rdmx_to_pci_M_AXI_AWPROT),
-        .S_WR_AWQOS(rdmx_to_pci_M_AXI_AWQOS),
-        .S_WR_AWREADY(rdmx_to_pci_M_AXI_AWREADY),
-        .S_WR_AWSIZE(rdmx_to_pci_M_AXI_AWSIZE),
-        .S_WR_AWVALID(rdmx_to_pci_M_AXI_AWVALID),
-        .S_WR_BREADY(rdmx_to_pci_M_AXI_BREADY),
-        .S_WR_BRESP(rdmx_to_pci_M_AXI_BRESP),
-        .S_WR_BVALID(rdmx_to_pci_M_AXI_BVALID),
-        .S_WR_RDATA(rdmx_to_pci_M_AXI_RDATA),
-        .S_WR_RLAST(rdmx_to_pci_M_AXI_RLAST),
-        .S_WR_RREADY(rdmx_to_pci_M_AXI_RREADY),
-        .S_WR_RRESP(rdmx_to_pci_M_AXI_RRESP),
-        .S_WR_RVALID(rdmx_to_pci_M_AXI_RVALID),
-        .S_WR_WDATA(rdmx_to_pci_M_AXI_WDATA),
-        .S_WR_WLAST(rdmx_to_pci_M_AXI_WLAST),
-        .S_WR_WREADY(rdmx_to_pci_M_AXI_WREADY),
-        .S_WR_WSTRB(rdmx_to_pci_M_AXI_WSTRB),
-        .S_WR_WVALID(rdmx_to_pci_M_AXI_WVALID),
-        .clk(pcie_bridge_axi_aclk));
+  top_level_axi_crossbar_1 axi_crossbar
+       (.aclk(pcie_bridge_axi_aclk),
+        .aresetn(resetn_in),
+        .m_axi_araddr(axi_crossbar_0_M00_AXI_ARADDR),
+        .m_axi_arburst(axi_crossbar_0_M00_AXI_ARBURST),
+        .m_axi_arcache(axi_crossbar_0_M00_AXI_ARCACHE),
+        .m_axi_arid(axi_crossbar_0_M00_AXI_ARID),
+        .m_axi_arlen(axi_crossbar_0_M00_AXI_ARLEN),
+        .m_axi_arlock(axi_crossbar_0_M00_AXI_ARLOCK),
+        .m_axi_arprot(axi_crossbar_0_M00_AXI_ARPROT),
+        .m_axi_arqos(axi_crossbar_0_M00_AXI_ARQOS),
+        .m_axi_arready(axi_crossbar_0_M00_AXI_ARREADY),
+        .m_axi_arregion(axi_crossbar_0_M00_AXI_ARREGION),
+        .m_axi_arsize(axi_crossbar_0_M00_AXI_ARSIZE),
+        .m_axi_arvalid(axi_crossbar_0_M00_AXI_ARVALID),
+        .m_axi_awaddr(axi_crossbar_0_M00_AXI_AWADDR),
+        .m_axi_awburst(axi_crossbar_0_M00_AXI_AWBURST),
+        .m_axi_awcache(axi_crossbar_0_M00_AXI_AWCACHE),
+        .m_axi_awid(axi_crossbar_0_M00_AXI_AWID),
+        .m_axi_awlen(axi_crossbar_0_M00_AXI_AWLEN),
+        .m_axi_awlock(axi_crossbar_0_M00_AXI_AWLOCK),
+        .m_axi_awprot(axi_crossbar_0_M00_AXI_AWPROT),
+        .m_axi_awqos(axi_crossbar_0_M00_AXI_AWQOS),
+        .m_axi_awready(axi_crossbar_0_M00_AXI_AWREADY),
+        .m_axi_awregion(axi_crossbar_0_M00_AXI_AWREGION),
+        .m_axi_awsize(axi_crossbar_0_M00_AXI_AWSIZE),
+        .m_axi_awvalid(axi_crossbar_0_M00_AXI_AWVALID),
+        .m_axi_bid(axi_crossbar_0_M00_AXI_BID),
+        .m_axi_bready(axi_crossbar_0_M00_AXI_BREADY),
+        .m_axi_bresp(axi_crossbar_0_M00_AXI_BRESP),
+        .m_axi_bvalid(axi_crossbar_0_M00_AXI_BVALID),
+        .m_axi_rdata(axi_crossbar_0_M00_AXI_RDATA),
+        .m_axi_rid(axi_crossbar_0_M00_AXI_RID),
+        .m_axi_rlast(axi_crossbar_0_M00_AXI_RLAST),
+        .m_axi_rready(axi_crossbar_0_M00_AXI_RREADY),
+        .m_axi_rresp(axi_crossbar_0_M00_AXI_RRESP),
+        .m_axi_rvalid(axi_crossbar_0_M00_AXI_RVALID),
+        .m_axi_wdata(axi_crossbar_0_M00_AXI_WDATA),
+        .m_axi_wlast(axi_crossbar_0_M00_AXI_WLAST),
+        .m_axi_wready(axi_crossbar_0_M00_AXI_WREADY),
+        .m_axi_wstrb(axi_crossbar_0_M00_AXI_WSTRB),
+        .m_axi_wvalid(axi_crossbar_0_M00_AXI_WVALID),
+        .s_axi_araddr({S_AXI_ABM_araddr,rdmx_to_pci_M_AXI_ARADDR}),
+        .s_axi_arburst({S_AXI_ABM_arburst,rdmx_to_pci_M_AXI_ARBURST}),
+        .s_axi_arcache({S_AXI_ABM_arcache,rdmx_to_pci_M_AXI_ARCACHE}),
+        .s_axi_arid({1'b0,S_AXI_ABM_arid,1'b0,1'b0,rdmx_to_pci_M_AXI_ARID}),
+        .s_axi_arlen({S_AXI_ABM_arlen,rdmx_to_pci_M_AXI_ARLEN}),
+        .s_axi_arlock({S_AXI_ABM_arlock,rdmx_to_pci_M_AXI_ARLOCK}),
+        .s_axi_arprot({S_AXI_ABM_arprot,rdmx_to_pci_M_AXI_ARPROT}),
+        .s_axi_arqos({S_AXI_ABM_arqos,rdmx_to_pci_M_AXI_ARQOS}),
+        .s_axi_arready({\^S_AXI_ABM_arready ,rdmx_to_pci_M_AXI_ARREADY}),
+        .s_axi_arsize({S_AXI_ABM_arsize,rdmx_to_pci_M_AXI_ARSIZE}),
+        .s_axi_arvalid({S_AXI_ABM_arvalid,rdmx_to_pci_M_AXI_ARVALID}),
+        .s_axi_awaddr({S_AXI_ABM_awaddr,rdmx_to_pci_M_AXI_AWADDR}),
+        .s_axi_awburst({S_AXI_ABM_awburst,rdmx_to_pci_M_AXI_AWBURST}),
+        .s_axi_awcache({S_AXI_ABM_awcache,rdmx_to_pci_M_AXI_AWCACHE}),
+        .s_axi_awid({1'b0,S_AXI_ABM_awid,1'b0,1'b0,rdmx_to_pci_M_AXI_AWID}),
+        .s_axi_awlen({S_AXI_ABM_awlen,rdmx_to_pci_M_AXI_AWLEN}),
+        .s_axi_awlock({S_AXI_ABM_awlock,rdmx_to_pci_M_AXI_AWLOCK}),
+        .s_axi_awprot({S_AXI_ABM_awprot,rdmx_to_pci_M_AXI_AWPROT}),
+        .s_axi_awqos({S_AXI_ABM_awqos,rdmx_to_pci_M_AXI_AWQOS}),
+        .s_axi_awready({\^S_AXI_ABM_awready ,rdmx_to_pci_M_AXI_AWREADY}),
+        .s_axi_awsize({S_AXI_ABM_awsize,rdmx_to_pci_M_AXI_AWSIZE}),
+        .s_axi_awvalid({S_AXI_ABM_awvalid,rdmx_to_pci_M_AXI_AWVALID}),
+        .s_axi_bready({S_AXI_ABM_bready,rdmx_to_pci_M_AXI_BREADY}),
+        .s_axi_bresp({\^S_AXI_ABM_bresp ,rdmx_to_pci_M_AXI_BRESP}),
+        .s_axi_bvalid({\^S_AXI_ABM_bvalid ,rdmx_to_pci_M_AXI_BVALID}),
+        .s_axi_rdata({\^S_AXI_ABM_rdata ,rdmx_to_pci_M_AXI_RDATA}),
+        .s_axi_rlast({\^S_AXI_ABM_rlast ,rdmx_to_pci_M_AXI_RLAST}),
+        .s_axi_rready({S_AXI_ABM_rready,rdmx_to_pci_M_AXI_RREADY}),
+        .s_axi_rresp({\^S_AXI_ABM_rresp ,rdmx_to_pci_M_AXI_RRESP}),
+        .s_axi_rvalid({\^S_AXI_ABM_rvalid ,rdmx_to_pci_M_AXI_RVALID}),
+        .s_axi_wdata({S_AXI_ABM_wdata,rdmx_to_pci_M_AXI_WDATA}),
+        .s_axi_wlast({S_AXI_ABM_wlast,rdmx_to_pci_M_AXI_WLAST}),
+        .s_axi_wready({\^S_AXI_ABM_wready ,rdmx_to_pci_M_AXI_WREADY}),
+        .s_axi_wstrb({S_AXI_ABM_wstrb,rdmx_to_pci_M_AXI_WSTRB}),
+        .s_axi_wvalid({S_AXI_ABM_wvalid,rdmx_to_pci_M_AXI_WVALID}));
   top_level_axis_register_slice_1 axis_register_slice
        (.aclk(pcie_bridge_axi_aclk),
         .aresetn(resetn_in),
@@ -6792,6 +6780,7 @@ module pcie1_bridge_imp_1YH9ZFK
         .S_AXI_arprot(axi_crossbar_0_M00_AXI_ARPROT),
         .S_AXI_arqos(axi_crossbar_0_M00_AXI_ARQOS),
         .S_AXI_arready(axi_crossbar_0_M00_AXI_ARREADY),
+        .S_AXI_arregion(axi_crossbar_0_M00_AXI_ARREGION),
         .S_AXI_arsize(axi_crossbar_0_M00_AXI_ARSIZE),
         .S_AXI_arvalid(axi_crossbar_0_M00_AXI_ARVALID),
         .S_AXI_awaddr(axi_crossbar_0_M00_AXI_AWADDR),
@@ -6803,6 +6792,7 @@ module pcie1_bridge_imp_1YH9ZFK
         .S_AXI_awprot(axi_crossbar_0_M00_AXI_AWPROT),
         .S_AXI_awqos(axi_crossbar_0_M00_AXI_AWQOS),
         .S_AXI_awready(axi_crossbar_0_M00_AXI_AWREADY),
+        .S_AXI_awregion(axi_crossbar_0_M00_AXI_AWREGION),
         .S_AXI_awsize(axi_crossbar_0_M00_AXI_AWSIZE),
         .S_AXI_awvalid(axi_crossbar_0_M00_AXI_AWVALID),
         .S_AXI_bid(axi_crossbar_0_M00_AXI_BID),
@@ -6893,7 +6883,7 @@ module pcie1_bridge_imp_1YH9ZFK
         .SLOT_1_AXI_arprot(axi_crossbar_0_M00_AXI_ARPROT),
         .SLOT_1_AXI_arqos(axi_crossbar_0_M00_AXI_ARQOS),
         .SLOT_1_AXI_arready(axi_crossbar_0_M00_AXI_ARREADY),
-        .SLOT_1_AXI_arregion({1'b0,1'b0,1'b0,1'b0}),
+        .SLOT_1_AXI_arregion(axi_crossbar_0_M00_AXI_ARREGION),
         .SLOT_1_AXI_arsize(axi_crossbar_0_M00_AXI_ARSIZE),
         .SLOT_1_AXI_aruser(1'b0),
         .SLOT_1_AXI_arvalid(axi_crossbar_0_M00_AXI_ARVALID),
@@ -6906,7 +6896,7 @@ module pcie1_bridge_imp_1YH9ZFK
         .SLOT_1_AXI_awprot(axi_crossbar_0_M00_AXI_AWPROT),
         .SLOT_1_AXI_awqos(axi_crossbar_0_M00_AXI_AWQOS),
         .SLOT_1_AXI_awready(axi_crossbar_0_M00_AXI_AWREADY),
-        .SLOT_1_AXI_awregion({1'b0,1'b0,1'b0,1'b0}),
+        .SLOT_1_AXI_awregion(axi_crossbar_0_M00_AXI_AWREGION),
         .SLOT_1_AXI_awsize(axi_crossbar_0_M00_AXI_AWSIZE),
         .SLOT_1_AXI_awuser(1'b0),
         .SLOT_1_AXI_awvalid(axi_crossbar_0_M00_AXI_AWVALID),
@@ -13310,7 +13300,7 @@ module system_interconnect_imp_1433GC4
         .aresetn(aresetn));
 endmodule
 
-(* CORE_GENERATION_INFO = "top_level,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=top_level,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=121,numReposBlks=94,numNonXlnxBlks=0,numHierBlks=27,maxHierDepth=4,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=55,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_clkrst_cnt=2,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "top_level.hwdef" *) 
+(* CORE_GENERATION_INFO = "top_level,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=top_level,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=121,numReposBlks=94,numNonXlnxBlks=0,numHierBlks=27,maxHierDepth=4,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=53,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_clkrst_cnt=2,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "top_level.hwdef" *) 
 module top_level
    (hbm0_refclk_clk_n,
     hbm0_refclk_clk_p,
