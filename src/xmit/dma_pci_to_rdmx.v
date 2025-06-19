@@ -15,7 +15,7 @@
 */
 
 
-module dma_pci_to_rdmx # (parameter DW=512, AW=64, IW=5, UW=32)
+module dma_pci_to_rdmx # (parameter DW=512, AW=64, IW=5, UW=40)
 (
     input       clk, resetn,
     input[63:0] src_address,

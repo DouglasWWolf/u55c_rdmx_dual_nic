@@ -9,6 +9,8 @@
 // 24-Apr-25  DWW     2  Added register comments
 //
 // 28-Apr-25  DWW     3  Changed PCI_PAUSE units from clock-cycles to microseconds
+//
+// 18-Jun-25  DWW     4  Added detection of the sender's QSFP port number
 //====================================================================================
 
 /*
@@ -64,6 +66,9 @@ module control # (parameter AW=8, HBM_TEMPW=7, DEFAULT_PCI_BASE = 64'h1_0000_000
 
     // The base address and size of the contiguous buffer in host RAM
     output reg[63:0] pci_base, pci_size,
+
+    // This is the sender's QSFP port number
+    input[7:0] sender_port,
 
     // Control and status for transmitting data out the QSFP
     output reg[63:0] xmit_src_addr,
@@ -191,6 +196,11 @@ localparam REG_CLEAR_COUNTERS = 11;
     @register HBM RAM temperature in whole degress Celsius
 */
 localparam REG_HBM_TEMP       = 12;
+
+/*
+    @register Sender's QSFP port number
+*/
+localparam REG_SENDER_PORT    = 13;
 
 /*
     @register When transmitting a block of data, this is the source address in host-RAM
@@ -550,6 +560,7 @@ always @(posedge clk) begin
             REG_PCI_SIZE_L:     ashi_rdata <= pci_size[31:00];
             REG_LOOPBACK:       ashi_rdata <= loopback;
             REG_HBM_TEMP:       ashi_rdata <= hbm_temp;
+            REG_SENDER_PORT:    ashi_rdata <= sender_port;
 
             REG_ERRORS:         ashi_rdata <= 
                                 {

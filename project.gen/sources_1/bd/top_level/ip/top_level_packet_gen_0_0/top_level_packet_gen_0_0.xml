@@ -418,6 +418,13 @@
         </spirit:wire>
       </spirit:port>
     </spirit:ports>
+    <spirit:modelParameters>
+      <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
+        <spirit:name>SRC_MAC</spirit:name>
+        <spirit:displayName>Src Mac</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.SRC_MAC">0</spirit:value>
+      </spirit:modelParameter>
+    </spirit:modelParameters>
   </spirit:model>
   <spirit:choices>
     <spirit:choice>
@@ -428,6 +435,11 @@
   </spirit:choices>
   <spirit:description>xilinx.com:module_ref:packet_gen:1.0</spirit:description>
   <spirit:parameters>
+    <spirit:parameter>
+      <spirit:name>SRC_MAC</spirit:name>
+      <spirit:displayName>Src Mac</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.SRC_MAC">0</spirit:value>
+    </spirit:parameter>
     <spirit:parameter>
       <spirit:name>Component_Name</spirit:name>
       <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.Component_Name" spirit:order="1">top_level_packet_gen_0_0</spirit:value>

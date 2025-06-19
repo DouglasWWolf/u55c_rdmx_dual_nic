@@ -38,18 +38,18 @@ preplace netloc channel_0_ram_reader_idle 1 1 2 N 420 NJ
 preplace netloc channel_1_high_water_mark 1 3 2 NJ 300 NJ
 preplace netloc channel_1_idle 1 1 2 N 360 NJ
 preplace netloc channel_1_overflow 1 3 2 NJ 280 NJ
-preplace netloc input_axis_switch_packet_strb 1 0 2 NJ 20 340J
-preplace netloc pcie_bridge_axi_aclk 1 0 4 40 200 360 20 640 20 940J
+preplace netloc input_axis_switch_packet_strb 1 0 2 NJ 20 330J
+preplace netloc pcie_bridge_axi_aclk 1 0 4 50 200 370 20 650 20 930J
 preplace netloc port_select_1 1 4 1 NJ 100
 preplace netloc ram_hbm_cattrip 1 3 2 NJ 240 NJ
 preplace netloc ram_hbm_temp 1 3 2 NJ 260 NJ
-preplace netloc resetn_1 1 0 3 20 220 340J 460 N
+preplace netloc resetn_1 1 0 3 30 220 330J 460 N
 preplace netloc start_ram_reader_0 1 1 2 N 300 NJ
 preplace netloc stream_to_ram_0_done 1 1 2 N 400 NJ
 preplace netloc stream_to_ram_0_has_data 1 1 2 N 380 NJ
 preplace netloc stream_to_ram_1_done 1 1 2 N 320 NJ
 preplace netloc stream_to_ram_1_has_data 1 1 2 N 440 NJ
-preplace netloc switch_ctrl_0_inflow_q 1 1 2 360 280 NJ
+preplace netloc switch_ctrl_0_inflow_q 1 1 2 370 280 NJ
 preplace netloc switch_ctrl_ram_reader_start1 1 1 2 N 340 NJ
 preplace netloc Conn1 1 4 1 NJ 60
 preplace netloc axis_in_1 1 0 1 NJ 80
@@ -62,8 +62,8 @@ preplace netloc output_axis_switch_axis_out1 1 4 1 NJ 80
 levelinfo -pg 1 0 190 500 790 1070 1220
 pagesize -pg 1 -db -bbox -sgen -180 0 1390 510
 ",
-   "No Loops_ScaleFactor":"0.869621",
-   "No Loops_TopLeft":"-176,2",
+   "No Loops_ScaleFactor":"0.931366",
+   "No Loops_TopLeft":"-177,-44",
    "guistr":"# # String gsaved with Nlview 7.0r4  2019-12-20 bk=1.5203 VDI=41 GEI=36 GUI=JA:10.0 TLS
 #  -string -flagsOSRD
 preplace port axis_in -pg 1 -lvl 0 -x 0 -y 50 -defaultsOSRD

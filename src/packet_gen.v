@@ -5,6 +5,9 @@
 //   Date     Who   Ver  Changes
 //====================================================================================
 // 20-Mar-25  DWW     1  Initial creation
+//
+// 17-Jun-25  DWW     2  Now generating periodic packets with the MEMFENCE bit set
+//                       in the RDMX "flags" field
 //====================================================================================
 
 /*
@@ -22,7 +25,7 @@
 
 */
 
-module packet_gen
+module packet_gen # (parameter[7:0] SRC_MAC = 0)
 (
     input             clk, resetn,
 
@@ -42,6 +45,18 @@ localparam LAST_CYCLE   = (PAYLOAD_SIZE / 64) + 1;
 
 reg[ 31:0] sequence_num;
 reg[ 63:0] packet_count;
+
+// This field is a part of the RDMX header we will emit
+wire[7:0] rdmx_flags;
+
+// Most of the bits of rdmx_flags are 0
+assign rdmx_flags[7:1] = 0;
+
+// The MEMFENCE flag is in bit 0 of rdmx_flags
+localparam RDMX_MEMFENCE = 0;
+
+// Every 512 packets, set the MEMFENCE bit of the the RDMX "flags" field
+assign rdmx_flags[RDMX_MEMFENCE] = (packet_count[8:0] == 9'b100000000);
 
 // Contains a little-endian version of the RDMX header
 wire[511:0] le_rdmx_header;
@@ -172,9 +187,10 @@ end
 //=============================================================================
 // This encodes an RDMX header into field "le_rdmx_header"
 //=============================================================================
-rdmx_encoder i_encoder
+rdmx_encoder # (.SRC_MAC(SRC_MAC)) i_encoder 
 (
     .rdmx_target_addr({32'h0, pci_address}),
+    .rdmx_flags      (rdmx_flags          ),
     .payload_length  (PAYLOAD_SIZE        ),
     .le_rdmx_header  (le_rdmx_header      )
 );

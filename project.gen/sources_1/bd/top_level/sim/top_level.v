@@ -2,7 +2,7 @@
 //Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2024.2 (lin64) Build 5239630 Fri Nov 08 22:34:34 MST 2024
-//Date        : Wed Jun 11 22:46:50 2025
+//Date        : Wed Jun 18 18:53:59 2025
 //Host        : wolf-super-server running 64-bit Ubuntu 20.04.6 LTS
 //Command     : generate_target top_level.bd
 //Design      : top_level
@@ -1953,6 +1953,7 @@ module channel_0_imp_3EIWA1
   wire [3:0]qsfp_gt_gtx_n;
   wire [3:0]qsfp_gt_gtx_p;
   wire qsfp_rx_aligned;
+  wire [7:0]qsfp_sender_port;
   wire [511:0]rdmx_xmit_AXIS_TX_TDATA;
   wire rdmx_xmit_AXIS_TX_TLAST;
   wire rdmx_xmit_AXIS_TX_TREADY;
@@ -2004,6 +2005,7 @@ module channel_0_imp_3EIWA1
         .pci_throughput(pci_throughput),
         .resetn(resetn),
         .resetn_out(resetn_out),
+        .sender_port(qsfp_sender_port),
         .seq_axis_tdata(axis_pcie_out_tdata),
         .seq_axis_tlast(axis_pcie_out_tlast),
         .seq_axis_tready(axis_pcie_out_tready),
@@ -2110,6 +2112,7 @@ module channel_0_imp_3EIWA1
         .max_packets(control_packet_count),
         .resetn(resetn_out),
         .rx_aligned(qsfp_rx_aligned),
+        .sender_port(qsfp_sender_port),
         .status_leds(status_leds));
 endmodule
 
@@ -2362,6 +2365,7 @@ module channel_1_imp_1R4OFYV
   wire [3:0]qsfp_gt_gtx_n;
   wire [3:0]qsfp_gt_gtx_p;
   wire qsfp_rx_aligned;
+  wire [7:0]qsfp_sender_port;
   wire [511:0]rdmx_xmit_AXIS_TX_TDATA;
   wire rdmx_xmit_AXIS_TX_TLAST;
   wire rdmx_xmit_AXIS_TX_TREADY;
@@ -2413,6 +2417,7 @@ module channel_1_imp_1R4OFYV
         .pci_throughput(pci_throughput),
         .resetn(resetn),
         .resetn_out(resetn_out),
+        .sender_port(qsfp_sender_port),
         .seq_axis_tdata(axis_pcie_out_tdata),
         .seq_axis_tlast(axis_pcie_out_tlast),
         .seq_axis_tready(axis_pcie_out_tready),
@@ -2519,6 +2524,7 @@ module channel_1_imp_1R4OFYV
         .max_packets(control_packet_count),
         .resetn(resetn_out),
         .rx_aligned(qsfp_rx_aligned),
+        .sender_port(qsfp_sender_port),
         .status_leds(status_leds));
 endmodule
 
@@ -4960,7 +4966,7 @@ module host_ram_to_rdmx_imp_97HVN3
   wire [3:0]dma_pci_to_rdmx_DST_AXI_AWQOS;
   wire dma_pci_to_rdmx_DST_AXI_AWREADY;
   wire [2:0]dma_pci_to_rdmx_DST_AXI_AWSIZE;
-  wire [31:0]dma_pci_to_rdmx_DST_AXI_AWUSER;
+  wire [39:0]dma_pci_to_rdmx_DST_AXI_AWUSER;
   wire dma_pci_to_rdmx_DST_AXI_AWVALID;
   wire dma_pci_to_rdmx_DST_AXI_BREADY;
   wire [1:0]dma_pci_to_rdmx_DST_AXI_BRESP;
@@ -5262,7 +5268,7 @@ module host_ram_to_rdmx_imp_M3IA0E
   wire [3:0]dma_pci_to_rdmx_DST_AXI_AWQOS;
   wire dma_pci_to_rdmx_DST_AXI_AWREADY;
   wire [2:0]dma_pci_to_rdmx_DST_AXI_AWSIZE;
-  wire [31:0]dma_pci_to_rdmx_DST_AXI_AWUSER;
+  wire [39:0]dma_pci_to_rdmx_DST_AXI_AWUSER;
   wire dma_pci_to_rdmx_DST_AXI_AWVALID;
   wire dma_pci_to_rdmx_DST_AXI_BREADY;
   wire [1:0]dma_pci_to_rdmx_DST_AXI_BRESP;
@@ -6113,10 +6119,12 @@ module pcie0_bridge_imp_XR3943
   wire [0:0]rdmx_to_pci_M_AXI_AWREADY;
   wire [2:0]rdmx_to_pci_M_AXI_AWSIZE;
   wire rdmx_to_pci_M_AXI_AWVALID;
+  wire [5:0]rdmx_to_pci_M_AXI_BID;
   wire rdmx_to_pci_M_AXI_BREADY;
   wire [1:0]rdmx_to_pci_M_AXI_BRESP;
   wire [0:0]rdmx_to_pci_M_AXI_BVALID;
   wire [511:0]rdmx_to_pci_M_AXI_RDATA;
+  wire [5:0]rdmx_to_pci_M_AXI_RID;
   wire [0:0]rdmx_to_pci_M_AXI_RLAST;
   wire rdmx_to_pci_M_AXI_RREADY;
   wire [1:0]rdmx_to_pci_M_AXI_RRESP;
@@ -6202,10 +6210,12 @@ module pcie0_bridge_imp_XR3943
         .s_axi_awready({\^S_AXI_ABM_awready ,rdmx_to_pci_M_AXI_AWREADY}),
         .s_axi_awsize({S_AXI_ABM_awsize,rdmx_to_pci_M_AXI_AWSIZE}),
         .s_axi_awvalid({S_AXI_ABM_awvalid,rdmx_to_pci_M_AXI_AWVALID}),
+        .s_axi_bid(rdmx_to_pci_M_AXI_BID),
         .s_axi_bready({S_AXI_ABM_bready,rdmx_to_pci_M_AXI_BREADY}),
         .s_axi_bresp({\^S_AXI_ABM_bresp ,rdmx_to_pci_M_AXI_BRESP}),
         .s_axi_bvalid({\^S_AXI_ABM_bvalid ,rdmx_to_pci_M_AXI_BVALID}),
         .s_axi_rdata({\^S_AXI_ABM_rdata ,rdmx_to_pci_M_AXI_RDATA}),
+        .s_axi_rid(rdmx_to_pci_M_AXI_RID),
         .s_axi_rlast({\^S_AXI_ABM_rlast ,rdmx_to_pci_M_AXI_RLAST}),
         .s_axi_rready({S_AXI_ABM_rready,rdmx_to_pci_M_AXI_RREADY}),
         .s_axi_rresp({\^S_AXI_ABM_rresp ,rdmx_to_pci_M_AXI_RRESP}),
@@ -6313,51 +6323,54 @@ module pcie0_bridge_imp_XR3943
         .pcie0_refclk_clk_n(pcie_refclk_clk_n),
         .pcie0_refclk_clk_p(pcie_refclk_clk_p),
         .sys_rst_n(pcie_sys_rst_n));
-  top_level_rdmx_to_pci_0_0 rdmx_to_pci
-       (.AXIS_IN_TDATA(axis_throttle_axis_out_TDATA),
-        .AXIS_IN_TREADY(axis_throttle_axis_out_TREADY),
-        .AXIS_IN_TVALID(axis_throttle_axis_out_TVALID),
-        .M_AXI_ARADDR(rdmx_to_pci_M_AXI_ARADDR),
-        .M_AXI_ARBURST(rdmx_to_pci_M_AXI_ARBURST),
-        .M_AXI_ARCACHE(rdmx_to_pci_M_AXI_ARCACHE),
-        .M_AXI_ARID(rdmx_to_pci_M_AXI_ARID),
-        .M_AXI_ARLEN(rdmx_to_pci_M_AXI_ARLEN),
-        .M_AXI_ARLOCK(rdmx_to_pci_M_AXI_ARLOCK),
-        .M_AXI_ARPROT(rdmx_to_pci_M_AXI_ARPROT),
-        .M_AXI_ARQOS(rdmx_to_pci_M_AXI_ARQOS),
-        .M_AXI_ARREADY(rdmx_to_pci_M_AXI_ARREADY),
-        .M_AXI_ARSIZE(rdmx_to_pci_M_AXI_ARSIZE),
-        .M_AXI_ARVALID(rdmx_to_pci_M_AXI_ARVALID),
-        .M_AXI_AWADDR(rdmx_to_pci_M_AXI_AWADDR),
-        .M_AXI_AWBURST(rdmx_to_pci_M_AXI_AWBURST),
-        .M_AXI_AWCACHE(rdmx_to_pci_M_AXI_AWCACHE),
-        .M_AXI_AWID(rdmx_to_pci_M_AXI_AWID),
-        .M_AXI_AWLEN(rdmx_to_pci_M_AXI_AWLEN),
-        .M_AXI_AWLOCK(rdmx_to_pci_M_AXI_AWLOCK),
-        .M_AXI_AWPROT(rdmx_to_pci_M_AXI_AWPROT),
-        .M_AXI_AWQOS(rdmx_to_pci_M_AXI_AWQOS),
-        .M_AXI_AWREADY(rdmx_to_pci_M_AXI_AWREADY),
-        .M_AXI_AWSIZE(rdmx_to_pci_M_AXI_AWSIZE),
-        .M_AXI_AWVALID(rdmx_to_pci_M_AXI_AWVALID),
-        .M_AXI_BREADY(rdmx_to_pci_M_AXI_BREADY),
-        .M_AXI_BRESP(rdmx_to_pci_M_AXI_BRESP),
-        .M_AXI_BVALID(rdmx_to_pci_M_AXI_BVALID),
-        .M_AXI_RDATA(rdmx_to_pci_M_AXI_RDATA),
-        .M_AXI_RLAST(rdmx_to_pci_M_AXI_RLAST),
-        .M_AXI_RREADY(rdmx_to_pci_M_AXI_RREADY),
-        .M_AXI_RRESP(rdmx_to_pci_M_AXI_RRESP),
-        .M_AXI_RVALID(rdmx_to_pci_M_AXI_RVALID),
-        .M_AXI_WDATA(rdmx_to_pci_M_AXI_WDATA),
-        .M_AXI_WLAST(rdmx_to_pci_M_AXI_WLAST),
-        .M_AXI_WREADY(rdmx_to_pci_M_AXI_WREADY),
-        .M_AXI_WSTRB(rdmx_to_pci_M_AXI_WSTRB),
-        .M_AXI_WVALID(rdmx_to_pci_M_AXI_WVALID),
-        .clk(pcie_bridge_axi_aclk),
+  rdmx_to_pci_imp_AXHD6H rdmx_to_pci
+       (.AXIS_IN_tdata(axis_throttle_axis_out_TDATA),
+        .AXIS_IN_tlast(axis_throttle_axis_out_TLAST),
+        .AXIS_IN_tready(axis_throttle_axis_out_TREADY),
+        .AXIS_IN_tvalid(axis_throttle_axis_out_TVALID),
+        .M_AXI_araddr(rdmx_to_pci_M_AXI_ARADDR),
+        .M_AXI_arburst(rdmx_to_pci_M_AXI_ARBURST),
+        .M_AXI_arcache(rdmx_to_pci_M_AXI_ARCACHE),
+        .M_AXI_arid(rdmx_to_pci_M_AXI_ARID),
+        .M_AXI_arlen(rdmx_to_pci_M_AXI_ARLEN),
+        .M_AXI_arlock(rdmx_to_pci_M_AXI_ARLOCK),
+        .M_AXI_arprot(rdmx_to_pci_M_AXI_ARPROT),
+        .M_AXI_arqos(rdmx_to_pci_M_AXI_ARQOS),
+        .M_AXI_arready(rdmx_to_pci_M_AXI_ARREADY),
+        .M_AXI_arsize(rdmx_to_pci_M_AXI_ARSIZE),
+        .M_AXI_arvalid(rdmx_to_pci_M_AXI_ARVALID),
+        .M_AXI_awaddr(rdmx_to_pci_M_AXI_AWADDR),
+        .M_AXI_awburst(rdmx_to_pci_M_AXI_AWBURST),
+        .M_AXI_awcache(rdmx_to_pci_M_AXI_AWCACHE),
+        .M_AXI_awid(rdmx_to_pci_M_AXI_AWID),
+        .M_AXI_awlen(rdmx_to_pci_M_AXI_AWLEN),
+        .M_AXI_awlock(rdmx_to_pci_M_AXI_AWLOCK),
+        .M_AXI_awprot(rdmx_to_pci_M_AXI_AWPROT),
+        .M_AXI_awqos(rdmx_to_pci_M_AXI_AWQOS),
+        .M_AXI_awready(rdmx_to_pci_M_AXI_AWREADY),
+        .M_AXI_awsize(rdmx_to_pci_M_AXI_AWSIZE),
+        .M_AXI_awvalid(rdmx_to_pci_M_AXI_AWVALID),
+        .M_AXI_bid(rdmx_to_pci_M_AXI_BID),
+        .M_AXI_bready(rdmx_to_pci_M_AXI_BREADY),
+        .M_AXI_bresp(rdmx_to_pci_M_AXI_BRESP),
+        .M_AXI_bvalid(rdmx_to_pci_M_AXI_BVALID),
+        .M_AXI_rdata(rdmx_to_pci_M_AXI_RDATA),
+        .M_AXI_rid(rdmx_to_pci_M_AXI_RID),
+        .M_AXI_rlast(rdmx_to_pci_M_AXI_RLAST),
+        .M_AXI_rready(rdmx_to_pci_M_AXI_RREADY),
+        .M_AXI_rresp(rdmx_to_pci_M_AXI_RRESP),
+        .M_AXI_rvalid(rdmx_to_pci_M_AXI_RVALID),
+        .M_AXI_wdata(rdmx_to_pci_M_AXI_WDATA),
+        .M_AXI_wlast(rdmx_to_pci_M_AXI_WLAST),
+        .M_AXI_wready(rdmx_to_pci_M_AXI_WREADY),
+        .M_AXI_wstrb(rdmx_to_pci_M_AXI_WSTRB),
+        .M_AXI_wvalid(rdmx_to_pci_M_AXI_WVALID),
+        .axi_aclk(pcie_bridge_axi_aclk),
         .pci_base(pci_base),
         .pci_range_err_strb(pci_range_err_strb),
         .pci_size(pci_size),
         .pci_throughput(pci_throughput),
-        .resetn(resetn_in));
+        .resetn_in(resetn_in));
   top_level_system_ila_0_4 system_ila
        (.SLOT_0_AXIS_tdata(axis_throttle_axis_out_TDATA[0]),
         .SLOT_0_AXIS_tdest(1'b0),
@@ -6646,10 +6659,12 @@ module pcie1_bridge_imp_1YH9ZFK
   wire [0:0]rdmx_to_pci_M_AXI_AWREADY;
   wire [2:0]rdmx_to_pci_M_AXI_AWSIZE;
   wire rdmx_to_pci_M_AXI_AWVALID;
+  wire [5:0]rdmx_to_pci_M_AXI_BID;
   wire rdmx_to_pci_M_AXI_BREADY;
   wire [1:0]rdmx_to_pci_M_AXI_BRESP;
   wire [0:0]rdmx_to_pci_M_AXI_BVALID;
   wire [511:0]rdmx_to_pci_M_AXI_RDATA;
+  wire [5:0]rdmx_to_pci_M_AXI_RID;
   wire [0:0]rdmx_to_pci_M_AXI_RLAST;
   wire rdmx_to_pci_M_AXI_RREADY;
   wire [1:0]rdmx_to_pci_M_AXI_RRESP;
@@ -6735,10 +6750,12 @@ module pcie1_bridge_imp_1YH9ZFK
         .s_axi_awready({\^S_AXI_ABM_awready ,rdmx_to_pci_M_AXI_AWREADY}),
         .s_axi_awsize({S_AXI_ABM_awsize,rdmx_to_pci_M_AXI_AWSIZE}),
         .s_axi_awvalid({S_AXI_ABM_awvalid,rdmx_to_pci_M_AXI_AWVALID}),
+        .s_axi_bid(rdmx_to_pci_M_AXI_BID),
         .s_axi_bready({S_AXI_ABM_bready,rdmx_to_pci_M_AXI_BREADY}),
         .s_axi_bresp({\^S_AXI_ABM_bresp ,rdmx_to_pci_M_AXI_BRESP}),
         .s_axi_bvalid({\^S_AXI_ABM_bvalid ,rdmx_to_pci_M_AXI_BVALID}),
         .s_axi_rdata({\^S_AXI_ABM_rdata ,rdmx_to_pci_M_AXI_RDATA}),
+        .s_axi_rid(rdmx_to_pci_M_AXI_RID),
         .s_axi_rlast({\^S_AXI_ABM_rlast ,rdmx_to_pci_M_AXI_RLAST}),
         .s_axi_rready({S_AXI_ABM_rready,rdmx_to_pci_M_AXI_RREADY}),
         .s_axi_rresp({\^S_AXI_ABM_rresp ,rdmx_to_pci_M_AXI_RRESP}),
@@ -6819,51 +6836,54 @@ module pcie1_bridge_imp_1YH9ZFK
         .resetn_in(resetn_in),
         .sys_clk(pcie_bridge_axi_aclk),
         .sys_rst_n(pcie_sys_rst_n));
-  top_level_rdmx_to_pci_1 rdmx_to_pci
-       (.AXIS_IN_TDATA(axis_throttle_axis_out_TDATA),
-        .AXIS_IN_TREADY(axis_throttle_axis_out_TREADY),
-        .AXIS_IN_TVALID(axis_throttle_axis_out_TVALID),
-        .M_AXI_ARADDR(rdmx_to_pci_M_AXI_ARADDR),
-        .M_AXI_ARBURST(rdmx_to_pci_M_AXI_ARBURST),
-        .M_AXI_ARCACHE(rdmx_to_pci_M_AXI_ARCACHE),
-        .M_AXI_ARID(rdmx_to_pci_M_AXI_ARID),
-        .M_AXI_ARLEN(rdmx_to_pci_M_AXI_ARLEN),
-        .M_AXI_ARLOCK(rdmx_to_pci_M_AXI_ARLOCK),
-        .M_AXI_ARPROT(rdmx_to_pci_M_AXI_ARPROT),
-        .M_AXI_ARQOS(rdmx_to_pci_M_AXI_ARQOS),
-        .M_AXI_ARREADY(rdmx_to_pci_M_AXI_ARREADY),
-        .M_AXI_ARSIZE(rdmx_to_pci_M_AXI_ARSIZE),
-        .M_AXI_ARVALID(rdmx_to_pci_M_AXI_ARVALID),
-        .M_AXI_AWADDR(rdmx_to_pci_M_AXI_AWADDR),
-        .M_AXI_AWBURST(rdmx_to_pci_M_AXI_AWBURST),
-        .M_AXI_AWCACHE(rdmx_to_pci_M_AXI_AWCACHE),
-        .M_AXI_AWID(rdmx_to_pci_M_AXI_AWID),
-        .M_AXI_AWLEN(rdmx_to_pci_M_AXI_AWLEN),
-        .M_AXI_AWLOCK(rdmx_to_pci_M_AXI_AWLOCK),
-        .M_AXI_AWPROT(rdmx_to_pci_M_AXI_AWPROT),
-        .M_AXI_AWQOS(rdmx_to_pci_M_AXI_AWQOS),
-        .M_AXI_AWREADY(rdmx_to_pci_M_AXI_AWREADY),
-        .M_AXI_AWSIZE(rdmx_to_pci_M_AXI_AWSIZE),
-        .M_AXI_AWVALID(rdmx_to_pci_M_AXI_AWVALID),
-        .M_AXI_BREADY(rdmx_to_pci_M_AXI_BREADY),
-        .M_AXI_BRESP(rdmx_to_pci_M_AXI_BRESP),
-        .M_AXI_BVALID(rdmx_to_pci_M_AXI_BVALID),
-        .M_AXI_RDATA(rdmx_to_pci_M_AXI_RDATA),
-        .M_AXI_RLAST(rdmx_to_pci_M_AXI_RLAST),
-        .M_AXI_RREADY(rdmx_to_pci_M_AXI_RREADY),
-        .M_AXI_RRESP(rdmx_to_pci_M_AXI_RRESP),
-        .M_AXI_RVALID(rdmx_to_pci_M_AXI_RVALID),
-        .M_AXI_WDATA(rdmx_to_pci_M_AXI_WDATA),
-        .M_AXI_WLAST(rdmx_to_pci_M_AXI_WLAST),
-        .M_AXI_WREADY(rdmx_to_pci_M_AXI_WREADY),
-        .M_AXI_WSTRB(rdmx_to_pci_M_AXI_WSTRB),
-        .M_AXI_WVALID(rdmx_to_pci_M_AXI_WVALID),
-        .clk(pcie_bridge_axi_aclk),
+  rdmx_to_pci_imp_IZ3YL9 rdmx_to_pci
+       (.AXIS_IN_tdata(axis_throttle_axis_out_TDATA),
+        .AXIS_IN_tlast(axis_throttle_axis_out_TLAST),
+        .AXIS_IN_tready(axis_throttle_axis_out_TREADY),
+        .AXIS_IN_tvalid(axis_throttle_axis_out_TVALID),
+        .M_AXI_araddr(rdmx_to_pci_M_AXI_ARADDR),
+        .M_AXI_arburst(rdmx_to_pci_M_AXI_ARBURST),
+        .M_AXI_arcache(rdmx_to_pci_M_AXI_ARCACHE),
+        .M_AXI_arid(rdmx_to_pci_M_AXI_ARID),
+        .M_AXI_arlen(rdmx_to_pci_M_AXI_ARLEN),
+        .M_AXI_arlock(rdmx_to_pci_M_AXI_ARLOCK),
+        .M_AXI_arprot(rdmx_to_pci_M_AXI_ARPROT),
+        .M_AXI_arqos(rdmx_to_pci_M_AXI_ARQOS),
+        .M_AXI_arready(rdmx_to_pci_M_AXI_ARREADY),
+        .M_AXI_arsize(rdmx_to_pci_M_AXI_ARSIZE),
+        .M_AXI_arvalid(rdmx_to_pci_M_AXI_ARVALID),
+        .M_AXI_awaddr(rdmx_to_pci_M_AXI_AWADDR),
+        .M_AXI_awburst(rdmx_to_pci_M_AXI_AWBURST),
+        .M_AXI_awcache(rdmx_to_pci_M_AXI_AWCACHE),
+        .M_AXI_awid(rdmx_to_pci_M_AXI_AWID),
+        .M_AXI_awlen(rdmx_to_pci_M_AXI_AWLEN),
+        .M_AXI_awlock(rdmx_to_pci_M_AXI_AWLOCK),
+        .M_AXI_awprot(rdmx_to_pci_M_AXI_AWPROT),
+        .M_AXI_awqos(rdmx_to_pci_M_AXI_AWQOS),
+        .M_AXI_awready(rdmx_to_pci_M_AXI_AWREADY),
+        .M_AXI_awsize(rdmx_to_pci_M_AXI_AWSIZE),
+        .M_AXI_awvalid(rdmx_to_pci_M_AXI_AWVALID),
+        .M_AXI_bid(rdmx_to_pci_M_AXI_BID),
+        .M_AXI_bready(rdmx_to_pci_M_AXI_BREADY),
+        .M_AXI_bresp(rdmx_to_pci_M_AXI_BRESP),
+        .M_AXI_bvalid(rdmx_to_pci_M_AXI_BVALID),
+        .M_AXI_rdata(rdmx_to_pci_M_AXI_RDATA),
+        .M_AXI_rid(rdmx_to_pci_M_AXI_RID),
+        .M_AXI_rlast(rdmx_to_pci_M_AXI_RLAST),
+        .M_AXI_rready(rdmx_to_pci_M_AXI_RREADY),
+        .M_AXI_rresp(rdmx_to_pci_M_AXI_RRESP),
+        .M_AXI_rvalid(rdmx_to_pci_M_AXI_RVALID),
+        .M_AXI_wdata(rdmx_to_pci_M_AXI_WDATA),
+        .M_AXI_wlast(rdmx_to_pci_M_AXI_WLAST),
+        .M_AXI_wready(rdmx_to_pci_M_AXI_WREADY),
+        .M_AXI_wstrb(rdmx_to_pci_M_AXI_WSTRB),
+        .M_AXI_wvalid(rdmx_to_pci_M_AXI_WVALID),
         .pci_base(pci_base),
         .pci_range_err_strb(pci_range_err_strb),
         .pci_size(pci_size),
         .pci_throughput(pci_throughput),
-        .resetn(resetn_in));
+        .resetn_in(resetn_in),
+        .sys_clk(pcie_bridge_axi_aclk));
   top_level_system_ila_1 system_ila
        (.SLOT_0_AXIS_tdata(axis_throttle_axis_out_TDATA[0]),
         .SLOT_0_AXIS_tdest(1'b0),
@@ -6948,6 +6968,7 @@ module qsfp_imp_1PWBPIJ
     max_packets,
     resetn,
     rx_aligned,
+    sender_port,
     status_leds);
   input [511:0]axis_loopback_tdata;
   output axis_loopback_tready;
@@ -6973,6 +6994,7 @@ module qsfp_imp_1PWBPIJ
   input [63:0]max_packets;
   input resetn;
   output rx_aligned;
+  output [7:0]sender_port;
   output [2:0]status_leds;
 
   wire [511:0]axis_loopback_tdata;
@@ -7015,6 +7037,7 @@ module qsfp_imp_1PWBPIJ
   wire repacketizer_axis_out_TVALID;
   wire resetn;
   wire rx_aligned;
+  wire [7:0]sender_port;
   wire [2:0]status_leds;
 
   top_level_eth_tx_mux_1 eth_tx_mux
@@ -7074,6 +7097,14 @@ module qsfp_imp_1PWBPIJ
         .max_packets(max_packets),
         .resetn(resetn),
         .start(gen_packets));
+  top_level_port_detect_1 port_detect
+       (.axis_tdata(axis_rx_tdata),
+        .axis_tlast(axis_rx_tlast),
+        .axis_tready(axis_rx_tready),
+        .axis_tvalid(axis_rx_tvalid),
+        .clk(clk),
+        .qsfp_port(sender_port),
+        .resetn(resetn));
   repacketizer_imp_1WRCN7Q repacketizer
        (.axis_in_tdata(axis_loopback_tdata),
         .axis_in_tready(axis_loopback_tready),
@@ -7118,6 +7149,7 @@ module qsfp_imp_SK5CEB
     max_packets,
     resetn,
     rx_aligned,
+    sender_port,
     status_leds);
   input [511:0]axis_loopback_tdata;
   output axis_loopback_tready;
@@ -7143,6 +7175,7 @@ module qsfp_imp_SK5CEB
   input [63:0]max_packets;
   input resetn;
   output rx_aligned;
+  output [7:0]sender_port;
   output [2:0]status_leds;
 
   wire [511:0]axis_loopback_tdata;
@@ -7185,6 +7218,7 @@ module qsfp_imp_SK5CEB
   wire repacketizer_axis_out_TVALID;
   wire resetn;
   wire rx_aligned;
+  wire [7:0]sender_port;
   wire [2:0]status_leds;
 
   top_level_eth_tx_mux_0_0 eth_tx_mux
@@ -7244,6 +7278,14 @@ module qsfp_imp_SK5CEB
         .max_packets(max_packets),
         .resetn(resetn),
         .start(gen_packets));
+  top_level_port_detect_0_0 port_detect
+       (.axis_tdata(axis_rx_tdata),
+        .axis_tlast(axis_rx_tlast),
+        .axis_tready(axis_rx_tready),
+        .axis_tvalid(axis_rx_tvalid),
+        .clk(clk),
+        .qsfp_port(sender_port),
+        .resetn(resetn));
   repacketizer_imp_1WD6MXN repacketizer
        (.axis_in_tdata(axis_loopback_tdata),
         .axis_in_tready(axis_loopback_tready),
@@ -12765,6 +12807,612 @@ module ram_imp_QIIXRU
         .aresetn(aresetn));
 endmodule
 
+module rdmx_to_pci_imp_AXHD6H
+   (AXIS_IN_tdata,
+    AXIS_IN_tlast,
+    AXIS_IN_tready,
+    AXIS_IN_tvalid,
+    M_AXI_araddr,
+    M_AXI_arburst,
+    M_AXI_arcache,
+    M_AXI_arid,
+    M_AXI_arlen,
+    M_AXI_arlock,
+    M_AXI_arprot,
+    M_AXI_arqos,
+    M_AXI_arready,
+    M_AXI_arsize,
+    M_AXI_arvalid,
+    M_AXI_awaddr,
+    M_AXI_awburst,
+    M_AXI_awcache,
+    M_AXI_awid,
+    M_AXI_awlen,
+    M_AXI_awlock,
+    M_AXI_awprot,
+    M_AXI_awqos,
+    M_AXI_awready,
+    M_AXI_awsize,
+    M_AXI_awvalid,
+    M_AXI_bid,
+    M_AXI_bready,
+    M_AXI_bresp,
+    M_AXI_bvalid,
+    M_AXI_rdata,
+    M_AXI_rid,
+    M_AXI_rlast,
+    M_AXI_rready,
+    M_AXI_rresp,
+    M_AXI_rvalid,
+    M_AXI_wdata,
+    M_AXI_wlast,
+    M_AXI_wready,
+    M_AXI_wstrb,
+    M_AXI_wvalid,
+    axi_aclk,
+    pci_base,
+    pci_range_err_strb,
+    pci_size,
+    pci_throughput,
+    resetn_in);
+  input [511:0]AXIS_IN_tdata;
+  input AXIS_IN_tlast;
+  output AXIS_IN_tready;
+  input AXIS_IN_tvalid;
+  output [63:0]M_AXI_araddr;
+  output [1:0]M_AXI_arburst;
+  output [3:0]M_AXI_arcache;
+  output [3:0]M_AXI_arid;
+  output [7:0]M_AXI_arlen;
+  output M_AXI_arlock;
+  output [2:0]M_AXI_arprot;
+  output [3:0]M_AXI_arqos;
+  input M_AXI_arready;
+  output [2:0]M_AXI_arsize;
+  output M_AXI_arvalid;
+  output [63:0]M_AXI_awaddr;
+  output [1:0]M_AXI_awburst;
+  output [3:0]M_AXI_awcache;
+  output [3:0]M_AXI_awid;
+  output [7:0]M_AXI_awlen;
+  output M_AXI_awlock;
+  output [2:0]M_AXI_awprot;
+  output [3:0]M_AXI_awqos;
+  input M_AXI_awready;
+  output [2:0]M_AXI_awsize;
+  output M_AXI_awvalid;
+  input [5:0]M_AXI_bid;
+  output M_AXI_bready;
+  input [1:0]M_AXI_bresp;
+  input M_AXI_bvalid;
+  input [511:0]M_AXI_rdata;
+  input [5:0]M_AXI_rid;
+  input M_AXI_rlast;
+  output M_AXI_rready;
+  input [1:0]M_AXI_rresp;
+  input M_AXI_rvalid;
+  output [511:0]M_AXI_wdata;
+  output M_AXI_wlast;
+  input M_AXI_wready;
+  output [63:0]M_AXI_wstrb;
+  output M_AXI_wvalid;
+  input axi_aclk;
+  input [63:0]pci_base;
+  output pci_range_err_strb;
+  input [63:0]pci_size;
+  output [31:0]pci_throughput;
+  input resetn_in;
+
+  wire [511:0]AXIS_IN_tdata;
+  wire AXIS_IN_tready;
+  wire AXIS_IN_tvalid;
+  wire [63:0]M_AXI_araddr;
+  wire [1:0]M_AXI_arburst;
+  wire [3:0]M_AXI_arcache;
+  wire [3:0]M_AXI_arid;
+  wire [7:0]M_AXI_arlen;
+  wire M_AXI_arlock;
+  wire [2:0]M_AXI_arprot;
+  wire [3:0]M_AXI_arqos;
+  wire M_AXI_arready;
+  wire [2:0]M_AXI_arsize;
+  wire M_AXI_arvalid;
+  wire [63:0]M_AXI_awaddr;
+  wire [1:0]M_AXI_awburst;
+  wire [3:0]M_AXI_awcache;
+  wire [3:0]M_AXI_awid;
+  wire [7:0]M_AXI_awlen;
+  wire M_AXI_awlock;
+  wire [2:0]M_AXI_awprot;
+  wire [3:0]M_AXI_awqos;
+  wire M_AXI_awready;
+  wire [2:0]M_AXI_awsize;
+  wire M_AXI_awvalid;
+  wire [5:0]M_AXI_bid;
+  wire M_AXI_bready;
+  wire [1:0]M_AXI_bresp;
+  wire M_AXI_bvalid;
+  wire [511:0]M_AXI_rdata;
+  wire [5:0]M_AXI_rid;
+  wire M_AXI_rlast;
+  wire M_AXI_rready;
+  wire [1:0]M_AXI_rresp;
+  wire M_AXI_rvalid;
+  wire [511:0]M_AXI_wdata;
+  wire M_AXI_wlast;
+  wire M_AXI_wready;
+  wire [63:0]M_AXI_wstrb;
+  wire M_AXI_wvalid;
+  wire axi_aclk;
+  wire [63:0]pci_base;
+  wire pci_range_err_strb;
+  wire [63:0]pci_size;
+  wire [31:0]pci_throughput;
+  wire [63:0]rdmx_to_pci_M_AXI_ARADDR;
+  wire [1:0]rdmx_to_pci_M_AXI_ARBURST;
+  wire [3:0]rdmx_to_pci_M_AXI_ARCACHE;
+  wire [3:0]rdmx_to_pci_M_AXI_ARID;
+  wire [7:0]rdmx_to_pci_M_AXI_ARLEN;
+  wire rdmx_to_pci_M_AXI_ARLOCK;
+  wire [2:0]rdmx_to_pci_M_AXI_ARPROT;
+  wire [3:0]rdmx_to_pci_M_AXI_ARQOS;
+  wire rdmx_to_pci_M_AXI_ARREADY;
+  wire [2:0]rdmx_to_pci_M_AXI_ARSIZE;
+  wire rdmx_to_pci_M_AXI_ARVALID;
+  wire [63:0]rdmx_to_pci_M_AXI_AWADDR;
+  wire [1:0]rdmx_to_pci_M_AXI_AWBURST;
+  wire [3:0]rdmx_to_pci_M_AXI_AWCACHE;
+  wire [3:0]rdmx_to_pci_M_AXI_AWID;
+  wire [7:0]rdmx_to_pci_M_AXI_AWLEN;
+  wire rdmx_to_pci_M_AXI_AWLOCK;
+  wire [2:0]rdmx_to_pci_M_AXI_AWPROT;
+  wire [3:0]rdmx_to_pci_M_AXI_AWQOS;
+  wire rdmx_to_pci_M_AXI_AWREADY;
+  wire [2:0]rdmx_to_pci_M_AXI_AWSIZE;
+  wire rdmx_to_pci_M_AXI_AWUSER;
+  wire rdmx_to_pci_M_AXI_AWVALID;
+  wire rdmx_to_pci_M_AXI_BREADY;
+  wire [1:0]rdmx_to_pci_M_AXI_BRESP;
+  wire rdmx_to_pci_M_AXI_BVALID;
+  wire [511:0]rdmx_to_pci_M_AXI_RDATA;
+  wire rdmx_to_pci_M_AXI_RLAST;
+  wire rdmx_to_pci_M_AXI_RREADY;
+  wire [1:0]rdmx_to_pci_M_AXI_RRESP;
+  wire rdmx_to_pci_M_AXI_RVALID;
+  wire [511:0]rdmx_to_pci_M_AXI_WDATA;
+  wire rdmx_to_pci_M_AXI_WLAST;
+  wire rdmx_to_pci_M_AXI_WREADY;
+  wire [63:0]rdmx_to_pci_M_AXI_WSTRB;
+  wire rdmx_to_pci_M_AXI_WVALID;
+  wire resetn_in;
+
+  top_level_axi4_memfence_0_0 axi4_memfence
+       (.DST_AXI_ARADDR(M_AXI_araddr),
+        .DST_AXI_ARBURST(M_AXI_arburst),
+        .DST_AXI_ARCACHE(M_AXI_arcache),
+        .DST_AXI_ARID(M_AXI_arid),
+        .DST_AXI_ARLEN(M_AXI_arlen),
+        .DST_AXI_ARLOCK(M_AXI_arlock),
+        .DST_AXI_ARPROT(M_AXI_arprot),
+        .DST_AXI_ARQOS(M_AXI_arqos),
+        .DST_AXI_ARREADY(M_AXI_arready),
+        .DST_AXI_ARSIZE(M_AXI_arsize),
+        .DST_AXI_ARVALID(M_AXI_arvalid),
+        .DST_AXI_AWADDR(M_AXI_awaddr),
+        .DST_AXI_AWBURST(M_AXI_awburst),
+        .DST_AXI_AWCACHE(M_AXI_awcache),
+        .DST_AXI_AWID(M_AXI_awid),
+        .DST_AXI_AWLEN(M_AXI_awlen),
+        .DST_AXI_AWLOCK(M_AXI_awlock),
+        .DST_AXI_AWPROT(M_AXI_awprot),
+        .DST_AXI_AWQOS(M_AXI_awqos),
+        .DST_AXI_AWREADY(M_AXI_awready),
+        .DST_AXI_AWSIZE(M_AXI_awsize),
+        .DST_AXI_AWVALID(M_AXI_awvalid),
+        .DST_AXI_BID(M_AXI_bid[3:0]),
+        .DST_AXI_BREADY(M_AXI_bready),
+        .DST_AXI_BRESP(M_AXI_bresp),
+        .DST_AXI_BVALID(M_AXI_bvalid),
+        .DST_AXI_RDATA(M_AXI_rdata),
+        .DST_AXI_RID(M_AXI_rid[3:0]),
+        .DST_AXI_RLAST(M_AXI_rlast),
+        .DST_AXI_RREADY(M_AXI_rready),
+        .DST_AXI_RRESP(M_AXI_rresp),
+        .DST_AXI_RVALID(M_AXI_rvalid),
+        .DST_AXI_WDATA(M_AXI_wdata),
+        .DST_AXI_WLAST(M_AXI_wlast),
+        .DST_AXI_WREADY(M_AXI_wready),
+        .DST_AXI_WSTRB(M_AXI_wstrb),
+        .DST_AXI_WVALID(M_AXI_wvalid),
+        .SRC_AXI_ARADDR(rdmx_to_pci_M_AXI_ARADDR),
+        .SRC_AXI_ARBURST(rdmx_to_pci_M_AXI_ARBURST),
+        .SRC_AXI_ARCACHE(rdmx_to_pci_M_AXI_ARCACHE),
+        .SRC_AXI_ARID(rdmx_to_pci_M_AXI_ARID),
+        .SRC_AXI_ARLEN(rdmx_to_pci_M_AXI_ARLEN),
+        .SRC_AXI_ARLOCK(rdmx_to_pci_M_AXI_ARLOCK),
+        .SRC_AXI_ARPROT(rdmx_to_pci_M_AXI_ARPROT),
+        .SRC_AXI_ARQOS(rdmx_to_pci_M_AXI_ARQOS),
+        .SRC_AXI_ARREADY(rdmx_to_pci_M_AXI_ARREADY),
+        .SRC_AXI_ARSIZE(rdmx_to_pci_M_AXI_ARSIZE),
+        .SRC_AXI_ARVALID(rdmx_to_pci_M_AXI_ARVALID),
+        .SRC_AXI_AWADDR(rdmx_to_pci_M_AXI_AWADDR),
+        .SRC_AXI_AWBURST(rdmx_to_pci_M_AXI_AWBURST),
+        .SRC_AXI_AWCACHE(rdmx_to_pci_M_AXI_AWCACHE),
+        .SRC_AXI_AWID(rdmx_to_pci_M_AXI_AWID),
+        .SRC_AXI_AWLEN(rdmx_to_pci_M_AXI_AWLEN),
+        .SRC_AXI_AWLOCK(rdmx_to_pci_M_AXI_AWLOCK),
+        .SRC_AXI_AWPROT(rdmx_to_pci_M_AXI_AWPROT),
+        .SRC_AXI_AWQOS(rdmx_to_pci_M_AXI_AWQOS),
+        .SRC_AXI_AWREADY(rdmx_to_pci_M_AXI_AWREADY),
+        .SRC_AXI_AWSIZE(rdmx_to_pci_M_AXI_AWSIZE),
+        .SRC_AXI_AWUSER(rdmx_to_pci_M_AXI_AWUSER),
+        .SRC_AXI_AWVALID(rdmx_to_pci_M_AXI_AWVALID),
+        .SRC_AXI_BREADY(rdmx_to_pci_M_AXI_BREADY),
+        .SRC_AXI_BRESP(rdmx_to_pci_M_AXI_BRESP),
+        .SRC_AXI_BVALID(rdmx_to_pci_M_AXI_BVALID),
+        .SRC_AXI_RDATA(rdmx_to_pci_M_AXI_RDATA),
+        .SRC_AXI_RLAST(rdmx_to_pci_M_AXI_RLAST),
+        .SRC_AXI_RREADY(rdmx_to_pci_M_AXI_RREADY),
+        .SRC_AXI_RRESP(rdmx_to_pci_M_AXI_RRESP),
+        .SRC_AXI_RVALID(rdmx_to_pci_M_AXI_RVALID),
+        .SRC_AXI_WDATA(rdmx_to_pci_M_AXI_WDATA),
+        .SRC_AXI_WLAST(rdmx_to_pci_M_AXI_WLAST),
+        .SRC_AXI_WREADY(rdmx_to_pci_M_AXI_WREADY),
+        .SRC_AXI_WSTRB(rdmx_to_pci_M_AXI_WSTRB),
+        .SRC_AXI_WVALID(rdmx_to_pci_M_AXI_WVALID),
+        .clk(axi_aclk),
+        .resetn(resetn_in));
+  top_level_rdmx_to_pci_0_0 rdmx_to_pci
+       (.AXIS_IN_TDATA(AXIS_IN_tdata),
+        .AXIS_IN_TREADY(AXIS_IN_tready),
+        .AXIS_IN_TVALID(AXIS_IN_tvalid),
+        .M_AXI_ARADDR(rdmx_to_pci_M_AXI_ARADDR),
+        .M_AXI_ARBURST(rdmx_to_pci_M_AXI_ARBURST),
+        .M_AXI_ARCACHE(rdmx_to_pci_M_AXI_ARCACHE),
+        .M_AXI_ARID(rdmx_to_pci_M_AXI_ARID),
+        .M_AXI_ARLEN(rdmx_to_pci_M_AXI_ARLEN),
+        .M_AXI_ARLOCK(rdmx_to_pci_M_AXI_ARLOCK),
+        .M_AXI_ARPROT(rdmx_to_pci_M_AXI_ARPROT),
+        .M_AXI_ARQOS(rdmx_to_pci_M_AXI_ARQOS),
+        .M_AXI_ARREADY(rdmx_to_pci_M_AXI_ARREADY),
+        .M_AXI_ARSIZE(rdmx_to_pci_M_AXI_ARSIZE),
+        .M_AXI_ARVALID(rdmx_to_pci_M_AXI_ARVALID),
+        .M_AXI_AWADDR(rdmx_to_pci_M_AXI_AWADDR),
+        .M_AXI_AWBURST(rdmx_to_pci_M_AXI_AWBURST),
+        .M_AXI_AWCACHE(rdmx_to_pci_M_AXI_AWCACHE),
+        .M_AXI_AWID(rdmx_to_pci_M_AXI_AWID),
+        .M_AXI_AWLEN(rdmx_to_pci_M_AXI_AWLEN),
+        .M_AXI_AWLOCK(rdmx_to_pci_M_AXI_AWLOCK),
+        .M_AXI_AWPROT(rdmx_to_pci_M_AXI_AWPROT),
+        .M_AXI_AWQOS(rdmx_to_pci_M_AXI_AWQOS),
+        .M_AXI_AWREADY(rdmx_to_pci_M_AXI_AWREADY),
+        .M_AXI_AWSIZE(rdmx_to_pci_M_AXI_AWSIZE),
+        .M_AXI_AWUSER(rdmx_to_pci_M_AXI_AWUSER),
+        .M_AXI_AWVALID(rdmx_to_pci_M_AXI_AWVALID),
+        .M_AXI_BREADY(rdmx_to_pci_M_AXI_BREADY),
+        .M_AXI_BRESP(rdmx_to_pci_M_AXI_BRESP),
+        .M_AXI_BVALID(rdmx_to_pci_M_AXI_BVALID),
+        .M_AXI_RDATA(rdmx_to_pci_M_AXI_RDATA),
+        .M_AXI_RLAST(rdmx_to_pci_M_AXI_RLAST),
+        .M_AXI_RREADY(rdmx_to_pci_M_AXI_RREADY),
+        .M_AXI_RRESP(rdmx_to_pci_M_AXI_RRESP),
+        .M_AXI_RVALID(rdmx_to_pci_M_AXI_RVALID),
+        .M_AXI_WDATA(rdmx_to_pci_M_AXI_WDATA),
+        .M_AXI_WLAST(rdmx_to_pci_M_AXI_WLAST),
+        .M_AXI_WREADY(rdmx_to_pci_M_AXI_WREADY),
+        .M_AXI_WSTRB(rdmx_to_pci_M_AXI_WSTRB),
+        .M_AXI_WVALID(rdmx_to_pci_M_AXI_WVALID),
+        .clk(axi_aclk),
+        .pci_base(pci_base),
+        .pci_range_err_strb(pci_range_err_strb),
+        .pci_size(pci_size),
+        .pci_throughput(pci_throughput),
+        .resetn(resetn_in));
+endmodule
+
+module rdmx_to_pci_imp_IZ3YL9
+   (AXIS_IN_tdata,
+    AXIS_IN_tlast,
+    AXIS_IN_tready,
+    AXIS_IN_tvalid,
+    M_AXI_araddr,
+    M_AXI_arburst,
+    M_AXI_arcache,
+    M_AXI_arid,
+    M_AXI_arlen,
+    M_AXI_arlock,
+    M_AXI_arprot,
+    M_AXI_arqos,
+    M_AXI_arready,
+    M_AXI_arsize,
+    M_AXI_arvalid,
+    M_AXI_awaddr,
+    M_AXI_awburst,
+    M_AXI_awcache,
+    M_AXI_awid,
+    M_AXI_awlen,
+    M_AXI_awlock,
+    M_AXI_awprot,
+    M_AXI_awqos,
+    M_AXI_awready,
+    M_AXI_awsize,
+    M_AXI_awvalid,
+    M_AXI_bid,
+    M_AXI_bready,
+    M_AXI_bresp,
+    M_AXI_bvalid,
+    M_AXI_rdata,
+    M_AXI_rid,
+    M_AXI_rlast,
+    M_AXI_rready,
+    M_AXI_rresp,
+    M_AXI_rvalid,
+    M_AXI_wdata,
+    M_AXI_wlast,
+    M_AXI_wready,
+    M_AXI_wstrb,
+    M_AXI_wvalid,
+    pci_base,
+    pci_range_err_strb,
+    pci_size,
+    pci_throughput,
+    resetn_in,
+    sys_clk);
+  input [511:0]AXIS_IN_tdata;
+  input AXIS_IN_tlast;
+  output AXIS_IN_tready;
+  input AXIS_IN_tvalid;
+  output [63:0]M_AXI_araddr;
+  output [1:0]M_AXI_arburst;
+  output [3:0]M_AXI_arcache;
+  output [3:0]M_AXI_arid;
+  output [7:0]M_AXI_arlen;
+  output M_AXI_arlock;
+  output [2:0]M_AXI_arprot;
+  output [3:0]M_AXI_arqos;
+  input M_AXI_arready;
+  output [2:0]M_AXI_arsize;
+  output M_AXI_arvalid;
+  output [63:0]M_AXI_awaddr;
+  output [1:0]M_AXI_awburst;
+  output [3:0]M_AXI_awcache;
+  output [3:0]M_AXI_awid;
+  output [7:0]M_AXI_awlen;
+  output M_AXI_awlock;
+  output [2:0]M_AXI_awprot;
+  output [3:0]M_AXI_awqos;
+  input M_AXI_awready;
+  output [2:0]M_AXI_awsize;
+  output M_AXI_awvalid;
+  input [5:0]M_AXI_bid;
+  output M_AXI_bready;
+  input [1:0]M_AXI_bresp;
+  input M_AXI_bvalid;
+  input [511:0]M_AXI_rdata;
+  input [5:0]M_AXI_rid;
+  input M_AXI_rlast;
+  output M_AXI_rready;
+  input [1:0]M_AXI_rresp;
+  input M_AXI_rvalid;
+  output [511:0]M_AXI_wdata;
+  output M_AXI_wlast;
+  input M_AXI_wready;
+  output [63:0]M_AXI_wstrb;
+  output M_AXI_wvalid;
+  input [63:0]pci_base;
+  output pci_range_err_strb;
+  input [63:0]pci_size;
+  output [31:0]pci_throughput;
+  input resetn_in;
+  input sys_clk;
+
+  wire [511:0]AXIS_IN_tdata;
+  wire AXIS_IN_tready;
+  wire AXIS_IN_tvalid;
+  wire [63:0]M_AXI_araddr;
+  wire [1:0]M_AXI_arburst;
+  wire [3:0]M_AXI_arcache;
+  wire [3:0]M_AXI_arid;
+  wire [7:0]M_AXI_arlen;
+  wire M_AXI_arlock;
+  wire [2:0]M_AXI_arprot;
+  wire [3:0]M_AXI_arqos;
+  wire M_AXI_arready;
+  wire [2:0]M_AXI_arsize;
+  wire M_AXI_arvalid;
+  wire [63:0]M_AXI_awaddr;
+  wire [1:0]M_AXI_awburst;
+  wire [3:0]M_AXI_awcache;
+  wire [3:0]M_AXI_awid;
+  wire [7:0]M_AXI_awlen;
+  wire M_AXI_awlock;
+  wire [2:0]M_AXI_awprot;
+  wire [3:0]M_AXI_awqos;
+  wire M_AXI_awready;
+  wire [2:0]M_AXI_awsize;
+  wire M_AXI_awvalid;
+  wire [5:0]M_AXI_bid;
+  wire M_AXI_bready;
+  wire [1:0]M_AXI_bresp;
+  wire M_AXI_bvalid;
+  wire [511:0]M_AXI_rdata;
+  wire [5:0]M_AXI_rid;
+  wire M_AXI_rlast;
+  wire M_AXI_rready;
+  wire [1:0]M_AXI_rresp;
+  wire M_AXI_rvalid;
+  wire [511:0]M_AXI_wdata;
+  wire M_AXI_wlast;
+  wire M_AXI_wready;
+  wire [63:0]M_AXI_wstrb;
+  wire M_AXI_wvalid;
+  wire [63:0]pci_base;
+  wire pci_range_err_strb;
+  wire [63:0]pci_size;
+  wire [31:0]pci_throughput;
+  wire [63:0]rdmx_to_pci_M_AXI_ARADDR;
+  wire [1:0]rdmx_to_pci_M_AXI_ARBURST;
+  wire [3:0]rdmx_to_pci_M_AXI_ARCACHE;
+  wire [3:0]rdmx_to_pci_M_AXI_ARID;
+  wire [7:0]rdmx_to_pci_M_AXI_ARLEN;
+  wire rdmx_to_pci_M_AXI_ARLOCK;
+  wire [2:0]rdmx_to_pci_M_AXI_ARPROT;
+  wire [3:0]rdmx_to_pci_M_AXI_ARQOS;
+  wire rdmx_to_pci_M_AXI_ARREADY;
+  wire [2:0]rdmx_to_pci_M_AXI_ARSIZE;
+  wire rdmx_to_pci_M_AXI_ARVALID;
+  wire [63:0]rdmx_to_pci_M_AXI_AWADDR;
+  wire [1:0]rdmx_to_pci_M_AXI_AWBURST;
+  wire [3:0]rdmx_to_pci_M_AXI_AWCACHE;
+  wire [3:0]rdmx_to_pci_M_AXI_AWID;
+  wire [7:0]rdmx_to_pci_M_AXI_AWLEN;
+  wire rdmx_to_pci_M_AXI_AWLOCK;
+  wire [2:0]rdmx_to_pci_M_AXI_AWPROT;
+  wire [3:0]rdmx_to_pci_M_AXI_AWQOS;
+  wire rdmx_to_pci_M_AXI_AWREADY;
+  wire [2:0]rdmx_to_pci_M_AXI_AWSIZE;
+  wire rdmx_to_pci_M_AXI_AWUSER;
+  wire rdmx_to_pci_M_AXI_AWVALID;
+  wire rdmx_to_pci_M_AXI_BREADY;
+  wire [1:0]rdmx_to_pci_M_AXI_BRESP;
+  wire rdmx_to_pci_M_AXI_BVALID;
+  wire [511:0]rdmx_to_pci_M_AXI_RDATA;
+  wire rdmx_to_pci_M_AXI_RLAST;
+  wire rdmx_to_pci_M_AXI_RREADY;
+  wire [1:0]rdmx_to_pci_M_AXI_RRESP;
+  wire rdmx_to_pci_M_AXI_RVALID;
+  wire [511:0]rdmx_to_pci_M_AXI_WDATA;
+  wire rdmx_to_pci_M_AXI_WLAST;
+  wire rdmx_to_pci_M_AXI_WREADY;
+  wire [63:0]rdmx_to_pci_M_AXI_WSTRB;
+  wire rdmx_to_pci_M_AXI_WVALID;
+  wire resetn_in;
+  wire sys_clk;
+
+  top_level_axi4_memfence_0_1 axi4_memfence
+       (.DST_AXI_ARADDR(M_AXI_araddr),
+        .DST_AXI_ARBURST(M_AXI_arburst),
+        .DST_AXI_ARCACHE(M_AXI_arcache),
+        .DST_AXI_ARID(M_AXI_arid),
+        .DST_AXI_ARLEN(M_AXI_arlen),
+        .DST_AXI_ARLOCK(M_AXI_arlock),
+        .DST_AXI_ARPROT(M_AXI_arprot),
+        .DST_AXI_ARQOS(M_AXI_arqos),
+        .DST_AXI_ARREADY(M_AXI_arready),
+        .DST_AXI_ARSIZE(M_AXI_arsize),
+        .DST_AXI_ARVALID(M_AXI_arvalid),
+        .DST_AXI_AWADDR(M_AXI_awaddr),
+        .DST_AXI_AWBURST(M_AXI_awburst),
+        .DST_AXI_AWCACHE(M_AXI_awcache),
+        .DST_AXI_AWID(M_AXI_awid),
+        .DST_AXI_AWLEN(M_AXI_awlen),
+        .DST_AXI_AWLOCK(M_AXI_awlock),
+        .DST_AXI_AWPROT(M_AXI_awprot),
+        .DST_AXI_AWQOS(M_AXI_awqos),
+        .DST_AXI_AWREADY(M_AXI_awready),
+        .DST_AXI_AWSIZE(M_AXI_awsize),
+        .DST_AXI_AWVALID(M_AXI_awvalid),
+        .DST_AXI_BID(M_AXI_bid[3:0]),
+        .DST_AXI_BREADY(M_AXI_bready),
+        .DST_AXI_BRESP(M_AXI_bresp),
+        .DST_AXI_BVALID(M_AXI_bvalid),
+        .DST_AXI_RDATA(M_AXI_rdata),
+        .DST_AXI_RID(M_AXI_rid[3:0]),
+        .DST_AXI_RLAST(M_AXI_rlast),
+        .DST_AXI_RREADY(M_AXI_rready),
+        .DST_AXI_RRESP(M_AXI_rresp),
+        .DST_AXI_RVALID(M_AXI_rvalid),
+        .DST_AXI_WDATA(M_AXI_wdata),
+        .DST_AXI_WLAST(M_AXI_wlast),
+        .DST_AXI_WREADY(M_AXI_wready),
+        .DST_AXI_WSTRB(M_AXI_wstrb),
+        .DST_AXI_WVALID(M_AXI_wvalid),
+        .SRC_AXI_ARADDR(rdmx_to_pci_M_AXI_ARADDR),
+        .SRC_AXI_ARBURST(rdmx_to_pci_M_AXI_ARBURST),
+        .SRC_AXI_ARCACHE(rdmx_to_pci_M_AXI_ARCACHE),
+        .SRC_AXI_ARID(rdmx_to_pci_M_AXI_ARID),
+        .SRC_AXI_ARLEN(rdmx_to_pci_M_AXI_ARLEN),
+        .SRC_AXI_ARLOCK(rdmx_to_pci_M_AXI_ARLOCK),
+        .SRC_AXI_ARPROT(rdmx_to_pci_M_AXI_ARPROT),
+        .SRC_AXI_ARQOS(rdmx_to_pci_M_AXI_ARQOS),
+        .SRC_AXI_ARREADY(rdmx_to_pci_M_AXI_ARREADY),
+        .SRC_AXI_ARSIZE(rdmx_to_pci_M_AXI_ARSIZE),
+        .SRC_AXI_ARVALID(rdmx_to_pci_M_AXI_ARVALID),
+        .SRC_AXI_AWADDR(rdmx_to_pci_M_AXI_AWADDR),
+        .SRC_AXI_AWBURST(rdmx_to_pci_M_AXI_AWBURST),
+        .SRC_AXI_AWCACHE(rdmx_to_pci_M_AXI_AWCACHE),
+        .SRC_AXI_AWID(rdmx_to_pci_M_AXI_AWID),
+        .SRC_AXI_AWLEN(rdmx_to_pci_M_AXI_AWLEN),
+        .SRC_AXI_AWLOCK(rdmx_to_pci_M_AXI_AWLOCK),
+        .SRC_AXI_AWPROT(rdmx_to_pci_M_AXI_AWPROT),
+        .SRC_AXI_AWQOS(rdmx_to_pci_M_AXI_AWQOS),
+        .SRC_AXI_AWREADY(rdmx_to_pci_M_AXI_AWREADY),
+        .SRC_AXI_AWSIZE(rdmx_to_pci_M_AXI_AWSIZE),
+        .SRC_AXI_AWUSER(rdmx_to_pci_M_AXI_AWUSER),
+        .SRC_AXI_AWVALID(rdmx_to_pci_M_AXI_AWVALID),
+        .SRC_AXI_BREADY(rdmx_to_pci_M_AXI_BREADY),
+        .SRC_AXI_BRESP(rdmx_to_pci_M_AXI_BRESP),
+        .SRC_AXI_BVALID(rdmx_to_pci_M_AXI_BVALID),
+        .SRC_AXI_RDATA(rdmx_to_pci_M_AXI_RDATA),
+        .SRC_AXI_RLAST(rdmx_to_pci_M_AXI_RLAST),
+        .SRC_AXI_RREADY(rdmx_to_pci_M_AXI_RREADY),
+        .SRC_AXI_RRESP(rdmx_to_pci_M_AXI_RRESP),
+        .SRC_AXI_RVALID(rdmx_to_pci_M_AXI_RVALID),
+        .SRC_AXI_WDATA(rdmx_to_pci_M_AXI_WDATA),
+        .SRC_AXI_WLAST(rdmx_to_pci_M_AXI_WLAST),
+        .SRC_AXI_WREADY(rdmx_to_pci_M_AXI_WREADY),
+        .SRC_AXI_WSTRB(rdmx_to_pci_M_AXI_WSTRB),
+        .SRC_AXI_WVALID(rdmx_to_pci_M_AXI_WVALID),
+        .clk(sys_clk),
+        .resetn(resetn_in));
+  top_level_rdmx_to_pci_1 rdmx_to_pci
+       (.AXIS_IN_TDATA(AXIS_IN_tdata),
+        .AXIS_IN_TREADY(AXIS_IN_tready),
+        .AXIS_IN_TVALID(AXIS_IN_tvalid),
+        .M_AXI_ARADDR(rdmx_to_pci_M_AXI_ARADDR),
+        .M_AXI_ARBURST(rdmx_to_pci_M_AXI_ARBURST),
+        .M_AXI_ARCACHE(rdmx_to_pci_M_AXI_ARCACHE),
+        .M_AXI_ARID(rdmx_to_pci_M_AXI_ARID),
+        .M_AXI_ARLEN(rdmx_to_pci_M_AXI_ARLEN),
+        .M_AXI_ARLOCK(rdmx_to_pci_M_AXI_ARLOCK),
+        .M_AXI_ARPROT(rdmx_to_pci_M_AXI_ARPROT),
+        .M_AXI_ARQOS(rdmx_to_pci_M_AXI_ARQOS),
+        .M_AXI_ARREADY(rdmx_to_pci_M_AXI_ARREADY),
+        .M_AXI_ARSIZE(rdmx_to_pci_M_AXI_ARSIZE),
+        .M_AXI_ARVALID(rdmx_to_pci_M_AXI_ARVALID),
+        .M_AXI_AWADDR(rdmx_to_pci_M_AXI_AWADDR),
+        .M_AXI_AWBURST(rdmx_to_pci_M_AXI_AWBURST),
+        .M_AXI_AWCACHE(rdmx_to_pci_M_AXI_AWCACHE),
+        .M_AXI_AWID(rdmx_to_pci_M_AXI_AWID),
+        .M_AXI_AWLEN(rdmx_to_pci_M_AXI_AWLEN),
+        .M_AXI_AWLOCK(rdmx_to_pci_M_AXI_AWLOCK),
+        .M_AXI_AWPROT(rdmx_to_pci_M_AXI_AWPROT),
+        .M_AXI_AWQOS(rdmx_to_pci_M_AXI_AWQOS),
+        .M_AXI_AWREADY(rdmx_to_pci_M_AXI_AWREADY),
+        .M_AXI_AWSIZE(rdmx_to_pci_M_AXI_AWSIZE),
+        .M_AXI_AWUSER(rdmx_to_pci_M_AXI_AWUSER),
+        .M_AXI_AWVALID(rdmx_to_pci_M_AXI_AWVALID),
+        .M_AXI_BREADY(rdmx_to_pci_M_AXI_BREADY),
+        .M_AXI_BRESP(rdmx_to_pci_M_AXI_BRESP),
+        .M_AXI_BVALID(rdmx_to_pci_M_AXI_BVALID),
+        .M_AXI_RDATA(rdmx_to_pci_M_AXI_RDATA),
+        .M_AXI_RLAST(rdmx_to_pci_M_AXI_RLAST),
+        .M_AXI_RREADY(rdmx_to_pci_M_AXI_RREADY),
+        .M_AXI_RRESP(rdmx_to_pci_M_AXI_RRESP),
+        .M_AXI_RVALID(rdmx_to_pci_M_AXI_RVALID),
+        .M_AXI_WDATA(rdmx_to_pci_M_AXI_WDATA),
+        .M_AXI_WLAST(rdmx_to_pci_M_AXI_WLAST),
+        .M_AXI_WREADY(rdmx_to_pci_M_AXI_WREADY),
+        .M_AXI_WSTRB(rdmx_to_pci_M_AXI_WSTRB),
+        .M_AXI_WVALID(rdmx_to_pci_M_AXI_WVALID),
+        .clk(sys_clk),
+        .pci_base(pci_base),
+        .pci_range_err_strb(pci_range_err_strb),
+        .pci_size(pci_size),
+        .pci_throughput(pci_throughput),
+        .resetn(resetn_in));
+endmodule
+
 module repacketizer_imp_1WD6MXN
    (axis_in_tdata,
     axis_in_tready,
@@ -13300,7 +13948,7 @@ module system_interconnect_imp_1433GC4
         .aresetn(aresetn));
 endmodule
 
-(* CORE_GENERATION_INFO = "top_level,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=top_level,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=121,numReposBlks=94,numNonXlnxBlks=0,numHierBlks=27,maxHierDepth=4,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=53,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_clkrst_cnt=2,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "top_level.hwdef" *) 
+(* CORE_GENERATION_INFO = "top_level,IP_Integrator,{x_ipVendor=xilinx.com,x_ipLibrary=BlockDiagram,x_ipName=top_level,x_ipVersion=1.00.a,x_ipLanguage=VERILOG,numBlks=127,numReposBlks=98,numNonXlnxBlks=0,numHierBlks=29,maxHierDepth=4,numSysgenBlks=0,numHlsBlks=0,numHdlrefBlks=57,numPkgbdBlks=0,bdsource=USER,da_axi4_cnt=1,da_clkrst_cnt=2,synth_mode=Hierarchical}" *) (* HW_HANDOFF = "top_level.hwdef" *) 
 module top_level
    (hbm0_refclk_clk_n,
     hbm0_refclk_clk_p,

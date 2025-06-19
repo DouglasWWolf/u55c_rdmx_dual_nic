@@ -14,6 +14,10 @@
    The first data-cycle of every packet is assumed to be an RDMX header.  From
    that header, we compute the PCI address to store the payload at as well as
    the number of data-cycles in the packet payload.
+
+   If a write-request is emitted with a '1' in M_AXI_AWUSER, it will cause a 
+   downstream module to perform a memory-fence operation prior to writing the
+   payload of the packet to host-ram.
 */
 
 
@@ -39,14 +43,15 @@ module rdmx_to_pci # (parameter DW=512, FREQ_HZ = 250000000)
 
     // "Specify write address"              -- Master --    -- Slave --
     output     [63:0]                        M_AXI_AWADDR,
-    output     [7:0]                         M_AXI_AWLEN,
-    output     [2:0]                         M_AXI_AWSIZE,
-    output     [3:0]                         M_AXI_AWID,
-    output     [1:0]                         M_AXI_AWBURST,
+    output                                   M_AXI_AWUSER,
+    output     [ 7:0]                        M_AXI_AWLEN,
+    output     [ 2:0]                        M_AXI_AWSIZE,
+    output     [ 3:0]                        M_AXI_AWID,
+    output     [ 1:0]                        M_AXI_AWBURST,
     output                                   M_AXI_AWLOCK,
-    output     [3:0]                         M_AXI_AWCACHE,
-    output     [3:0]                         M_AXI_AWQOS,
-    output     [2:0]                         M_AXI_AWPROT,
+    output     [ 3:0]                        M_AXI_AWCACHE,
+    output     [ 3:0]                        M_AXI_AWQOS,
+    output     [ 2:0]                        M_AXI_AWPROT,
     output                                   M_AXI_AWVALID,
     input                                                   M_AXI_AWREADY,
 
@@ -91,6 +96,7 @@ reg [ 7:0] cycle_within_packet;
 wire[ 7:0] imm_payload_cycles;
 reg [ 7:0] payload_cycles;
 wire[63:0] rdmx_offset;
+wire[ 7:0] rdmx_flags;
 reg [63:0] pci_address;
 wire[ 7:0] awlen = imm_payload_cycles - 1;
 
@@ -228,9 +234,6 @@ assign M_AXI_RREADY  = 0;
 
 
 
-
-
-
 //=============================================================================
 // This decodes an RDMX header into a target address and a payload length
 //=============================================================================
@@ -238,6 +241,7 @@ rdmx_decoder i_decoder
 (
     .le_rdmx_header(AXIS_IN_TDATA     ),
     .rdmx_address  (rdmx_offset       ),
+    .rdmx_flags    (rdmx_flags        ),
     .payload_bytes (                  ),
     .payload_cycles(imm_payload_cycles)
 );
@@ -313,6 +317,7 @@ xpm_fifo_axis #
 (
    .FIFO_DEPTH      (16),
    .TDATA_WIDTH     (72),
+   .TUSER_WIDTH     (1),
    .FIFO_MEMORY_TYPE("auto"),
    .PACKET_FIFO     ("false"),
    .USE_ADV_FEATURES("0000"),
@@ -327,11 +332,13 @@ aw_fifo
 
     // The input bus of the FIFO
    .s_axis_tdata ({awlen, pci_address}),
+   .s_axis_tuser (rdmx_flags[0]       ),
    .s_axis_tvalid(is_header           ),
    .s_axis_tready(                    ),
 
     // The output bus of the FIFO
    .m_axis_tdata ({M_AXI_AWLEN, M_AXI_AWADDR}),
+   .m_axis_tuser (M_AXI_AWUSER  ),
    .m_axis_tvalid(M_AXI_AWVALID ),
    .m_axis_tready(M_AXI_AWREADY ),
 
@@ -341,14 +348,12 @@ aw_fifo
    .s_axis_tdest(),
    .s_axis_tid  (),
    .s_axis_tstrb(),
-   .s_axis_tuser(),
-
+   
     // Unused output stream signals
    .m_axis_tlast(),
    .m_axis_tdest(),
    .m_axis_tid  (),
    .m_axis_tstrb(),
-   .m_axis_tuser(),
    .m_axis_tkeep(),
 
     // Other unused signals
@@ -364,8 +369,6 @@ aw_fifo
    .injectsbiterr_axis()
 );
 //=============================================================================
-
-
 
 
 endmodule

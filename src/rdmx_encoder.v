@@ -5,15 +5,17 @@
 //   Date     Who   Ver  Changes
 //====================================================================================
 // 20-Mar-25  DWW     1  Initial creation
+// 17-Jun-25  DWW     2  Added port rdmx_flags
 //====================================================================================
 
 /*
     This encodes an RDMX header
 */
 
-module rdmx_encoder
+module rdmx_encoder # (parameter[7:0] SRC_MAC = 0)
 (
     input [ 63:0] rdmx_target_addr,
+    input [  7:0] rdmx_flags,
     input [ 15:0] payload_length,
     output[511:0] le_rdmx_header
 );
@@ -38,8 +40,6 @@ localparam[15:0] REMOTE_SERVER_PORT = 32002;
 //=============================================================================
 // Hard-coded configurable settings
 //=============================================================================
-localparam[7:0] SRC_MAC = 0;
-
 localparam[7:0] SRC_IP0 = 10;
 localparam[7:0] SRC_IP1 =  1;
 localparam[7:0] SRC_IP2 =  1;
@@ -75,8 +75,8 @@ localparam[15:0] udp_checksum   = 0;
 // 2 bytes of magic number
 localparam[15:0] rdmx_magic = 16'h0122;
 
-// 6 bytes of reserved area in the RDMX header
-localparam[6*8-1:0] rdmx_reserved = 0;
+// 5 bytes of reserved area in the RDMX header
+localparam[5*8-1:0] rdmx_reserved = 0;
 
 // Compute both the IPv4 packet length and UDP packet length
 wire[15:0] ip4_length = IP_HDR_LEN + UDP_HDR_LEN + RDMX_HDR_LEN + payload_length;
@@ -133,6 +133,7 @@ wire[511:0] be_rdmx_header =
     rdmx_target_addr,
     rdmx_seq_num,
     rdmx_user_field,
+    rdmx_flags,
     rdmx_reserved
 };
 

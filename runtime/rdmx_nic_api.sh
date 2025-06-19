@@ -4,8 +4,10 @@
 # 23-Mar-25  1.0.0  DWW  Initial Creation
 #
 # 07-Jun-25  1.1.0  DWW  Added optional "byte_count" parameter to xmit()
+#
+# 18-Jun-25  1.2.0  DWW  Added "sender_port" command
 #==============================================================================
-RDMX_NIC_API_VERSION=1.1.0
+RDMX_NIC_API_VERSION=1.2.0
 
 
 #==============================================================================
@@ -65,6 +67,7 @@ define_registers()
              REG_RESET=$((NIC_BASE_ADDR + 10 * 4))
     REG_CLEAR_COUNTERS=$((NIC_BASE_ADDR + 11 * 4))
           REG_HBM_TEMP=$((NIC_BASE_ADDR + 12 * 4))
+       REG_SENDER_PORT=$((NIC_BASE_ADDR + 13 * 4))
 
     # Transmit-related related registers
     REG_XMIT_SRCADDR_H=$((NIC_BASE_ADDR + 20 * 4));
@@ -349,3 +352,12 @@ pci_throughput()
 #==============================================================================
 
 
+#==============================================================================
+# Displays the QSFP port number of the sender
+#==============================================================================
+sender_port()
+{
+
+    pcireg -dec $REG_SENDER_PORT    
+}
+#==============================================================================

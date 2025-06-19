@@ -179,6 +179,14 @@
 
 
 //
+// Register:    NIC0_SENDER_PORT
+// Size:        32-bits
+// Description: Sender's QSFP port number
+//
+#define NIC0_SENDER_PORT                                             0x0000000000001034ULL
+
+
+//
 // Register:    NIC0_XMIT_SRCADDR
 // Size:        64-bits
 // Description: When transmitting a block of data, this is the source address in host-RAM
@@ -364,6 +372,14 @@
 // Description: HBM RAM temperature in whole degress Celsius
 //
 #define NIC1_HBM_TEMP                                                0x0000000000002030ULL
+
+
+//
+// Register:    NIC1_SENDER_PORT
+// Size:        32-bits
+// Description: Sender's QSFP port number
+//
+#define NIC1_SENDER_PORT                                             0x0000000000002034ULL
 
 
 //

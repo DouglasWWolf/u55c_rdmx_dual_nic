@@ -67,6 +67,7 @@
         "pci_throughput": [ { "direction": "in", "size_left": "31", "size_right": "0" } ],
         "pci_base": [ { "direction": "out", "size_left": "63", "size_right": "0" } ],
         "pci_size": [ { "direction": "out", "size_left": "63", "size_right": "0" } ],
+        "sender_port": [ { "direction": "in", "size_left": "7", "size_right": "0" } ],
         "xmit_src_addr": [ { "direction": "out", "size_left": "63", "size_right": "0" } ],
         "xmit_dst_addr": [ { "direction": "out", "size_left": "63", "size_right": "0" } ],
         "xmit_byte_count": [ { "direction": "out", "size_left": "63", "size_right": "0" } ],

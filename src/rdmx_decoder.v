@@ -24,6 +24,9 @@ module rdmx_decoder
     // PCI address where payload should be written
     output[63:0] rdmx_address,
 
+    // The "flags" field from the RDMX header
+    output[7:0]  rdmx_flags,
+
     // The length of the payload in bytes
     output[15:0] payload_bytes,
 
@@ -47,7 +50,9 @@ wire[ 2 *8-1:0] ip4_srcip_h, ip4_srcip_l, ip4_dstip_h, ip4_dstip_l;
 wire[ 2 *8-1:0] udp_src_port, udp_dst_port, udp_length, udp_checksum;
 wire[ 2 *8-1:0] rdmx_magic;
 wire[ 8 *8-1:0] rdmx_target_addr;
-wire[12 *8-1:0] rdmx_reserved;
+wire[ 2 *8-1:0] rdmx_seq;
+wire[ 4 *8-1:0] rdmx_user_field;
+wire[ 5 *8-1:0] rdmx_reserved;
 
 // Big-endian RDMX header
 wire[511:0] be_rdmx_header =
@@ -59,7 +64,7 @@ wire[511:0] be_rdmx_header =
 
     // IPv4 header fields - 20 bytes
     ip4_ver_dsf,
-    ip4_length,
+    ip4_length, 
     ip4_id,
     ip4_flags,
     ip4_ttl_prot,
@@ -78,6 +83,9 @@ wire[511:0] be_rdmx_header =
     // RDMX header fields - 22 bytes
     rdmx_magic,
     rdmx_target_addr,
+    rdmx_seq,
+    rdmx_user_field,
+    rdmx_flags,
     rdmx_reserved
 };
 

@@ -14,7 +14,5 @@ if [ -z $filename ] || [ ! -f $filename ]; then
 fi
 load_bitstream -hot_reset -part xcu280_u55c_0 -pci_device 10ee:903f -vivado "$VIVADO" $filename
 
-hot_reset 10ee:903f
-hot_reset 10ee:9040
-pci_device 10ee BusMaster+ RlxdOrd-
+hot_reset
 
